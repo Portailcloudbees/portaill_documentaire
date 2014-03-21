@@ -12,7 +12,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
 <!-- BEGIN HEAD -->
 <head>
    <meta charset="utf-8" />
-   <title>Metronic | Data Tables - Responsive Tables</title>
+   <title>Statistic Table Users</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -176,9 +176,8 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                   </div>
                </form>
                <!-- END RESPONSIVE QUICK SEARCH FORM -->
-           </li>
             <li class="start active ">
-               <a href="index.html">
+               <a href="index user.html">
                <i class="icon-home"></i> 
                <span class="title">Dashboard</span>
                <span class="selected"></span>
@@ -198,26 +197,20 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                      </a>
                   </li>
                   <li>
-                     <a href="doc_xml.html">
+                     <a href="doc_xml u res.html">
                      XML Setting
                      <span class="arrow"></span>
                      </a>
                   </li>
                   <li>
-                     <a href="doc_généré.html">
+                     <a href="doc_généré u res.html">
                      Générated Setting
                      <span class="arrow"></span>
                      </a>
                   </li>
 				                    <li>
-                     <a href="download.html">
+                     <a href="download u res.html">
                      Download Document
-                     <span class="arrow"></span>
-                     </a>
-                  </li>
-				                    <li>
-                     <a href="javascript:;">
-                     Generate a document
                      <span class="arrow"></span>
                      </a>
                   </li>
@@ -241,13 +234,13 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             <li class="">
                <a href="javascript:;">
                <i class="icon-file-text"></i> 
-               <span class="title">Reclamation</span>
+               <span class="title">Notification</span>
                <span class="arrow "></span>
                </a>
 			   <ul class="sub-menu">
                   <li>
-                     <a href="javascript:;">
-                     Submit reclamation 
+                     <a href="reclamation u res.html">
+                     Sabmit  Notification
                      <span class="arrow"></span>
                      </a>
                   </li>
@@ -333,7 +326,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  Responsive Tables <small>responsive table samples</small>
+                  Statistiques <small>View All</small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li class="btn-group">
@@ -354,30 +347,20 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                      <i class="icon-angle-right"></i>
                   </li>
                   <li>
-                     <a href="#">Data Tables</a>
+                     <a href="#">Statistiques</a>
                      <i class="icon-angle-right"></i>
                   </li>
-                  <li><a href="#">Responsive Tables</a></li>
+                  <li><a href="#">View Statistiques</a></li>
                </ul>
                <!-- END PAGE TITLE & BREADCRUMB-->
             </div>
          </div>
          <!-- END PAGE HEADER-->
          <!-- BEGIN PAGE CONTENT-->          
-         <div class="row">
-            <div class="col-md-12">
-               <div class="note note-success">
-                  <p>
-                     Please try to re-size your browser window in order to see the tables in responsive mode.
-                  </p>
-               </div>
-
-              
-
                <!-- BEGIN SAMPLE TABLE PORTLET-->
                <div class="portlet box blue">
                   <div class="portlet-title">
-                     <div class="caption"><i class="icon-cogs"></i>Bordered Bootstrap 3.0 Responsive Table</div>
+                     <div class="caption"><i class="icon-cogs"></i>Statistical table</div>
                      <div class="tools">
                         <a href="javascript:;" class="collapse"></a>
                         <a href="#portlet-config" data-toggle="modal" class="config"></a>
@@ -391,12 +374,12 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                            <thead>
                               <tr>
                                  <th>#</th>
-                                 <th>Utilisateur</th>
-                                 <th>Société</th>
+                                 <th>Users</th>
+                                 <th>Company</th>
                                  <th>Date</th>
-                                 <th>Nombre de documents générés</th>
-                                 <th>Nombre de consultation</th>
-                                 <th>Table heading</th>
+                                 <th>Number of documents generated</th>
+                                 <th>Number of consultation</th>
+                                 <th></th>
                               </tr>
                            </thead>
                            <tbody>
@@ -409,24 +392,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                                  <td>Table cell</td>
                                  <td>Table cell</td>
                               </tr>
-                              <tr>
-                                 <td>2</td>
-                                 <td>Table cell</td>
-                                 <td>Table cell</td>
-                                 <td>Table cell</td>
-                                 <td>Table cell</td>
-                                 <td>Table cell</td>
-                                 <td>Table cell</td>
-                              </tr>
-                              <tr>
-                                 <td>3</td>
-                                 <td>Table cell</td>
-                                 <td>Table cell</td>
-                                 <td>Table cell</td>
-                                 <td>Table cell</td>
-                                 <td>Table cell</td>
-                                 <td>Table cell</td>
-                              </tr>
+
                            </tbody>
                         </table>
                      </div>

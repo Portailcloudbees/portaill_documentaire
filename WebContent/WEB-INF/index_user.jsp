@@ -58,7 +58,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
          <!-- BEGIN TOP NAVIGATION MENU -->
          <ul class="nav navbar-nav pull-right">
             <!-- BEGIN NOTIFICATION DROPDOWN -->
-            <li class="dropdown" id="header_notification_bar">
+                        <li class="dropdown" id="header_notification_bar">
                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
                   data-close-others="true">
                <i class="icon-warning-sign"></i>
@@ -77,62 +77,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                            <span class="time">Just now</span>
                            </a>
                         </li>
-                        <li>  
-                           <a href="#">
-                           <span class="label label-sm label-icon label-danger"><i class="icon-bolt"></i></span>
-                           Server #12 overloaded. 
-                           <span class="time">15 mins</span>
-                           </a>
-                        </li>
-                        <li>  
-                           <a href="#">
-                           <span class="label label-sm label-icon label-warning"><i class="icon-bell"></i></span>
-                           Server #2 not responding.
-                           <span class="time">22 mins</span>
-                           </a>
-                        </li>
-                        <li>  
-                           <a href="#">
-                           <span class="label label-sm label-icon label-info"><i class="icon-bullhorn"></i></span>
-                           Application error.
-                           <span class="time">40 mins</span>
-                           </a>
-                        </li>
-                        <li>  
-                           <a href="#">
-                           <span class="label label-sm label-icon label-danger"><i class="icon-bolt"></i></span>
-                           Database overloaded 68%. 
-                           <span class="time">2 hrs</span>
-                           </a>
-                        </li>
-                        <li>  
-                           <a href="#">
-                           <span class="label label-sm label-icon label-danger"><i class="icon-bolt"></i></span>
-                           2 user IP blocked.
-                           <span class="time">5 hrs</span>
-                           </a>
-                        </li>
-                        <li>  
-                           <a href="#">
-                           <span class="label label-sm label-icon label-warning"><i class="icon-bell"></i></span>
-                           Storage Server #4 not responding.
-                           <span class="time">45 mins</span>
-                           </a>
-                        </li>
-                        <li>  
-                           <a href="#">
-                           <span class="label label-sm label-icon label-info"><i class="icon-bullhorn"></i></span>
-                           System Error.
-                           <span class="time">55 mins</span>
-                           </a>
-                        </li>
-                        <li>  
-                           <a href="#">
-                           <span class="label label-sm label-icon label-danger"><i class="icon-bolt"></i></span>
-                           Database overloaded 68%. 
-                           <span class="time">2 hrs</span>
-                           </a>
-                        </li>
+                        
                      </ul>
                   </li>
                   <li class="external">   
@@ -154,70 +99,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                   </li>
                   <li>
                      <ul class="dropdown-menu-list scroller" style="height: 250px;">
-                        <li>  
-                           <a href="inbox.html?a=view">
-                           <span class="photo"><img src="./assets/img/avatar2.jpg" alt=""/></span>
-                           <span class="subject">
-                           <span class="from">Lisa Wong</span>
-                           <span class="time">Just Now</span>
-                           </span>
-                           <span class="message">
-                           Vivamus sed auctor nibh congue nibh. auctor nibh
-                           auctor nibh...
-                           </span>  
-                           </a>
-                        </li>
-                        <li>  
-                           <a href="inbox.html?a=view">
-                           <span class="photo"><img src="./assets/img/avatar3.jpg" alt=""/></span>
-                           <span class="subject">
-                           <span class="from">Richard Doe</span>
-                           <span class="time">16 mins</span>
-                           </span>
-                           <span class="message">
-                           Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh
-                           auctor nibh...
-                           </span>  
-                           </a>
-                        </li>
-                        <li>  
-                           <a href="inbox.html?a=view">
-                           <span class="photo"><img src="./assets/img/avatar1.jpg" alt=""/></span>
-                           <span class="subject">
-                           <span class="from">Bob Nilson</span>
-                           <span class="time">2 hrs</span>
-                           </span>
-                           <span class="message">
-                           Vivamus sed nibh auctor nibh congue nibh. auctor nibh
-                           auctor nibh...
-                           </span>  
-                           </a>
-                        </li>
-                        <li>  
-                           <a href="inbox.html?a=view">
-                           <span class="photo"><img src="./assets/img/avatar2.jpg" alt=""/></span>
-                           <span class="subject">
-                           <span class="from">Lisa Wong</span>
-                           <span class="time">40 mins</span>
-                           </span>
-                           <span class="message">
-                           Vivamus sed auctor 40% nibh congue nibh...
-                           </span>  
-                           </a>
-                        </li>
-                        <li>  
-                           <a href="inbox.html?a=view">
-                           <span class="photo"><img src="./assets/img/avatar3.jpg" alt=""/></span>
-                           <span class="subject">
-                           <span class="from">Richard Doe</span>
-                           <span class="time">46 mins</span>
-                           </span>
-                           <span class="message">
-                           Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh
-                           auctor nibh...
-                           </span>  
-                           </a>
-                        </li>
+                      
                      </ul>
                   </li>
                   <li class="external">   
@@ -225,6 +107,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                   </li>
                </ul>
             </li>
+            <!-- END INBOX DROPDOWN -->
             <!-- END INBOX DROPDOWN -->
             <!-- BEGIN USER LOGIN DROPDOWN -->
             <li class="dropdown user">
@@ -247,7 +130,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                   </li>
                   <li><a href="extra_lock.html"><i class="icon-lock"></i> Lock Screen</a>
                   </li>
-                  <li><a href="login.html"><i class="icon-key"></i> Log Out</a>
+                  <li><a href="deconnexion"><i class="icon-key"></i> Log Out</a>
                   </li>
                </ul>
             </li>
@@ -304,26 +187,20 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                      </a>
                   </li>
                   <li>
-                     <a href="doc_xml.html">
+                     <a href="doc_xml u res.html">
                      XML Setting
                      <span class="arrow"></span>
                      </a>
                   </li>
                   <li>
-                     <a href="doc_généré.html">
+                     <a href="doc_généré u res.html">
                      Générated Setting
                      <span class="arrow"></span>
                      </a>
                   </li>
 				                    <li>
-                     <a href="download.html">
+                     <a href="download u res.html">
                      Download Document
-                     <span class="arrow"></span>
-                     </a>
-                  </li>
-				                    <li>
-                     <a href="javascript:;">
-                     Generate a document
                      <span class="arrow"></span>
                      </a>
                   </li>
@@ -347,13 +224,13 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             <li class="">
                <a href="javascript:;">
                <i class="icon-file-text"></i> 
-               <span class="title">Reclamation</span>
+               <span class="title">Notification</span>
                <span class="arrow "></span>
                </a>
 			   <ul class="sub-menu">
                   <li>
-                     <a href="javascript:;">
-                     Submit reclamation 
+                     <a href="reclamation u res.html">
+                     Sabmit  Notification 
                      <span class="arrow"></span>
                      </a>
                   </li>

@@ -294,7 +294,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  Responsive Tables <small>responsive table samples</small>
+                  Statistiques <small>View All</small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li class="btn-group">
@@ -315,30 +315,21 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                      <i class="icon-angle-right"></i>
                   </li>
                   <li>
-                     <a href="#">Data Tables</a>
+                     <a href="#">Statistiques</a>
                      <i class="icon-angle-right"></i>
                   </li>
-                  <li><a href="#">Responsive Tables</a></li>
+                  <li><a href="#">View Statistique</a></li>
                </ul>
                <!-- END PAGE TITLE & BREADCRUMB-->
             </div>
          </div>
          <!-- END PAGE HEADER-->
-         <!-- BEGIN PAGE CONTENT-->          
-         <div class="row">
-            <div class="col-md-12">
-               <div class="note note-success">
-                  <p>
-                     Please try to re-size your browser window in order to see the tables in responsive mode.
-                  </p>
-               </div>
-
-              
+         <!-- BEGIN PAGE CONTENT-->                      
 
                <!-- BEGIN SAMPLE TABLE PORTLET-->
                <div class="portlet box blue">
                   <div class="portlet-title">
-                     <div class="caption"><i class="icon-cogs"></i>Bordered Bootstrap 3.0 Responsive Table</div>
+                     <div class="caption"><i class="icon-cogs"></i>Statistical table</div>
                      <div class="tools">
                         <a href="javascript:;" class="collapse"></a>
                         <a href="#portlet-config" data-toggle="modal" class="config"></a>
@@ -352,12 +343,12 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                            <thead>
                               <tr>
                                  <th>#</th>
-                                 <th>Utilisateur</th>
-                                 <th>Société</th>
+                                 <th>Users</th>
+                                 <th>Company</th>
                                  <th>Date</th>
-                                 <th>Nombre de documents générés</th>
-                                 <th>Nombre de consultation</th>
-                                 <th>Table heading</th>
+                                 <th>Number of documents generated</th>
+                                 <th>Number of consultation</th>
+                                 <th></th>
                               </tr>
                            </thead>
                            <tbody>
@@ -370,24 +361,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                                  <td>Table cell</td>
                                  <td>Table cell</td>
                               </tr>
-                              <tr>
-                                 <td>2</td>
-                                 <td>Table cell</td>
-                                 <td>Table cell</td>
-                                 <td>Table cell</td>
-                                 <td>Table cell</td>
-                                 <td>Table cell</td>
-                                 <td>Table cell</td>
-                              </tr>
-                              <tr>
-                                 <td>3</td>
-                                 <td>Table cell</td>
-                                 <td>Table cell</td>
-                                 <td>Table cell</td>
-                                 <td>Table cell</td>
-                                 <td>Table cell</td>
-                                 <td>Table cell</td>
-                              </tr>
+
                            </tbody>
                         </table>
                      </div>
@@ -412,7 +386,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
    <!-- BEGIN FOOTER -->
    <div class="footer">
       <div class="footer-inner">
-         2013 &copy; Metronic by keenthemes.
+         2014 &copy; Imex.
       </div>
       <div class="footer-tools">
          <span class="go-top">

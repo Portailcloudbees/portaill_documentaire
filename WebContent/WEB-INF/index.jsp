@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
  <html lang="en" class="no-js"> 
 <!-- BEGIN HEAD -->
 <head>
@@ -96,7 +96,7 @@
                  
                   <li class="divider"></li>
                   
-                  <li><a href="login.html"><i class="icon-key"></i> Log Out</a>
+                  <li><a href="deconnexion"><i class="icon-key"></i> Log Out</a>
                   </li>
                </ul>
             </li>
@@ -141,14 +141,16 @@
             </li>
             
             <li class="">
-               <a href="table_responsive.html">
+              
+               <a href="table_responsive.jsp">
                <i class="icon-user"></i> 
                <span class="title">Users</span>
                <span class="arrow "></span>
                </a>
 			                  <ul class="sub-menu">
                   <li class="active">
-                     <a href="table_users.html">
+                   
+                     <a href="forward?lien=table_users.jsp">
                      View User
                      <span class="arrow"></span>
                      </a>                  
@@ -231,15 +233,15 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  Portail documentaire <small></small>
+                  Dashboard <small>Documentary portal</small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li>
                      <i class="icon-home"></i>
-                     <a href="index.html">Acceuil</a> 
+                     <a href="index.html">Home</a> 
                      <i class="icon-angle-right"></i>
                   </li>
-                  <li><a href="#">Portail</a></li>
+                  <li><a href="#">Dashboard</a></li>
                   <li class="pull-right">
                      <div id="dashboard-report-range" class="dashboard-date-range tooltips" data-placement="top" data-original-title="Change dashboard date range">
                         <i class="icon-calendar"></i>

@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class authentification {
+	public static String c=null;
 	
 public authentification(){
 	
@@ -28,15 +29,23 @@ public String connecter(String login, String mp){
 	String reqAdmin="select * from admin where email_admin='"+login+"' and pass_admin='"+mp+"'";
 	String reqResp="select * from responsable_soc where email_resp='"+login+"' and pass_resp='"+mp+"'";
 	String requt="select * from utilisateur where email_ut='"+login+"' and pass_ut='"+mp+"'";
+	
 	if (exist(reqAdmin)>0){
+		authentification.c="cncted";
 		return "admin";
+		
 	}else if (exist(reqResp)>0){
+		authentification.c="cncted";
 		return "responsable";
 	}else if (exist(requt)>0) {
+		authentification.c="cncted";
 		return "utilisateur";
 	}else{
 		return "";
 	}
 	
 }
+
+
+
 }

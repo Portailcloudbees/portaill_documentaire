@@ -49,9 +49,9 @@ public class connecter extends HttpServlet {
 		}else if (auth.connecter(login,pass)=="admin"){
 			this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
 		}else if (auth.connecter(login,pass)=="responsable"){
-			this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+			this.getServletContext().getRequestDispatcher("/WEB-INF/index_responsable_societe.jsp").forward(request, response);
 		}else if (auth.connecter(login,pass)=="utilisateur"){
-			this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+			this.getServletContext().getRequestDispatcher("/WEB-INF/index_user.jsp").forward(request, response);
 		}
 		
 	}

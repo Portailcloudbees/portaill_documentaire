@@ -181,7 +181,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                </form>
                <!-- END RESPONSIVE QUICK SEARCH FORM -->
  </li>
-            <li class="start active ">
+           <li class="start active ">
                <a href="index.html">
                <i class="icon-home"></i> 
                <span class="title">Dashboard</span>
@@ -212,7 +212,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                </a>
 			    <ul class="sub-menu">
                   <li class="active">
-                     <a href="stat user.html">
+                     <a href="table_statistique.html">
                      View Statistique
                      <span class="arrow"></span>
                      </a>                  
@@ -299,7 +299,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  Gestion des comptes <small>tache faite par l'administrateur</small>
+                  Users <small>All Users</small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li class="btn-group">
@@ -316,14 +316,14 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                   </li>
                   <li>
                      <i class="icon-home"></i>
-                     <a href="index.html">Accueil</a> 
+                     <a href="index.html">Home</a> 
                      <i class="icon-angle-right"></i>
                   </li>
                   <li>
-                     <a href="#">Gestion des comtes</a>
+                     <a href="#">Users</a>
                      <i class="icon-angle-right"></i>
                   </li>
-                  <li><a href="#">Consulter</a></li>
+                  <li><a href="#">View User</a></li>
                </ul>
                <!-- END PAGE TITLE & BREADCRUMB-->
             </div>
@@ -335,7 +335,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                <!-- BEGIN EXAMPLE TABLE PORTLET-->
                <div class="portlet box blue">
                   <div class="portlet-title">
-                     <div class="caption"><i class="icon-edit"></i>Liste des utilisateurs</div>
+                     <div class="caption"><i class="icon-edit"></i>Table Users</div>
                      <div class="tools">
                         <a href="javascript:;" class="collapse"></a>
                         <a href="#portlet-config" data-toggle="modal" class="config"></a>
@@ -382,51 +382,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                               <td><a class="edit" href="javascript:;">Edit</a></td>
                               <td><a class="delete" href="javascript:;">Delete</a></td>
                            </tr>
-                           <tr >
-                              <td>lisa</td>
-                              <td>Lisa Wong</td>
-                              <td>434</td>
-                              <td class="center">new user</td>
-							   <td>2/02/2014</td>
-                              <td><a class="edit" href="javascript:;">Edit</a></td>
-                              <td><a class="delete" href="javascript:;">Delete</a></td>
-                           </tr>
-                           <tr >
-                              <td>nick12</td>
-                              <td>Nick Roberts</td>
-                              <td>232</td>
-                              <td class="center">power user</td>
-							   <td>2/03/2014</td>
-                              <td><a class="edit" href="javascript:;">Edit</a></td>
-                              <td><a class="delete" href="javascript:;">Delete</a></td>
-                           </tr>
-                           <tr >
-                              <td>goldweb</td>
-                              <td>Sergio Jackson</td>
-                              <td>132</td>
-                              <td class="center">elite user</td>
-							   <td>5/06/2014</td>
-                              <td><a class="edit" href="javascript:;">Edit</a></td>
-                              <td><a class="delete" href="javascript:;">Delete</a></td>
-                           </tr>
-                           <tr >
-                              <td>webriver</td>
-                              <td>Antonio Sanches</td>
-                              <td>462</td>
-                              <td class="center">new user</td>
-							   <td>2/2/2013</td>
-                              <td><a class="edit" href="javascript:;">Edit</a></td>
-                              <td><a class="delete" href="javascript:;">Delete</a></td>
-                           </tr>
-                           <tr >
-                              <td>gist124</td>
-                              <td>Nick Roberts</td>
-                              <td>62</td>
-                              <td class="center">new user</td>
-							   <td>2/2/2013</td>
-                              <td><a class="edit" href="javascript:;">Edit</a></td>
-                              <td><a class="delete" href="javascript:;">Delete</a></td>
-                           </tr>
+                         
                         </tbody>
                      </table>
                   </div>

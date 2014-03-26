@@ -40,7 +40,7 @@
       <!-- BEGIN TOP NAVIGATION BAR -->
       <div class="header-inner">
          <!-- BEGIN LOGO -->  
-         <a class="navbar-brand" href="index.html">
+         <a class="navbar-brand" href="forward?lien=index.jsp">
       <h3 style="color:white"> <b><center>I&nbsp;M&nbsp;E&nbsp;X</center></b></h3>
          </a>
          <!-- END LOGO -->
@@ -78,7 +78,7 @@
                   </li>
 
                   <li class="external">   
-                     <a href="inbox.html">See all messages <i class="m-icon-swapright"></i></a>
+                     <a href="forward?lien=inbox.jsp">See all messages <i class="m-icon-swapright"></i></a>
                   </li>
                </ul>
             </li>
@@ -91,7 +91,7 @@
                <i class="icon-angle-down"></i>
                </a>
                <ul class="dropdown-menu">
-                  <li><a href="extra_profile.html"><i class="icon-user"></i> My Profile</a>
+                  <li><a href="forward?lien=extra_profile.jsp"><i class="icon-user"></i> My Profile</a>
                   </li>
                  
                   <li class="divider"></li>
@@ -121,7 +121,7 @@
             </li>
             <li>
                <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
-               <form class="sidebar-search" action="extra_search.html" method="POST">
+               <form class="sidebar-search" action="forward?lien=extra_search.jsp" method="POST">
                   <div class="form-container">
                      <div class="input-box">
                         <a href="javascript:;" class="remove"></a>
@@ -133,7 +133,7 @@
                <!-- END RESPONSIVE QUICK SEARCH FORM -->
             </li>
             <li class="start active ">
-               <a href="index.html">
+               <a href="forward?lien=index.jsp">
                <i class="icon-home"></i> 
                <span class="title">Dashboard</span>
                <span class="selected"></span>
@@ -150,7 +150,7 @@
 			                  <ul class="sub-menu">
                   <li class="active">
                    
-                     <a href="forward?lien=table_users.jsp">
+                     <a href="listclients">
                      View User
                      <span class="arrow"></span>
                      </a>                  
@@ -165,7 +165,7 @@
                </a>
 			    <ul class="sub-menu">
                   <li class="active">
-                     <a href="table_statistique.html">
+                     <a href="forward?lien=table_statistique.jsp">
                      View Statistique
                      <span class="arrow"></span>
                      </a>                  
@@ -238,7 +238,7 @@
                <ul class="page-breadcrumb breadcrumb">
                   <li>
                      <i class="icon-home"></i>
-                     <a href="index.html">Home</a> 
+                     <a href="forward?lien=index.jsp">Home</a> 
                      <i class="icon-angle-right"></i>
                   </li>
                   <li><a href="#">Dashboard</a></li>

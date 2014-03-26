@@ -1,14 +1,15 @@
 package entities;
 
-public class société {
+public class societe {
 	private String mat_société;
 	private String adress_société;
 	private String nom_société;
+	private String tel_soc;
 	
-	public société() {	
+	public societe() {	
 	}
 	
-	public société(String mat_société, String adress_société, String nom_société) {
+	public societe(String mat_société, String adress_société, String nom_société) {
 		
 		this.mat_société = mat_société;
 		this.adress_société = adress_société;
@@ -31,6 +32,14 @@ public class société {
 	}
 	public void setNom_société(String nom_société) {
 		this.nom_société = nom_société;
+	}
+
+	public String getTel_soc() {
+		return tel_soc;
+	}
+
+	public void setTel_soc(String tel_soc) {
+		this.tel_soc = tel_soc;
 	}
 	
 	

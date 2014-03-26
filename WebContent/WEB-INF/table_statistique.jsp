@@ -1,13 +1,5 @@
 <!DOCTYPE html>
-<!-- 
-Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.0
-Version: 1.5.2
-Author: KeenThemes
-Website: http://www.keenthemes.com/
-Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
--->
-<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
-<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+
 <!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <!-- BEGIN HEAD -->
 <head>
@@ -41,7 +33,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
       <!-- BEGIN TOP NAVIGATION BAR -->
       <div class="header-inner">
          <!-- BEGIN LOGO -->  
-         <a class="navbar-brand" href="index.html">
+         <a class="navbar-brand" href="forward?lien=index.jsp">
          <img src="assets/img/logo.png" alt="logo" class="img-responsive" />
          </a>
          <!-- END LOGO -->
@@ -141,7 +133,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                   <li><a href="extra_profile.html"><i class="icon-user"></i> My Profile</a>
                   </li>
                   <li class="divider"></li>
-                  <li><a href="login.html"><i class="icon-key"></i> Log Out</a>
+                  <li><a href="deconnexion"><i class="icon-key"></i> Log Out</a>
                   </li>
                </ul>
             </li>
@@ -177,7 +169,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                </form>
                <!-- END RESPONSIVE QUICK SEARCH FORM -->
            <li class="start active ">
-               <a href="index.html">
+               <a href="forward?lien=index.jsp">
                <i class="icon-home"></i> 
                <span class="title">Dashboard</span>
                <span class="selected"></span>
@@ -192,7 +184,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                </a>
 			                  <ul class="sub-menu">
                   <li class="active">
-                     <a href="table_users.html">
+                     <a href="forward?lien=table_users.jsp">
                      View User
                      <span class="arrow"></span>
                      </a>                  
@@ -207,7 +199,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                </a>
 			    <ul class="sub-menu">
                   <li class="active">
-                     <a href="table_statistique.html">
+                     <a href="forward?lien=table_statistique.jsp">
                      View Statistique
                      <span class="arrow"></span>
                      </a>                  
@@ -311,7 +303,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                   </li>
                   <li>
                      <i class="icon-home"></i>
-                     <a href="index.html">Home</a> 
+                     <a href="forward?lien=index.jsp">Home</a> 
                      <i class="icon-angle-right"></i>
                   </li>
                   <li>

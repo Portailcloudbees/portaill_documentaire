@@ -1,13 +1,12 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="entities.client" %>
+<%@ page import="entities.societe" %>
+
+
+
+
 <!DOCTYPE html>
-<!-- 
-Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.0
-Version: 1.5.2
-Author: KeenThemes
-Website: http://www.keenthemes.com/
-Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
--->
-<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
-<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+
 <!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <!-- BEGIN HEAD -->
 <head>
@@ -45,7 +44,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
       <!-- BEGIN TOP NAVIGATION BAR -->
       <div class="header-inner">
          <!-- BEGIN LOGO -->  
-         <a class="navbar-brand" href="index.html">
+         <a class="navbar-brand" href="forward?lien=index.jsp">
          <img src="assets/img/logo.png" alt="logo" class="img-responsive" />
          </a>
          <!-- END LOGO -->
@@ -145,7 +144,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                   <li><a href="extra_profile.html"><i class="icon-user"></i> My Profile</a>
                   </li>
                   <li class="divider"></li>
-                  <li><a href="login.html"><i class="icon-key"></i> Log Out</a>
+                  <li><a href="deconnexion"><i class="icon-key"></i> Log Out</a>
                   </li>
                </ul>
             </li>
@@ -182,7 +181,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                <!-- END RESPONSIVE QUICK SEARCH FORM -->
  </li>
            <li class="start active ">
-               <a href="index.html">
+               <a href="forward?lien=index.jsp">
                <i class="icon-home"></i> 
                <span class="title">Dashboard</span>
                <span class="selected"></span>
@@ -197,7 +196,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                </a>
 			                  <ul class="sub-menu">
                   <li class="active">
-                     <a href="table_users.html">
+                     <a href="forward?lien=table_users.jsp">
                      View User
                      <span class="arrow"></span>
                      </a>                  
@@ -212,7 +211,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                </a>
 			    <ul class="sub-menu">
                   <li class="active">
-                     <a href="table_statistique.html">
+                     <a href="forward?lien=table_statistique.jsp">
                      View Statistique
                      <span class="arrow"></span>
                      </a>                  
@@ -316,7 +315,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                   </li>
                   <li>
                      <i class="icon-home"></i>
-                     <a href="index.html">Home</a> 
+                     <a href="forward?lien=index.jsp">Home</a> 
                      <i class="icon-angle-right"></i>
                   </li>
                   <li>
@@ -332,7 +331,73 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
          <!-- BEGIN PAGE CONTENT-->
          <div class="row">
             <div class="col-md-12">
-               <!-- BEGIN EXAMPLE TABLE PORTLET-->
+            <!-- table de company -->
+               
+                <div class="portlet box blue">
+                  <div class="portlet-title">
+                     <div class="caption"><i class="icon-edit"></i>Companies table</div>
+                     <div class="tools">
+                        <a href="javascript:;" class="collapse"></a>
+                        <a href="#portlet-config" data-toggle="modal" class="config"></a>
+                        <a href="javascript:;" class="reload"></a>
+                        <a href="javascript:;" class="remove"></a>
+                     </div>
+                  </div>
+                  <div class="portlet-body">
+                     <div class="table-toolbar">
+                        <div class="btn-group">
+                           <button id="sample_editable_company_new" class="btn green">
+                           Add New <i class="icon-plus"></i>
+                           </button>
+                        </div>
+                        <div class="btn-group pull-right">
+                           <button class="btn dropdown-toggle" data-toggle="dropdown">Tools <i class="icon-angle-down"></i>
+                           </button>
+                           <ul class="dropdown-menu pull-right">
+                              <li><a href="#">Print</a></li>
+                              <li><a href="#">Save as PDF</a></li>
+                              <li><a href="#">Export to Excel</a></li>
+                           </ul>
+                        </div>
+                     </div>
+                     <table class="table table-striped table-hover table-bordered" id="sample_editable_company">
+                        <thead>
+                           <tr>
+                              <th>Matricule</th>
+                              <th>Company name</th>
+                              <th>Adress</th>
+                              <th>Phone Number</th>
+							  <th>Edit</th>
+                              <th>Delete</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                         <% 
+                        int j;
+                        ArrayList<societe> liste_societe = (ArrayList<societe>) request.getAttribute("list_de_soc");
+                        for (j=0; j<liste_societe.size(); j++) { 
+                            	
+                        %>
+                           <tr >
+                              <td><%= liste_societe.get(j).getMat_société() %></td>
+                              <td><%= liste_societe.get(j).getNom_société() %></td>
+                              <td><%= liste_societe.get(j).getAdress_société() %></td>
+                              <td ><%= liste_societe.get(j).getTel_soc() %></td>
+							 <td><a class="edit" href="javascript:;">Edit</a></td>
+                              <td><a class="delete" href="javascript:;">Delete</a></td>
+                           </tr>
+                         <% } %>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               
+               <!-- end of company table -->
+            
+            
+            
+            
+               <!-- BEGIN EXAMPLE TABLE users-->
                <div class="portlet box blue">
                   <div class="portlet-title">
                      <div class="caption"><i class="icon-edit"></i>Table Users</div>
@@ -364,7 +429,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                         <thead>
                            <tr>
                               <th>Full Name</th>
-                              <th>Company</th>
+                              <th>Service company</th>
                               <th>Login</th>
                               <th>mot de passe</th>
 							  <th>Date Added</th>
@@ -373,21 +438,32 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                            </tr>
                         </thead>
                         <tbody>
+                        <% 
+                        int i;
+                        ArrayList<client> liste_client = (ArrayList<client>) request.getAttribute("list_de_client");
+                        for ( i=0; i<liste_client.size(); i++) { 
+                            	
+                        %>
                            <tr >
-                              <td>alex</td>
-                              <td>Alex Nilson</td>
-                              <td>1234</td>
-                              <td class="center">power user</td>
-							  <td>2/2/2013</td>
+                              <td><%= liste_client.get(i).getPrenom_resp()+" "+liste_client.get(i).getNom_resp() %></td>
+                              <td><%= liste_client.get(i).getMatricule_soc() %></td>
+                              <td><%= liste_client.get(i).getEmail_resp() %></td>
+                              <td ><%= liste_client.get(i).getMot_de_pass_resp() %></td>
+							  <td><%= liste_client.get(i).getDate_ajout_resp() %></td>
                               <td><a class="edit" href="javascript:;">Edit</a></td>
                               <td><a class="delete" href="javascript:;">Delete</a></td>
                            </tr>
+                        
+                        <% } %>
+                          
                          
                         </tbody>
                      </table>
                   </div>
                </div>
-               <!-- END EXAMPLE TABLE PORTLET-->
+                 <!-- END EXAMPLE TABLE PORTLET-->
+               
+             
             </div>
          </div>
          <!-- END PAGE CONTENT -->
@@ -429,11 +505,13 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
    <!-- END PAGE LEVEL PLUGINS -->
    <!-- BEGIN PAGE LEVEL SCRIPTS -->
    <script src="assets/scripts/app.js"></script>
-   <script src="assets/scripts/table-editable.js"></script>    
+   <script src="assets/scripts/table-editable-client.js"></script> 
+   <script src="assets/scripts/table-editable-company.js"></script>    
    <script>
       jQuery(document).ready(function() {       
          App.init();
          TableEditable.init();
+         TableEditableCompany.init();
       });
    </script>
 </body>

@@ -1,18 +1,20 @@
 package entities;
 
-public class responsable_société {
+import java.sql.Date;
+
+public class client {
 	private String email_resp;
 	private String nom_resp;
 	private String prenom_resp;
-	private int date_ajout_resp;
+	private Date date_ajout_resp;
 	private String mot_de_pass_resp;
-	private int tel_resp;
+	private String matricule_soc;
 	
-	public responsable_société() {
+	public client() {
 	}
 	
-	public responsable_société(String email_resp, String nom_resp,
-			String prenom_resp, int date_ajout_resp, String mot_de_pass_resp,
+	public client(String email_resp, String nom_resp,
+			String prenom_resp, Date date_ajout_resp, String mot_de_pass_resp,
 			int tel_resp) {
 		
 		this.email_resp = email_resp;
@@ -20,7 +22,7 @@ public class responsable_société {
 		this.prenom_resp = prenom_resp;
 		this.date_ajout_resp = date_ajout_resp;
 		this.mot_de_pass_resp = mot_de_pass_resp;
-		this.tel_resp = tel_resp;
+		
 	}
 	
 	public String getEmail_resp() {
@@ -41,11 +43,11 @@ public class responsable_société {
 	public void setPrenom_resp(String prenom_resp) {
 		this.prenom_resp = prenom_resp;
 	}
-	public int getDate_ajout_resp() {
+	public Date getDate_ajout_resp() {
 		return date_ajout_resp;
 	}
-	public void setDate_ajout_resp(int date_ajout_resp) {
-		this.date_ajout_resp = date_ajout_resp;
+	public void setDate_ajout_resp(Date d) {
+		this.date_ajout_resp = d;
 	}
 	public String getMot_de_pass_resp() {
 		return mot_de_pass_resp;
@@ -53,12 +55,15 @@ public class responsable_société {
 	public void setMot_de_pass_resp(String mot_de_pass_resp) {
 		this.mot_de_pass_resp = mot_de_pass_resp;
 	}
-	public int getTel_resp() {
-		return tel_resp;
+
+	public String getMatricule_soc() {
+		return matricule_soc;
 	}
-	public void setTel_resp(int tel_resp) {
-		this.tel_resp = tel_resp;
+
+	public void setMatricule_soc(String matricule_soc) {
+		this.matricule_soc = matricule_soc;
 	}
+	
 	
 
 }

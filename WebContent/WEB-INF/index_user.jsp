@@ -1,13 +1,5 @@
 <!DOCTYPE html>
-<!-- 
-Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.0
-Version: 1.5.2
-Author: KeenThemes
-Website: http://www.keenthemes.com/
-Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
--->
-<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
-<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+
 <!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <!-- BEGIN HEAD -->
 <head>
@@ -49,7 +41,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
       <!-- BEGIN TOP NAVIGATION BAR -->
       <div class="header-inner">
          <!-- BEGIN LOGO -->  
-         <a class="navbar-brand" href="index.html">
+         <a class="navbar-brand" href="forward?lien=index_user.jsp">
          <img src="assets/img/logo1.png" height="60" width="85" alt="logo" class="img-responsive" />
          </a>
          <!-- END LOGO -->
@@ -103,7 +95,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                      </ul>
                   </li>
                   <li class="external">   
-                     <a href="inbox.html">See all messages <i class="m-icon-swapright"></i></a>
+                     <a href="forward?lien=inbox.html">See all messages <i class="m-icon-swapright"></i></a>
                   </li>
                </ul>
             </li>
@@ -117,18 +109,18 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                <i class="icon-angle-down"></i>
                </a>
                <ul class="dropdown-menu">
-                  <li><a href="extra_profile.html"><i class="icon-user"></i> My Profile</a>
+                  <li><a href="forward?lien=extra_profile.html"><i class="icon-user"></i> My Profile</a>
                   </li>
-                  <li><a href="page_calendar.html"><i class="icon-calendar"></i> My Calendar</a>
+                  <li><a href="forward?lien=page_calendar.html"><i class="icon-calendar"></i> My Calendar</a>
                   </li>
-                  <li><a href="inbox.html"><i class="icon-envelope"></i> My Inbox <span class="badge badge-danger">3</span></a>
+                  <li><a href="forward?lien=inbox.html"><i class="icon-envelope"></i> My Inbox <span class="badge badge-danger">3</span></a>
                   </li>
                   <li><a href="#"><i class="icon-tasks"></i> My Tasks <span class="badge badge-success">7</span></a>
                   </li>
                   <li class="divider"></li>
                   <li><a href="javascript:;" id="trigger_fullscreen"><i class="icon-move"></i> Full Screen</a>
                   </li>
-                  <li><a href="extra_lock.html"><i class="icon-lock"></i> Lock Screen</a>
+                  <li><a href="forward?lien=extra_lock.html"><i class="icon-lock"></i> Lock Screen</a>
                   </li>
                   <li><a href="deconnexion"><i class="icon-key"></i> Log Out</a>
                   </li>
@@ -167,7 +159,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                <!-- END RESPONSIVE QUICK SEARCH FORM -->
             </li>
             <li class="start active ">
-               <a href="index user.html">
+               <a href="forward?lien=index user.jsp">
                <i class="icon-home"></i> 
                <span class="title">Dashboard</span>
                <span class="selected"></span>
@@ -187,19 +179,19 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                      </a>
                   </li>
                   <li>
-                     <a href="doc_xml u res.html">
+                     <a href="forward?lien=doc_xml_u_res.jsp">
                      XML Setting
                      <span class="arrow"></span>
                      </a>
                   </li>
                   <li>
-                     <a href="doc_généré u res.html">
+                     <a href="forward?lien=doc_genere_u_res.jsp">
                      Générated Setting
                      <span class="arrow"></span>
                      </a>
                   </li>
 				                    <li>
-                     <a href="download u res.html">
+                     <a href="forward?lien=download_u_res.jsp">
                      Download Document
                      <span class="arrow"></span>
                      </a>
@@ -214,7 +206,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                </a>
 			   <ul class="sub-menu">
                   <li>
-                     <a href="stat_user.html">
+                     <a href="forward?lien=stat_user.jsp">
                      View Statistique 
                      <span class="arrow"></span>
                      </a>
@@ -229,7 +221,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                </a>
 			   <ul class="sub-menu">
                   <li>
-                     <a href="reclamation u res.html">
+                     <a href="forward?lien=reclamation_u_res.jsp">
                      Sabmit  Notification 
                      <span class="arrow"></span>
                      </a>
@@ -300,7 +292,7 @@ Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-templa
                <ul class="page-breadcrumb breadcrumb">
                   <li>
                      <i class="icon-home"></i>
-                     <a href="index.html">Acceuil</a> 
+                     <a href="forward?lien=index_user.jsp">Acceuil</a> 
                      <i class="icon-angle-right"></i>
                   </li>
                   <li><a href="#">Portail</a></li>

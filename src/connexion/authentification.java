@@ -31,14 +31,14 @@ public String connecter(String login, String mp){
 	String requt="select * from utilisateur where email_ut='"+login+"' and pass_ut='"+mp+"'";
 	
 	if (exist(reqAdmin)>0){
-		authentification.c="cncted";
+		authentification.c="admin";
 		return "admin";
 		
 	}else if (exist(reqResp)>0){
-		authentification.c="cncted";
+		authentification.c="responsable";
 		return "responsable";
 	}else if (exist(requt)>0) {
-		authentification.c="cncted";
+		authentification.c="utilisateur";
 		return "utilisateur";
 	}else{
 		return "";

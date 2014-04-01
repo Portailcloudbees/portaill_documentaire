@@ -1,10 +1,10 @@
-<!DOCTYPE html>
 
-<!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+ <html lang="en" class="no-js"> 
 <!-- BEGIN HEAD -->
+
 <head>
    <meta charset="utf-8" />
-   <title>IMEX | Acceuil</title>
+   <title>IMEX | Acceuil-Client</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -41,8 +41,8 @@
       <!-- BEGIN TOP NAVIGATION BAR -->
       <div class="header-inner">
          <!-- BEGIN LOGO -->  
-         <a class="navbar-brand" href="index.html">
-         <img src="assets/img/logo1.png" height="60" width="85" alt="logo" class="img-responsive" />
+         <a class="navbar-brand" href="forward?lien=index_client.jsp">
+         <h3 style="color:white"> <b><center>I&nbsp;M&nbsp;E&nbsp;X</center></b></h3>
          </a>
          <!-- END LOGO -->
          <!-- BEGIN RESPONSIVE MENU TOGGLER --> 
@@ -50,7 +50,7 @@
          <!-- BEGIN TOP NAVIGATION MENU -->
          <ul class="nav navbar-nav pull-right">
             <!-- BEGIN NOTIFICATION DROPDOWN -->
-            <li class="dropdown" id="header_notification_bar">
+                        <li class="dropdown" id="header_notification_bar">
                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
                   data-close-others="true">
                <i class="icon-warning-sign"></i>
@@ -69,62 +69,7 @@
                            <span class="time">Just now</span>
                            </a>
                         </li>
-                        <li>  
-                           <a href="#">
-                           <span class="label label-sm label-icon label-danger"><i class="icon-bolt"></i></span>
-                           Server #12 overloaded. 
-                           <span class="time">15 mins</span>
-                           </a>
-                        </li>
-                        <li>  
-                           <a href="#">
-                           <span class="label label-sm label-icon label-warning"><i class="icon-bell"></i></span>
-                           Server #2 not responding.
-                           <span class="time">22 mins</span>
-                           </a>
-                        </li>
-                        <li>  
-                           <a href="#">
-                           <span class="label label-sm label-icon label-info"><i class="icon-bullhorn"></i></span>
-                           Application error.
-                           <span class="time">40 mins</span>
-                           </a>
-                        </li>
-                        <li>  
-                           <a href="#">
-                           <span class="label label-sm label-icon label-danger"><i class="icon-bolt"></i></span>
-                           Database overloaded 68%. 
-                           <span class="time">2 hrs</span>
-                           </a>
-                        </li>
-                        <li>  
-                           <a href="#">
-                           <span class="label label-sm label-icon label-danger"><i class="icon-bolt"></i></span>
-                           2 user IP blocked.
-                           <span class="time">5 hrs</span>
-                           </a>
-                        </li>
-                        <li>  
-                           <a href="#">
-                           <span class="label label-sm label-icon label-warning"><i class="icon-bell"></i></span>
-                           Storage Server #4 not responding.
-                           <span class="time">45 mins</span>
-                           </a>
-                        </li>
-                        <li>  
-                           <a href="#">
-                           <span class="label label-sm label-icon label-info"><i class="icon-bullhorn"></i></span>
-                           System Error.
-                           <span class="time">55 mins</span>
-                           </a>
-                        </li>
-                        <li>  
-                           <a href="#">
-                           <span class="label label-sm label-icon label-danger"><i class="icon-bolt"></i></span>
-                           Database overloaded 68%. 
-                           <span class="time">2 hrs</span>
-                           </a>
-                        </li>
+                        
                      </ul>
                   </li>
                   <li class="external">   
@@ -146,77 +91,15 @@
                   </li>
                   <li>
                      <ul class="dropdown-menu-list scroller" style="height: 250px;">
-                        <li>  
-                           <a href="inbox.html?a=view">
-                           <span class="photo"><img src="./assets/img/avatar2.jpg" alt=""/></span>
-                           <span class="subject">
-                           <span class="from">Lisa Wong</span>
-                           <span class="time">Just Now</span>
-                           </span>
-                           <span class="message">
-                           Vivamus sed auctor nibh congue nibh. auctor nibh
-                           auctor nibh...
-                           </span>  
-                           </a>
-                        </li>
-                        <li>  
-                           <a href="inbox.html?a=view">
-                           <span class="photo"><img src="./assets/img/avatar3.jpg" alt=""/></span>
-                           <span class="subject">
-                           <span class="from">Richard Doe</span>
-                           <span class="time">16 mins</span>
-                           </span>
-                           <span class="message">
-                           Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh
-                           auctor nibh...
-                           </span>  
-                           </a>
-                        </li>
-                        <li>  
-                           <a href="inbox.html?a=view">
-                           <span class="photo"><img src="./assets/img/avatar1.jpg" alt=""/></span>
-                           <span class="subject">
-                           <span class="from">Bob Nilson</span>
-                           <span class="time">2 hrs</span>
-                           </span>
-                           <span class="message">
-                           Vivamus sed nibh auctor nibh congue nibh. auctor nibh
-                           auctor nibh...
-                           </span>  
-                           </a>
-                        </li>
-                        <li>  
-                           <a href="inbox.html?a=view">
-                           <span class="photo"><img src="./assets/img/avatar2.jpg" alt=""/></span>
-                           <span class="subject">
-                           <span class="from">Lisa Wong</span>
-                           <span class="time">40 mins</span>
-                           </span>
-                           <span class="message">
-                           Vivamus sed auctor 40% nibh congue nibh...
-                           </span>  
-                           </a>
-                        </li>
-                        <li>  
-                           <a href="inbox.html?a=view">
-                           <span class="photo"><img src="./assets/img/avatar3.jpg" alt=""/></span>
-                           <span class="subject">
-                           <span class="from">Richard Doe</span>
-                           <span class="time">46 mins</span>
-                           </span>
-                           <span class="message">
-                           Vivamus sed congue nibh auctor nibh congue nibh. auctor nibh
-                           auctor nibh...
-                           </span>  
-                           </a>
-                        </li>
+                      
                      </ul>
                   </li>
                   <li class="external">   
-                     <a href="inbox.html">See all messages <i class="m-icon-swapright"></i></a>
+                     <a href="forward?lien=inboxl">See all messages <i class="m-icon-swapright"></i></a>
                   </li>
                </ul>
             </li>
+            <!-- END INBOX DROPDOWN -->
             <!-- END INBOX DROPDOWN -->
             <!-- BEGIN USER LOGIN DROPDOWN -->
             <li class="dropdown user">
@@ -226,18 +109,7 @@
                <i class="icon-angle-down"></i>
                </a>
                <ul class="dropdown-menu">
-                  <li><a href="extra_profile.html"><i class="icon-user"></i> My Profile</a>
-                  </li>
-                  <li><a href="page_calendar.html"><i class="icon-calendar"></i> My Calendar</a>
-                  </li>
-                  <li><a href="inbox.html"><i class="icon-envelope"></i> My Inbox <span class="badge badge-danger">3</span></a>
-                  </li>
-                  <li><a href="#"><i class="icon-tasks"></i> My Tasks <span class="badge badge-success">7</span></a>
-                  </li>
-                  <li class="divider"></li>
-                  <li><a href="javascript:;" id="trigger_fullscreen"><i class="icon-move"></i> Full Screen</a>
-                  </li>
-                  <li><a href="extra_lock.html"><i class="icon-lock"></i> Lock Screen</a>
+                  <li><a href="forward?lien=extra_profile.jsp"><i class="icon-user"></i> My Profile</a>
                   </li>
                   <li><a href="deconnexion"><i class="icon-key"></i> Log Out</a>
                   </li>
@@ -264,7 +136,7 @@
             </li>
             <li>
                <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
-               <form class="sidebar-search" action="extra_search.html" method="POST">
+               <form class="sidebar-search" action="forward?lien=extra_search.jsp" method="POST">
                   <div class="form-container">
                      <div class="input-box">
                         <a href="javascript:;" class="remove"></a>
@@ -276,46 +148,71 @@
                <!-- END RESPONSIVE QUICK SEARCH FORM -->
             </li>
             <li class="start active ">
-               <a href="index user.html">
+               <a href="forward?lien=index_client.jsp">
                <i class="icon-home"></i> 
                <span class="title">Dashboard</span>
                <span class="selected"></span>
                </a>
             </li>
-            <li>
-               <a class="active" href="javascript:;">
+            
+            <li class="">
+               <a href="table_user.jsp">
+               <i class="icon-user"></i> 
+               <span class="title">User</span>
+               <span class="arrow "></span>
+               </a>
+			   <ul class="sub-menu">
+                  <li>
+                     <a href="list_ajout_update_ut">
+                     View User
+                     <span class="arrow"></span>
+                     </a>
+                  </li>
+				  </ul>
+            </li>
+			<li class="">
+               <a href="javascript:;">
                <i class="icon-leaf"></i> 
-               <span class="title">Documents</span>
+               <span class="title">Privilege</span>
+               <span class="arrow "></span>
+               </a>
+			   <ul class="sub-menu">
+                  <li>
+                     <a href="list_update_priv_ut">
+                     Choose Privilege
+                     <span class="arrow"></span>
+                     </a>
+                  </li>
+				  </ul>
+            </li>
+			<li>
+               <a class="active" href="javascript:;">
+               <i class="icon-folder-open"></i> 
+               <span class="title">Files</span>
                <span class="arrow "></span>
                </a>
                <ul class="sub-menu">
                   <li>
-                     <a href="javascript:;">
-                     Document Upload 
+                     <a href="upload_file_cl.html">
+                     File Upload 
+                     <span class="arrow"></span>
+                     </a>
+                  </li>
+                 <li>
+                     <a href="cons_up_cl.html">
+                     View File Upload
                      <span class="arrow"></span>
                      </a>
                   </li>
                   <li>
-                     <a href="doc_xml.html">
-                     XML Setting
+                     <a href="doc_traite_cl.html">
+                     View File Processed
                      <span class="arrow"></span>
                      </a>
                   </li>
-                  <li>
-                     <a href="doc_généré.html">
-                     Générated Setting
-                     <span class="arrow"></span>
-                     </a>
-                  </li>
-				                    <li>
-                     <a href="download.html">
-                     Download Document
-                     <span class="arrow"></span>
-                     </a>
-                  </li>
-				                    <li>
-                     <a href="javascript:;">
-                     Generate a document
+				     <li>
+                     <a href="telecharge_file_cl.html">
+                     Download File
                      <span class="arrow"></span>
                      </a>
                   </li>
@@ -323,35 +220,37 @@
             </li>
             <li class="">
                <a href="javascript:;">
-               <i class="icon-user"></i> 
-               <span class="title">Statistiques</span>
-               <span class="arrow "></span>
-               </a>
-			   <ul class="sub-menu">
-                  <li>
-                     <a href="stat_user.html">
-                     View Statistique 
-                     <span class="arrow"></span>
-                     </a>
-                  </li>
-				  </ul>
-            </li>
-            <li class="">
-               <a href="javascript:;">
                <i class="icon-file-text"></i> 
-               <span class="title">Reclamation</span>
+               <span class="title">Notification</span>
                <span class="arrow "></span>
                </a>
 			   <ul class="sub-menu">
                   <li>
-                     <a href="javascript:;">
-                     Submit reclamation 
+                     <a href="notification_cl.html">
+                     Cearte  Notification 
                      <span class="arrow"></span>
                      </a>
                   </li>
 				  </ul>
             </li>
+			<li class="last">
+               <a href="javascript:;">
+               <i class="icon-bar-chart"></i> 
+               <span class="title">Statistique</span>
+               <span class="arrow "></span>
+               </a>
+			   <ul class="sub-menu">
+                  <li>
+                     <a href="table_stat_cl.html">
+                     View  Statistique 
+                     <span class="arrow"></span>
+                     </a>
+                  </li>
+				  </ul>
+            </li>
+			
          </ul>
+		 
          <!-- END SIDEBAR MENU -->
       </div>
       <!-- END SIDEBAR -->
@@ -415,10 +314,10 @@
                <ul class="page-breadcrumb breadcrumb">
                   <li>
                      <i class="icon-home"></i>
-                     <a href="index.html">Acceuil</a> 
+                     <a href="forward?lien=index.jsp">Home</a> 
                      <i class="icon-angle-right"></i>
                   </li>
-                  <li><a href="#">Portail</a></li>
+                  <li><a href="#">Dashboard</a></li>
                   <li class="pull-right">
                      <div id="dashboard-report-range" class="dashboard-date-range tooltips" data-placement="top" data-original-title="Change dashboard date range">
                         <i class="icon-calendar"></i>

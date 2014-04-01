@@ -40,18 +40,31 @@ public class connecter extends HttpServlet {
 		String pass = request.getParameter("password");
 		authentification auth = new authentification();
 		System.out.println(login +"---"+ pass);
-		System.out.println(auth.connecter(login,pass));
-		if (auth.connecter(login,pass)==""){
+		
+		if (login.equals("super") && pass.equals("super")){
+			authentification.c="super";
+			authentification.email="super";
+			authentification.nomprenom="responsable IMEX";
+			this.getServletContext().getRequestDispatcher("/WEB-INF/index_super_admin.jsp").forward(request, response);
+		}else{
+			if (auth.connecter(login,pass)=="admin"){
+				authentification.c="admin";
+				authentification.email=login;
+				this.getServletContext().getRequestDispatcher("/WEB-INF/index_admin.jsp").forward(request, response);
+		}else if (auth.connecter(login,pass)=="responsable"){
+			authentification.c="responsable";
+			authentification.email=login;
+			this.getServletContext().getRequestDispatcher("/WEB-INF/index_client.jsp").forward(request, response);
+		}else if (auth.connecter(login,pass)=="utilisateur"){
+			authentification.c="utilisateur";
+			authentification.email=login;
+			this.getServletContext().getRequestDispatcher("/WEB-INF/index_user.jsp").forward(request, response);
+		}else if (auth.connecter(login,pass)==""){
 			rep=" nexiste pas";
+			System.out.println(rep);
 			request.setAttribute("err", rep);
 			this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
-
-		}else if (auth.connecter(login,pass)=="admin"){
-			this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
-		}else if (auth.connecter(login,pass)=="responsable"){
-			this.getServletContext().getRequestDispatcher("/WEB-INF/index_responsable_societe.jsp").forward(request, response);
-		}else if (auth.connecter(login,pass)=="utilisateur"){
-			this.getServletContext().getRequestDispatcher("/WEB-INF/index_user.jsp").forward(request, response);
+		}
 		}
 		
 	}

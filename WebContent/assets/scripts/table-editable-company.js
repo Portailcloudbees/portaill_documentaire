@@ -39,8 +39,8 @@ var TableEditableCompany = function () {
 
             function saveRow(oTable, nRow) {
                 var jqInputs = $('input', nRow);
-                oTable.fnUpdate(jqInputs[0].value, nRow, 0, true);
-                oTable.fnUpdate(jqInputs[1].value, nRow, 1, true);
+                oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
+                oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
                 oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
                 oTable.fnUpdate(jqInputs[3].value, nRow, 3, false);
                //alert(jqInputs[0].value);
@@ -56,7 +56,7 @@ var TableEditableCompany = function () {
                
                 $.ajax({
                 	type:"POST",
-                	url: "./insert_affiche_soc",
+                	url: "./ajout_modif_soc",
                 	contentType: "application/x-www-form-urlencoded",
                 	dataType: "JSON",
                 	data: {soc:JSON.stringify(table)},
@@ -136,7 +136,7 @@ var TableEditableCompany = function () {
                
                 $.ajax({
                 	type:"POST",
-                	url: "./modif_delete_soc",
+                	url: "./delet_soc_client",
                 	contentType: "application/x-www-form-urlencoded",
                 	dataType: "JSON",
                 	data: {mat:d[0]},

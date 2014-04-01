@@ -16,7 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import connexion.authentification;
 import entities.client;
+import entities.societe;
 import adminDAO.gerer_Client_societe;
 
 /**
@@ -38,16 +40,25 @@ public class list_ajout_update_client extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String connected = authentification.c;
 		gerer_Client_societe gc = new gerer_Client_societe();
 		List l = new ArrayList<client>();
 		l= gc.ListClient();
 		
-		List s = new ArrayList<client>();
+		List s = new ArrayList<societe>();
 		s= gc.ListSoc();
 		request.setAttribute("list_de_client", l);
 		request.setAttribute("list_de_soc", s);
+		System.out.println(connected);
+		if (connected==null){
+			this.getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
+		}else
+		if (connected.equals("super")){
+			this.getServletContext().getRequestDispatcher("/WEB-INF/super_admin_table_clients.jsp").forward(request, response);
+		}else{
+			this.getServletContext().getRequestDispatcher("/WEB-INF/admin_table_clients.jsp").forward(request, response);
+		}
 		
-		this.getServletContext().getRequestDispatcher("/WEB-INF/table_users.jsp").forward(request, response);
 	}
 	
 	public Date formatdate(String d){

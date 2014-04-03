@@ -1,10 +1,14 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="entities.utilisateur_entities" %>
+<%@ page import="entities.privilege_utilisateur" %>
 
- <html lang="en" class="no-js"> 
+<!DOCTYPE html>
+
+<!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <!-- BEGIN HEAD -->
-
 <head>
    <meta charset="utf-8" />
-   <title>IMEX | Acceuil-Client</title>
+   <title> IMEX |Privilege-user </title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -15,29 +19,27 @@
    <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
    <link href="assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
    <!-- END GLOBAL MANDATORY STYLES -->
-   <!-- BEGIN PAGE LEVEL PLUGIN STYLES --> 
-   <link href="assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" type="text/css"/>
-   <link href="assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
-   <link href="assets/plugins/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css"/>
-   <link href="assets/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css"/>
-   <link href="assets/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css"/>
-   <!-- END PAGE LEVEL PLUGIN STYLES -->
    <!-- BEGIN THEME STYLES --> 
    <link href="assets/css/style-metronic.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/style-responsive.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/plugins.css" rel="stylesheet" type="text/css"/>
-   <link href="assets/css/pages/tasks.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
    <link href="assets/css/custom.css" rel="stylesheet" type="text/css"/>
    <!-- END THEME STYLES -->
    <link rel="shortcut icon" href="favicon.ico" />
+   <script type="text/javascript">
+   retour(){
+	   alert("ok");
+	   
+   }
+   </script>
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
 <body class="page-header-fixed">
    <!-- BEGIN HEADER -->   
-   <div class="header navbar navbar-inverse navbar-fixed-top">
+      <div class="header navbar navbar-inverse navbar-fixed-top">
       <!-- BEGIN TOP NAVIGATION BAR -->
       <div class="header-inner">
          <!-- BEGIN LOGO -->  
@@ -95,7 +97,7 @@
                      </ul>
                   </li>
                   <li class="external">   
-                     <a href="forward?lien=inboxl">See all messages <i class="m-icon-swapright"></i></a>
+                     <a href="inbox.html">See all messages <i class="m-icon-swapright"></i></a>
                   </li>
                </ul>
             </li>
@@ -109,9 +111,9 @@
                <i class="icon-angle-down"></i>
                </a>
                <ul class="dropdown-menu">
-                  <li><a href="forward?lien=extra_profile.jsp"><i class="icon-user"></i> My Profile</a>
+                  <li><a href="extra_profile.html"><i class="icon-user"></i> My Profile</a>
                   </li>
-                  <li><a href="deconnexion"><i class="icon-key"></i> Log Out</a>
+                  <li><a href="login.html"><i class="icon-key"></i> Log Out</a>
                   </li>
                </ul>
             </li>
@@ -136,7 +138,7 @@
             </li>
             <li>
                <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
-               <form class="sidebar-search" action="forward?lien=extra_search.jsp" method="POST">
+               <form class="sidebar-search" action="extra_search.html" method="POST">
                   <div class="form-container">
                      <div class="input-box">
                         <a href="javascript:;" class="remove"></a>
@@ -163,14 +165,29 @@
                </a>
 			   <ul class="sub-menu">
                   <li>
-                     <a href="list_ajout_update_ut">
+                     <a href="forward?lien=table_user.jsp">
                      View User
                      <span class="arrow"></span>
                      </a>
                   </li>
 				  </ul>
             </li>
-		
+			<li class="">
+               <a href="javascript:;">
+               <i class="icon-leaf"></i> 
+               <span class="title">Privilege</span>
+               <span class="arrow "></span>
+               </a>
+			   <ul class="sub-menu">
+                  <li>
+                     <a href="forward?lien=priv_us.jsp">
+                     Choose Privilege
+                     <span class="arrow"></span>
+                     </a>
+                  </li>
+				  </ul>
+            </li>
+			
 			<li>
                <a class="active" href="javascript:;">
                <i class="icon-folder-open"></i> 
@@ -179,25 +196,25 @@
                </a>
                <ul class="sub-menu">
                   <li>
-                     <a href="forward?lien=client_upload_file.jsp">
+                     <a href="upload_file_cl.html">
                      File Upload 
                      <span class="arrow"></span>
                      </a>
                   </li>
                  <li>
-                     <a href="client_cons_up.jsp">
+                     <a href="cons_up_cl.html">
                      View File Upload
                      <span class="arrow"></span>
                      </a>
                   </li>
                   <li>
-                     <a href="client_doc_traite.jsp">
+                     <a href="doc_traite_cl.html">
                      View File Processed
                      <span class="arrow"></span>
                      </a>
                   </li>
 				     <li>
-                     <a href="client_telecharge_file.jsp">
+                     <a href="telecharge_file_cl.html">
                      Download File
                      <span class="arrow"></span>
                      </a>
@@ -212,7 +229,7 @@
                </a>
 			   <ul class="sub-menu">
                   <li>
-                     <a href="client_notification.jsp">
+                     <a href="notification_cl.html">
                      Cearte  Notification 
                      <span class="arrow"></span>
                      </a>
@@ -227,7 +244,7 @@
                </a>
 			   <ul class="sub-menu">
                   <li>
-                     <a href="client_table_stat.jsp">
+                     <a href="table_stat_cl.html">
                      View  Statistique 
                      <span class="arrow"></span>
                      </a>
@@ -243,6 +260,25 @@
       <!-- BEGIN PAGE -->
       <div class="page-content">
          <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->               
+         <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                     <h4 class="modal-title">Modal title</h4>
+                  </div>
+                  <div class="modal-body">
+                     Widget settings form goes here
+                  </div>
+                  <div class="modal-footer">
+                     <button type="button" class="btn blue">Save changes</button>
+                     <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                  </div>
+               </div>
+               <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+         </div>
          <!-- /.modal -->
          <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
          <!-- BEGIN STYLE CUSTOMIZER -->
@@ -254,7 +290,9 @@
                   <span>THEME COLOR</span>
                   <ul>
                      <li class="color-black current color-default" data-style="default"></li>
-                     <li class="color-blue"></li>
+                     <li class="color-blue" data-style="blue"></li>
+                     <li class="color-brown" data-style="brown"></li>
+                     <li class="color-purple" data-style="purple"></li>
                      <li class="color-grey" data-style="grey"></li>
                      <li class="color-white color-light" data-style="light"></li>
                   </ul>
@@ -289,41 +327,145 @@
                </div>
             </div>
          </div>
-         <!-- END BEGIN STYLE CUSTOMIZER -->  
+         <!-- END BEGIN STYLE CUSTOMIZER -->            
          <!-- BEGIN PAGE HEADER-->
          <div class="row">
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  Portail documentaire <small></small>
+                  Portail documentaire
                </h3>
                <ul class="page-breadcrumb breadcrumb">
+                 
                   <li>
                      <i class="icon-home"></i>
                      <a href="forward?lien=index.jsp">Home</a> 
                      <i class="icon-angle-right"></i>
                   </li>
-                  <li><a href="#">Dashboard</a></li>
-                  <li class="pull-right">
-                     <div id="dashboard-report-range" class="dashboard-date-range tooltips" data-placement="top" data-original-title="Change dashboard date range">
-                        <i class="icon-calendar"></i>
-                        <span></span>
-                        <i class="icon-angle-down"></i>
-                     </div>
+                  <li>
+                     <a href="#">Privilege</a>
+                     <i class="icon-angle-right"></i>
                   </li>
+                  <li><a href="#">Choose Privilege</a></li>
                </ul>
                <!-- END PAGE TITLE & BREADCRUMB-->
             </div>
          </div>
          <!-- END PAGE HEADER-->
-         
-        </div>
-           </div>
-              </div>
-        </div>
+         <!-- BEGIN PAGE CONTENT-->                      
+
+               <!-- BEGIN SAMPLE TABLE PORTLET-->
+		  <%  int i;
+                        ArrayList<privilege_utilisateur> liste_priv = (ArrayList<privilege_utilisateur>) request.getAttribute("list_de_priv");
+                		  boolean c1=false;
+                		  boolean c2=false;
+                		  boolean c3=false;
+                		  boolean c4=false;
+                		  boolean c5=false;
+                		  boolean c6=false;
+                		  boolean c7=false;
+                		  boolean c8=false;
+                		  boolean c9=false;
+                		  
+                		  for (i=0; i<liste_priv.size(); i++) { 
+                             c1 = liste_priv.get(i).isUploadFile();
+                             c2 = liste_priv.get(i).isDeleteFile();
+                             c3 = liste_priv.get(i).isSendFile();
+                             c4 = liste_priv.get(i).isDownloadFile();
+                             c5 = liste_priv.get(i).isSendSms();
+                             c6 = liste_priv.get(i).isSendEmail();
+                             c7 = liste_priv.get(i).isAnswerNotif();
+                             c8 = liste_priv.get(i).isViewStat();
+                             c9 = liste_priv.get(i).isExport();
+                           
+                            System.out.println(c1);
+                            System.out.println(c2);
+
+                        }
+                        %>
+ <form method="post" action="list_update_priv_ut">
+		<table width="950" align="center" >
+			<td>
+			<fieldset style="border:solid 1px #27a9e3; padding:35px; width:400px;" >
+				<legend><center><h5 style="color:#27a9e3;"><b>File management </b></h4></center></legend>
+             <input type="checkbox" name="CHOIX1" align="right" value="uploadfile" <%if (c1){out.println("CHECKED");} %>> Upload file &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="CHOIX2" value="deletfile" <%if (c2){out.println("CHECKED");} %>>Delete file</br></br>
+			 <input type="checkbox" name="CHOIX3" align="right" value="sendfile" <%if (c3){out.println("CHECKED");} %>>Send file &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="CHOIX4" value="downloadfile" <%if (c4){out.println("CHECKED");} %>>Download file</br></br>
+               
+              
+            </fieldset>
+		</td>
+		<td>
+			<fieldset style="border:solid 1px #27a9e3; padding:35px; width:400px;" >
+				<legend><center><h5 style="color:#27a9e3;"><b>Send SMS/Email </b></h4></center></legend>
+           <center><input type="checkbox" name="CHOIX5"  value="sendsms" <%if (c5){out.println("CHECKED");} %>>Send SMS &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="CHOIX6" value="sendemail" <%if (c6){out.println("CHECKED");} %>>Send Email</center></br></br>
+             
+              
+            </fieldset>
+		</td>
+		</tr>
+		<tr>
+	    <td width="510">
+		</br>
+		</br>
+		</br>
+			<fieldset style="border:solid 1px #27a9e3; padding:35px; width:400px;" >
+				<legend><center><h5 style="color:#27a9e3;"><b>statistical </b></h4></center></legend>
+             <center><input type="checkbox" name="CHOIX7" value="viewstatistic" <%if (c7){out.println("CHECKED");} %>>View statistic</center></br></br>
+              
+              
+            </fieldset>
+		</td>
+		<td>
+		</br>
+		</br>
+		</br>
+			<fieldset style="border:solid 1px #27a9e3; padding:35px; width:400px;" >
+				<legend><center><h5 style="color:#27a9e3;"><b>Notification </b></h4></center></legend>
+           <center><input type="checkbox" name="CHOIX8"value="answernotification" <%if (c8){out.println("CHECKED");} %>>Answer Notification </center></br></br>
+
+            </fieldset>
+		</td>
+		</tr>
+		<tr>
+		<td>
+		</br>
+		</br>
+			<fieldset style="border:solid 2px #27a9e3; padding:35px; width:400px;" >
+				<legend><center><h4 style="color:#27a9e3;" >Document management </h4></center></legend>
+             <input type="checkbox" name="CHOIX9" align="right" value="Export" <%if (c9){out.println("CHECKED");} %>> Export PDF/EXCEL 
+            </fieldset>
+		</td>
+		<td>
+		</br>
+		</br>
+		<center><button  type="submit" class="btn btn-default">Valider</button>&nbsp;&nbsp;&nbsp;<button  type="button" class="btn btn-default" onclick="document.retour.submit()">Annuler</button></center>
+		</td>
+		</tr>
+		</table>
+		
+</form>
+<form name="retour" method="GET" action="list_ajout_update_ut">
+</form>
+               <!-- END SAMPLE TABLE PORTLET-->
+               
+               <!-- BEGIN SAMPLE TABLE PORTLET-->
+
+               <!-- END SAMPLE TABLE PORTLET-->
+
+               <!-- BEGIN SAMPLE TABLE PORTLET-->
+              
+               <!-- END SAMPLE TABLE PORTLET-->
+            </div>
+         </div>
+         <!-- END PAGE CONTENT-->
+      </div>
+      <!-- END PAGE -->
+   </div>
+   <!-- END CONTAINER -->
+   <!-- BEGIN FOOTER -->
    <div class="footer">
       <div class="footer-inner">
-         2014 &copy; IMEX.
+         2014 &copy; Imex.
       </div>
       <div class="footer-tools">
          <span class="go-top">
@@ -339,9 +481,7 @@
    <script src="assets/plugins/excanvas.min.js"></script> 
    <![endif]-->   
    <script src="assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
-   <script src="assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>   
-   <!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
-   <script src="assets/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
+   <script src="assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>    
    <script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
    <script src="assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js" type="text/javascript" ></script>
    <script src="assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
@@ -349,45 +489,13 @@
    <script src="assets/plugins/jquery.cookie.min.js" type="text/javascript"></script>
    <script src="assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
    <!-- END CORE PLUGINS -->
-   <!-- BEGIN PAGE LEVEL PLUGINS -->
-   <script src="assets/plugins/jqvmap/jqvmap/jquery.vmap.js" type="text/javascript"></script>   
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js" type="text/javascript"></script>  
-   <script src="assets/plugins/flot/jquery.flot.js" type="text/javascript"></script>
-   <script src="assets/plugins/flot/jquery.flot.resize.js" type="text/javascript"></script>
-   <script src="assets/plugins/jquery.pulsate.min.js" type="text/javascript"></script>
-   <script src="assets/plugins/bootstrap-daterangepicker/moment.min.js" type="text/javascript"></script>
-   <script src="assets/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script>     
-   <script src="assets/plugins/gritter/js/jquery.gritter.js" type="text/javascript"></script>
-   <!-- IMPORTANT! fullcalendar depends on jquery-ui-1.10.3.custom.min.js for drag & drop support -->
-   <script src="assets/plugins/fullcalendar/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
-   <script src="assets/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.js" type="text/javascript"></script>
-   <script src="assets/plugins/jquery.sparkline.min.js" type="text/javascript"></script>  
-   <!-- END PAGE LEVEL PLUGINS -->
-   <!-- BEGIN PAGE LEVEL SCRIPTS -->
-   <script src="assets/scripts/app.js" type="text/javascript"></script>
-   <script src="assets/scripts/index.js" type="text/javascript"></script>
-   <script src="assets/scripts/tasks.js" type="text/javascript"></script>        
-   <!-- END PAGE LEVEL SCRIPTS -->  
+   <script src="assets/scripts/app.js"></script>      
    <script>
-      jQuery(document).ready(function() {    
-         App.init(); // initlayout and core plugins
-         Index.init();
-         Index.initJQVMAP(); // init index page's custom scripts
-         Index.initCalendar(); // init index page's custom scripts
-         Index.initCharts(); // init index page's custom scripts
-         Index.initChat();
-         Index.initMiniCharts();
-         Index.initDashboardDaterange();
-         Index.initIntro();
-         Tasks.initDashboardWidget();
+      jQuery(document).ready(function() {       
+         // initiate layout and plugins
+         App.init();
       });
    </script>
-   <!-- END JAVASCRIPTS -->
 </body>
 <!-- END BODY -->
 </html>

@@ -1,10 +1,9 @@
 
  <html lang="en" class="no-js"> 
 <!-- BEGIN HEAD -->
-
 <head>
    <meta charset="utf-8" />
-   <title>IMEX | Acceuil-Client</title>
+   <title>IMEX | Acceuil</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -41,8 +40,8 @@
       <!-- BEGIN TOP NAVIGATION BAR -->
       <div class="header-inner">
          <!-- BEGIN LOGO -->  
-         <a class="navbar-brand" href="forward?lien=index_client.jsp">
-         <h3 style="color:white"> <b><center>I&nbsp;M&nbsp;E&nbsp;X</center></b></h3>
+         <a class="navbar-brand" href="forward?lien=index.jsp">
+      <h3 style="color:white"> <b><center>I&nbsp;M&nbsp;E&nbsp;X</center></b></h3>
          </a>
          <!-- END LOGO -->
          <!-- BEGIN RESPONSIVE MENU TOGGLER --> 
@@ -50,9 +49,8 @@
          <!-- BEGIN TOP NAVIGATION MENU -->
          <ul class="nav navbar-nav pull-right">
             <!-- BEGIN NOTIFICATION DROPDOWN -->
-                        <li class="dropdown" id="header_notification_bar">
-               <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
-                  data-close-others="true">
+            <li class="dropdown" id="header_notification_bar">
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                <i class="icon-warning-sign"></i>
                <span class="badge">6</span>
                </a>
@@ -60,18 +58,7 @@
                   <li>
                      <p>You have 14 new notifications</p>
                   </li>
-                  <li>
-                     <ul class="dropdown-menu-list scroller" style="height: 250px;">
-                        <li>  
-                           <a href="#">
-                           <span class="label label-sm label-icon label-success"><i class="icon-plus"></i></span>
-                           New user registered. 
-                           <span class="time">Just now</span>
-                           </a>
-                        </li>
-                        
-                     </ul>
-                  </li>
+                
                   <li class="external">   
                      <a href="#">See all notifications <i class="m-icon-swapright"></i></a>
                   </li>
@@ -89,28 +76,26 @@
                   <li>
                      <p>You have 12 new messages</p>
                   </li>
-                  <li>
-                     <ul class="dropdown-menu-list scroller" style="height: 250px;">
-                      
-                     </ul>
-                  </li>
+
                   <li class="external">   
-                     <a href="forward?lien=inboxl">See all messages <i class="m-icon-swapright"></i></a>
+                     <a href="forward?lien=inbox.jsp">See all messages <i class="m-icon-swapright"></i></a>
                   </li>
                </ul>
             </li>
             <!-- END INBOX DROPDOWN -->
-            <!-- END INBOX DROPDOWN -->
             <!-- BEGIN USER LOGIN DROPDOWN -->
             <li class="dropdown user">
                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-               <img alt="" src="assets/img/avatar1_small.jpg"/>
+               
                <span class="username">Bob Nilson</span>
                <i class="icon-angle-down"></i>
                </a>
                <ul class="dropdown-menu">
                   <li><a href="forward?lien=extra_profile.jsp"><i class="icon-user"></i> My Profile</a>
                   </li>
+                 
+                  <li class="divider"></li>
+                  
                   <li><a href="deconnexion"><i class="icon-key"></i> Log Out</a>
                   </li>
                </ul>
@@ -148,95 +133,93 @@
                <!-- END RESPONSIVE QUICK SEARCH FORM -->
             </li>
             <li class="start active ">
-               <a href="forward?lien=index_client.jsp">
+               <a href="forward?lien=index.jsp">
                <i class="icon-home"></i> 
                <span class="title">Dashboard</span>
                <span class="selected"></span>
                </a>
             </li>
-            
             <li class="">
-               <a href="table_user.jsp">
-               <i class="icon-user"></i> 
-               <span class="title">User</span>
+               <a href="javascript:;">
+               <i class="icon-file-text"></i> 
+               <span class="title">Clients</span>
                <span class="arrow "></span>
                </a>
-			   <ul class="sub-menu">
-                  <li>
-                     <a href="list_ajout_update_ut">
-                     View User
+			    <ul class="sub-menu">
+                  <li class="active">
+                     <a href="forward?lien=table_clients.jsp">
+                     View Clients
                      <span class="arrow"></span>
-                     </a>
-                  </li>
-				  </ul>
-            </li>
-		
-			<li>
-               <a class="active" href="javascript:;">
-               <i class="icon-folder-open"></i> 
-               <span class="title">Files</span>
-               <span class="arrow "></span>
-               </a>
-               <ul class="sub-menu">
-                  <li>
-                     <a href="forward?lien=client_upload_file.jsp">
-                     File Upload 
-                     <span class="arrow"></span>
-                     </a>
-                  </li>
-                 <li>
-                     <a href="client_cons_up.jsp">
-                     View File Upload
-                     <span class="arrow"></span>
-                     </a>
-                  </li>
-                  <li>
-                     <a href="client_doc_traite.jsp">
-                     View File Processed
-                     <span class="arrow"></span>
-                     </a>
-                  </li>
-				     <li>
-                     <a href="client_telecharge_file.jsp">
-                     Download File
-                     <span class="arrow"></span>
-                     </a>
+                     </a>                  
                   </li>
                </ul>
             </li>
             <li class="">
                <a href="javascript:;">
                <i class="icon-file-text"></i> 
-               <span class="title">Notification</span>
+               <span class="title">Notifications</span>
                <span class="arrow "></span>
                </a>
-			   <ul class="sub-menu">
-                  <li>
-                     <a href="client_notification.jsp">
-                     Cearte  Notification 
+			    <ul class="sub-menu">
+                  <li class="active">
+                     <a href="list_delete_reclamation">
+                     View Notifications
                      <span class="arrow"></span>
-                     </a>
+                     </a>                  
                   </li>
+                  
 				  </ul>
-            </li>
-			<li class="last">
+				  </li>
+                  <li class="">
                <a href="javascript:;">
-               <i class="icon-bar-chart"></i> 
-               <span class="title">Statistique</span>
+               <i class="icon-file-text"></i> 
+               <span class="title">Historic</span>
                <span class="arrow "></span>
                </a>
-			   <ul class="sub-menu">
-                  <li>
-                     <a href="client_table_stat.jsp">
-                     View  Statistique 
+			    <ul class="sub-menu">
+                  
+                    <li class="active">					 
+                      <a href="forward?lien=historique_client.jsp">
+                     historc of Clients
                      <span class="arrow"></span>
                      </a>
+					 </li>
+                   </ul>					 
+                  </li>
+                          <li class="">
+               <a href="javascript:;">
+               <i class="icon-file-text"></i> 
+               <span class="title">Statistics</span>
+               <span class="arrow "></span>
+               </a>
+			    <ul class="sub-menu">
+                  <li class="active">
+                     <a href="forward?lien=table_statistique_admin.jsp">
+                     View Statistics
+                     <span class="arrow"></span>
+                     </a>                  
                   </li>
 				  </ul>
+				  </li>
+                   <li class="">
+               <a href="javascript:;">
+               <i class="icon-file-text"></i> 
+               <span class="title">Privilege</span>
+               <span class="arrow "></span>
+               </a>
+			    <ul class="sub-menu">
+                                       <li class="active">
+                     <a href="forward?lien=table_statistique.jsp">
+                     Put Privilege for Clients
+                     <span class="arrow"></span>
+                     </a>                  
+                  </li>
+                  
+               </ul>
             </li>
-			
+               </ul>
+            </li>
          </ul>
-		 
          <!-- END SIDEBAR MENU -->
       </div>
       <!-- END SIDEBAR -->
@@ -254,7 +237,9 @@
                   <span>THEME COLOR</span>
                   <ul>
                      <li class="color-black current color-default" data-style="default"></li>
-                     <li class="color-blue"></li>
+                     <li class="color-blue" data-style="blue"></li>
+                     <li class="color-brown" data-style="brown"></li>
+                     <li class="color-purple" data-style="purple"></li>
                      <li class="color-grey" data-style="grey"></li>
                      <li class="color-white color-light" data-style="light"></li>
                   </ul>
@@ -295,7 +280,7 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  Portail documentaire <small></small>
+                  Dashboard <small>Documentary portal</small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li>

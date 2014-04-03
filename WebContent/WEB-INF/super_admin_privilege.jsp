@@ -1,10 +1,13 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="entities.administrateur" %>
+<%@ page import="entities.privilege_admin" %>
+<!DOCTYPE html>
 
- <html lang="en" class="no-js"> 
+<!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <!-- BEGIN HEAD -->
-
 <head>
    <meta charset="utf-8" />
-   <title>IMEX | Acceuil-Client</title>
+   <title>Metronic | Data Tables - Responsive Tables</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -15,19 +18,11 @@
    <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
    <link href="assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
    <!-- END GLOBAL MANDATORY STYLES -->
-   <!-- BEGIN PAGE LEVEL PLUGIN STYLES --> 
-   <link href="assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" type="text/css"/>
-   <link href="assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
-   <link href="assets/plugins/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css"/>
-   <link href="assets/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css"/>
-   <link href="assets/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css"/>
-   <!-- END PAGE LEVEL PLUGIN STYLES -->
    <!-- BEGIN THEME STYLES --> 
    <link href="assets/css/style-metronic.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/style-responsive.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/plugins.css" rel="stylesheet" type="text/css"/>
-   <link href="assets/css/pages/tasks.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
    <link href="assets/css/custom.css" rel="stylesheet" type="text/css"/>
    <!-- END THEME STYLES -->
@@ -37,11 +32,11 @@
 <!-- BEGIN BODY -->
 <body class="page-header-fixed">
    <!-- BEGIN HEADER -->   
-   <div class="header navbar navbar-inverse navbar-fixed-top">
+      <div class="header navbar navbar-inverse navbar-fixed-top">
       <!-- BEGIN TOP NAVIGATION BAR -->
       <div class="header-inner">
          <!-- BEGIN LOGO -->  
-         <a class="navbar-brand" href="forward?lien=index_client.jsp">
+         <a class="navbar-brand" href="forward?lien=index_super_admin.jsp">
          <h3 style="color:white"> <b><center>I&nbsp;M&nbsp;E&nbsp;X</center></b></h3>
          </a>
          <!-- END LOGO -->
@@ -95,7 +90,7 @@
                      </ul>
                   </li>
                   <li class="external">   
-                     <a href="forward?lien=inboxl">See all messages <i class="m-icon-swapright"></i></a>
+                     <a href="inbox.html">See all messages <i class="m-icon-swapright"></i></a>
                   </li>
                </ul>
             </li>
@@ -109,7 +104,7 @@
                <i class="icon-angle-down"></i>
                </a>
                <ul class="dropdown-menu">
-                  <li><a href="forward?lien=extra_profile.jsp"><i class="icon-user"></i> My Profile</a>
+                  <li><a href="extra_profile.html"><i class="icon-user"></i> My Profile</a>
                   </li>
                   <li><a href="deconnexion"><i class="icon-key"></i> Log Out</a>
                   </li>
@@ -136,7 +131,7 @@
             </li>
             <li>
                <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
-               <form class="sidebar-search" action="forward?lien=extra_search.jsp" method="POST">
+               <form class="sidebar-search" action="extra_search.html" method="POST">
                   <div class="form-container">
                      <div class="input-box">
                         <a href="javascript:;" class="remove"></a>
@@ -146,9 +141,9 @@
                   </div>
                </form>
                <!-- END RESPONSIVE QUICK SEARCH FORM -->
-            </li>
+         </li>
             <li class="start active ">
-               <a href="forward?lien=index_client.jsp">
+               <a href="forward?lien=index_super_admin.jsp">
                <i class="icon-home"></i> 
                <span class="title">Dashboard</span>
                <span class="selected"></span>
@@ -156,85 +151,108 @@
             </li>
             
             <li class="">
-               <a href="table_user.jsp">
+              
+               <a href="table_responsive.jsp">
                <i class="icon-user"></i> 
-               <span class="title">User</span>
+               <span class="title">Administrateurs</span>
                <span class="arrow "></span>
                </a>
-			   <ul class="sub-menu">
-                  <li>
-                     <a href="list_ajout_update_ut">
-                     View User
+			                  <ul class="sub-menu">
+                  <li class="active">
+                   
+                     <a href="list_ajout_update_admin">
+                     View Administrateur
                      <span class="arrow"></span>
-                     </a>
-                  </li>
-				  </ul>
-            </li>
-		
-			<li>
-               <a class="active" href="javascript:;">
-               <i class="icon-folder-open"></i> 
-               <span class="title">Files</span>
-               <span class="arrow "></span>
-               </a>
-               <ul class="sub-menu">
-                  <li>
-                     <a href="forward?lien=client_upload_file.jsp">
-                     File Upload 
-                     <span class="arrow"></span>
-                     </a>
-                  </li>
-                 <li>
-                     <a href="client_cons_up.jsp">
-                     View File Upload
-                     <span class="arrow"></span>
-                     </a>
-                  </li>
-                  <li>
-                     <a href="client_doc_traite.jsp">
-                     View File Processed
-                     <span class="arrow"></span>
-                     </a>
-                  </li>
-				     <li>
-                     <a href="client_telecharge_file.jsp">
-                     Download File
-                     <span class="arrow"></span>
-                     </a>
+                     </a>                  
                   </li>
                </ul>
             </li>
             <li class="">
                <a href="javascript:;">
                <i class="icon-file-text"></i> 
-               <span class="title">Notification</span>
+               <span class="title">Clients</span>
                <span class="arrow "></span>
                </a>
-			   <ul class="sub-menu">
-                  <li>
-                     <a href="client_notification.jsp">
-                     Cearte  Notification 
+			    <ul class="sub-menu">
+                  <li class="active">
+                     <a href="listclients">
+                     View Clients
                      <span class="arrow"></span>
-                     </a>
+                     </a>                  
                   </li>
-				  </ul>
+               </ul>
             </li>
-			<li class="last">
+            <li class="">
                <a href="javascript:;">
-               <i class="icon-bar-chart"></i> 
-               <span class="title">Statistique</span>
+               <i class="icon-file-text"></i> 
+               <span class="title">Notifications</span>
                <span class="arrow "></span>
                </a>
-			   <ul class="sub-menu">
-                  <li>
-                     <a href="client_table_stat.jsp">
-                     View  Statistique 
+			    <ul class="sub-menu">
+                  <li class="active">
+                     <a href="list_delete_reclamation">
+                     View Notifications
+                     <span class="arrow"></span>
+                     </a>                  
+                  </li>
+                  
+				  </ul>
+				  </li>
+                  <li class="">
+               <a href="javascript:;">
+               <i class="icon-file-text"></i> 
+               <span class="title">Historic</span>
+               <span class="arrow "></span>
+               </a>
+			    <ul class="sub-menu">
+                  <li class="active">
+                     <a href="forward?lien=historique_admin.jsp">
+                     historc of administrators
                      <span class="arrow"></span>
                      </a>
+					 </li>
+                    <li class="active">					 
+                      <a href="forward?lien=historique_client.jsp">
+                     historc of Clients
+                     <span class="arrow"></span>
+                     </a>
+					 </li>
+                   </ul>					 
+                  </li>
+                          <li class="">
+               <a href="javascript:;">
+               <i class="icon-file-text"></i> 
+               <span class="title">Statistics</span>
+               <span class="arrow "></span>
+               </a>
+			    <ul class="sub-menu">
+                  <li class="active">
+                     <a href="forward?lien=table_statistique_admin.jsp">
+                     View Statistics
+                     <span class="arrow"></span>
+                     </a>                  
                   </li>
 				  </ul>
+				  </li>
+                   <li class="">
+               <a href="javascript:;">
+               <i class="icon-file-text"></i> 
+               <span class="title">Privilege</span>
+               <span class="arrow "></span>
+               </a>
+			    <ul class="sub-menu">
+                 
+                                       <li class="active">
+                     <a href="forward?lien=priv_admin.jsp">
+                     Put Privilege for Clients
+                     <span class="arrow"></span>
+                     </a>                  
+                  </li>
+                  
+               </ul>
             </li>
-			
+               </ul>
+            </li>
          </ul>
 		 
          <!-- END SIDEBAR MENU -->
@@ -243,6 +261,25 @@
       <!-- BEGIN PAGE -->
       <div class="page-content">
          <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->               
+         <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                     <h4 class="modal-title">Modal title</h4>
+                  </div>
+                  <div class="modal-body">
+                     Widget settings form goes here
+                  </div>
+                  <div class="modal-footer">
+                     <button type="button" class="btn blue">Save changes</button>
+                     <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                  </div>
+               </div>
+               <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+         </div>
          <!-- /.modal -->
          <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
          <!-- BEGIN STYLE CUSTOMIZER -->
@@ -254,7 +291,9 @@
                   <span>THEME COLOR</span>
                   <ul>
                      <li class="color-black current color-default" data-style="default"></li>
-                     <li class="color-blue"></li>
+                     <li class="color-blue" data-style="blue"></li>
+                     <li class="color-brown" data-style="brown"></li>
+                     <li class="color-purple" data-style="purple"></li>
                      <li class="color-grey" data-style="grey"></li>
                      <li class="color-white color-light" data-style="light"></li>
                   </ul>
@@ -289,41 +328,130 @@
                </div>
             </div>
          </div>
-         <!-- END BEGIN STYLE CUSTOMIZER -->  
+         <!-- END BEGIN STYLE CUSTOMIZER -->            
          <!-- BEGIN PAGE HEADER-->
          <div class="row">
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  Portail documentaire <small></small>
+                  Portail documentaire
                </h3>
                <ul class="page-breadcrumb breadcrumb">
+                 
                   <li>
                      <i class="icon-home"></i>
                      <a href="forward?lien=index.jsp">Home</a> 
                      <i class="icon-angle-right"></i>
                   </li>
-                  <li><a href="#">Dashboard</a></li>
-                  <li class="pull-right">
-                     <div id="dashboard-report-range" class="dashboard-date-range tooltips" data-placement="top" data-original-title="Change dashboard date range">
-                        <i class="icon-calendar"></i>
-                        <span></span>
-                        <i class="icon-angle-down"></i>
-                     </div>
+                  <li>
+                     <a href="#">Privilege</a>
+                     <i class="icon-angle-right"></i>
                   </li>
+                  <li><a href="#">Put Privilege for administrators</a></li>
                </ul>
                <!-- END PAGE TITLE & BREADCRUMB-->
             </div>
          </div>
          <!-- END PAGE HEADER-->
-         
-        </div>
-           </div>
-              </div>
-        </div>
+         <!-- BEGIN PAGE CONTENT-->                      
+
+               <!-- BEGIN SAMPLE TABLE PORTLET-->
+		  <% 
+                        int i;
+                        ArrayList<privilege_admin> liste_priv = (ArrayList<privilege_admin>) request.getAttribute("list_de_priv");
+                		  boolean c1=false;
+                		  boolean c2=false;
+                		  boolean c3=false;
+                		  boolean c4=false;
+                		  boolean c5=false;
+                		  boolean c6=false;
+                		  boolean c7=false;
+                		  boolean c8=false;
+                		  boolean c9=false;
+                		  
+                		  for (i=0; i<liste_priv.size(); i++) { 
+                             c1 = liste_priv.get(i).isAddClient();
+                             c2 = liste_priv.get(i).isDeleteClient();
+                             c3 = liste_priv.get(i).isViewClient();
+                             c4 = liste_priv.get(i).isUpdateClient();
+                             c5 = liste_priv.get(i).isViewNotif();
+                             c6 = liste_priv.get(i).isAnswerNotif();
+                             c7 = liste_priv.get(i).isExport();
+                             c8 = liste_priv.get(i).isViewStat();
+                             c9 = liste_priv.get(i).isViewHistoric();
+                            System.out.println(c1);
+                            System.out.println(c2);
+                        	
+                        }
+                        %>
+<form method="post" action="list_update_priv_admin">
+		<table width="950" align="center" >
+			<tr>
+			<td>
+			<fieldset style="border:solid 2px #27a9e3; padding:35px; width:400px;" >
+				<legend><center><h4 style="color:#27a9e3;">Client management </h4></center></legend>
+             <input type="checkbox" name="CHOIX1" align="right" value="addclient" <%if (c1){out.println("CHECKED");} %>> Add Client &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="CHOIX3" value="viewclient" <%if (c3){out.println("CHECKED");} %>>View client</br></br>
+			 <input type="checkbox" name="CHOIX2" align="right" value="deleteclient" <%if (c2){out.println("CHECKED");} %>>Delete client &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="CHOIX4" value="updateclient" <%if (c4){out.println("CHECKED");} %>>Update client</br></br>
+
+              
+            </fieldset>
+		</td>
+	
+          <td>
+		  <fieldset style="border:solid 2px #27a9e3; padding:35px; width:400px;" >
+				<legend><center><h4 style="color:#27a9e3;">Notification</h4></center></legend>
+             <input type="checkbox" name="CHOIX5" align="right" value="view_not" <%if (c5){out.println("CHECKED");} %>> View notifications&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/><br/>
+			 <input type="checkbox" name="CHOIX6" value="Ansewer" <%if (c6){out.println("CHECKED");} %>>Answer</br></br>			 
+            </fieldset>
+		</td>
+		
+		</tr>
+		<tr>
+         <td>
+			<fieldset style="border:solid 2px #27a9e3; padding:35px; width:400px;" >
+				<legend><center><h4 style="color:#27a9e3;" >Document management </h4></center></legend>
+             <input type="checkbox" name="CHOIX7" align="right" value="Export" <%if (c7){out.println("CHECKED");} %>> Export PDF/EXCEL 
+            </fieldset>
+		</td>
+		<td>
+
+			<fieldset style="border:solid 2px #27a9e3; padding:35px; width:400px;" >
+				<legend><center><h4 style="color:#27a9e3;" >Statistic</h4></center></legend>
+             <input type="checkbox" name="CHOIX8" align="right" value="viewstat" <%if (c8){out.println("CHECKED");} %>> View Statistic
+            </fieldset>
+		</td>
+		</tr>
+				<tr>
+<td>
+			<fieldset style="border:solid 2px #27a9e3; padding:35px; width:400px;" >
+				<legend><center><h4 style="color:#27a9e3;" >historic </h4></center></legend>
+             <input type="checkbox" name="CHOIX9" align="right" value="viewhistoric" <%if (c9){out.println("CHECKED");} %>>View historic 
+            </fieldset>
+		</td>
+		
+		<td>
+		<center><button style="color:#27a9e3;" type="submit" class="btn btn-default" ><b>Valider</b></button>&nbsp;&nbsp;&nbsp;<button style="color:#27a9e3;" type="reset" class="btn btn-default"><b>Annuler</b></button></center>
+		</td>
+		
+	
+		</tr>
+		</table>
+		
+</form>
+
+               <!-- END SAMPLE TABLE PORTLET-->
+       
+            </div>
+         </div>
+         <!-- END PAGE CONTENT-->
+      </div>
+      <!-- END PAGE -->
+   </div>
+   <!-- END CONTAINER -->
+   <!-- BEGIN FOOTER -->
    <div class="footer">
       <div class="footer-inner">
-         2014 &copy; IMEX.
+         2014 &copy; Imex.
       </div>
       <div class="footer-tools">
          <span class="go-top">
@@ -339,9 +467,7 @@
    <script src="assets/plugins/excanvas.min.js"></script> 
    <![endif]-->   
    <script src="assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
-   <script src="assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>   
-   <!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
-   <script src="assets/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
+   <script src="assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>    
    <script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
    <script src="assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js" type="text/javascript" ></script>
    <script src="assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
@@ -349,45 +475,13 @@
    <script src="assets/plugins/jquery.cookie.min.js" type="text/javascript"></script>
    <script src="assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
    <!-- END CORE PLUGINS -->
-   <!-- BEGIN PAGE LEVEL PLUGINS -->
-   <script src="assets/plugins/jqvmap/jqvmap/jquery.vmap.js" type="text/javascript"></script>   
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js" type="text/javascript"></script>  
-   <script src="assets/plugins/flot/jquery.flot.js" type="text/javascript"></script>
-   <script src="assets/plugins/flot/jquery.flot.resize.js" type="text/javascript"></script>
-   <script src="assets/plugins/jquery.pulsate.min.js" type="text/javascript"></script>
-   <script src="assets/plugins/bootstrap-daterangepicker/moment.min.js" type="text/javascript"></script>
-   <script src="assets/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script>     
-   <script src="assets/plugins/gritter/js/jquery.gritter.js" type="text/javascript"></script>
-   <!-- IMPORTANT! fullcalendar depends on jquery-ui-1.10.3.custom.min.js for drag & drop support -->
-   <script src="assets/plugins/fullcalendar/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
-   <script src="assets/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.js" type="text/javascript"></script>
-   <script src="assets/plugins/jquery.sparkline.min.js" type="text/javascript"></script>  
-   <!-- END PAGE LEVEL PLUGINS -->
-   <!-- BEGIN PAGE LEVEL SCRIPTS -->
-   <script src="assets/scripts/app.js" type="text/javascript"></script>
-   <script src="assets/scripts/index.js" type="text/javascript"></script>
-   <script src="assets/scripts/tasks.js" type="text/javascript"></script>        
-   <!-- END PAGE LEVEL SCRIPTS -->  
+   <script src="assets/scripts/app.js"></script>      
    <script>
-      jQuery(document).ready(function() {    
-         App.init(); // initlayout and core plugins
-         Index.init();
-         Index.initJQVMAP(); // init index page's custom scripts
-         Index.initCalendar(); // init index page's custom scripts
-         Index.initCharts(); // init index page's custom scripts
-         Index.initChat();
-         Index.initMiniCharts();
-         Index.initDashboardDaterange();
-         Index.initIntro();
-         Tasks.initDashboardWidget();
+      jQuery(document).ready(function() {       
+         // initiate layout and plugins
+         App.init();
       });
    </script>
-   <!-- END JAVASCRIPTS -->
 </body>
 <!-- END BODY -->
 </html>

@@ -1,10 +1,7 @@
-
- <html lang="en" class="no-js"> 
-<!-- BEGIN HEAD -->
-
+<!DOCTYPE html>
 <head>
    <meta charset="utf-8" />
-   <title>IMEX | Acceuil-Client</title>
+   <title>IMEX | Acceuil-User</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -41,7 +38,7 @@
       <!-- BEGIN TOP NAVIGATION BAR -->
       <div class="header-inner">
          <!-- BEGIN LOGO -->  
-         <a class="navbar-brand" href="forward?lien=index_client.jsp">
+         <a class="navbar-brand" href="index.html">
          <h3 style="color:white"> <b><center>I&nbsp;M&nbsp;E&nbsp;X</center></b></h3>
          </a>
          <!-- END LOGO -->
@@ -95,7 +92,7 @@
                      </ul>
                   </li>
                   <li class="external">   
-                     <a href="forward?lien=inboxl">See all messages <i class="m-icon-swapright"></i></a>
+                     <a href="inbox.html">See all messages <i class="m-icon-swapright"></i></a>
                   </li>
                </ul>
             </li>
@@ -109,9 +106,9 @@
                <i class="icon-angle-down"></i>
                </a>
                <ul class="dropdown-menu">
-                  <li><a href="forward?lien=extra_profile.jsp"><i class="icon-user"></i> My Profile</a>
+                  <li><a href="extra_profile.html"><i class="icon-user"></i> My Profile</a>
                   </li>
-                  <li><a href="deconnexion"><i class="icon-key"></i> Log Out</a>
+                  <li><a href="login.html"><i class="icon-key"></i> Log Out</a>
                   </li>
                </ul>
             </li>
@@ -136,7 +133,7 @@
             </li>
             <li>
                <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
-               <form class="sidebar-search" action="forward?lien=extra_search.jsp" method="POST">
+               <form class="sidebar-search" action="extra_search.html" method="POST">
                   <div class="form-container">
                      <div class="input-box">
                         <a href="javascript:;" class="remove"></a>
@@ -148,29 +145,12 @@
                <!-- END RESPONSIVE QUICK SEARCH FORM -->
             </li>
             <li class="start active ">
-               <a href="forward?lien=index_client.jsp">
+               <a href="index_us.html">
                <i class="icon-home"></i> 
                <span class="title">Dashboard</span>
                <span class="selected"></span>
                </a>
             </li>
-            
-            <li class="">
-               <a href="table_user.jsp">
-               <i class="icon-user"></i> 
-               <span class="title">User</span>
-               <span class="arrow "></span>
-               </a>
-			   <ul class="sub-menu">
-                  <li>
-                     <a href="list_ajout_update_ut">
-                     View User
-                     <span class="arrow"></span>
-                     </a>
-                  </li>
-				  </ul>
-            </li>
-		
 			<li>
                <a class="active" href="javascript:;">
                <i class="icon-folder-open"></i> 
@@ -179,25 +159,25 @@
                </a>
                <ul class="sub-menu">
                   <li>
-                     <a href="forward?lien=client_upload_file.jsp">
+                     <a href="upload_file_us.html">
                      File Upload 
                      <span class="arrow"></span>
                      </a>
                   </li>
                  <li>
-                     <a href="client_cons_up.jsp">
+                     <a href="cons_up_us.html">
                      View File Upload
                      <span class="arrow"></span>
                      </a>
                   </li>
-                  <li>
-                     <a href="client_doc_traite.jsp">
+                 <li>
+                     <a href="doc_traite_us.html">
                      View File Processed
                      <span class="arrow"></span>
                      </a>
                   </li>
-				     <li>
-                     <a href="client_telecharge_file.jsp">
+				  <li>
+                     <a href="telecharge_file_us.html">
                      Download File
                      <span class="arrow"></span>
                      </a>
@@ -212,7 +192,7 @@
                </a>
 			   <ul class="sub-menu">
                   <li>
-                     <a href="client_notification.jsp">
+                     <a href="notification_us.html">
                      Cearte  Notification 
                      <span class="arrow"></span>
                      </a>
@@ -227,7 +207,7 @@
                </a>
 			   <ul class="sub-menu">
                   <li>
-                     <a href="client_table_stat.jsp">
+                     <a href="table_stat_us.html">
                      View  Statistique 
                      <span class="arrow"></span>
                      </a>
@@ -236,7 +216,6 @@
             </li>
 			
          </ul>
-		 
          <!-- END SIDEBAR MENU -->
       </div>
       <!-- END SIDEBAR -->
@@ -295,15 +274,17 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  Portail documentaire <small></small>
+                  Poratil Documentaire
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li>
                      <i class="icon-home"></i>
-                     <a href="forward?lien=index.jsp">Home</a> 
+                     <a href="index.html">Home</a> 
                      <i class="icon-angle-right"></i>
                   </li>
-                  <li><a href="#">Dashboard</a></li>
+                  <li><a href="#">Files</a></li>
+				  <i class="icon-angle-right"></i>
+				  <li><a href="#">Download File</a></li>
                   <li class="pull-right">
                      <div id="dashboard-report-range" class="dashboard-date-range tooltips" data-placement="top" data-original-title="Change dashboard date range">
                         <i class="icon-calendar"></i>
@@ -316,6 +297,62 @@
             </div>
          </div>
          <!-- END PAGE HEADER-->
+		 
+		 
+  <div class="portlet box blue">
+                  <div class="portlet-title">
+                     <div class="caption"><i class="icon-edit"></i>Download File</div>
+                     <div class="tools">
+                        <a href="javascript:;" class="collapse"></a>
+                        <a href="#portlet-config" data-toggle="modal" class="config"></a>
+                        <a href="javascript:;" class="reload"></a>
+                        <a href="javascript:;" class="remove"></a>
+                     </div>
+                  </div>
+                  <div class="portlet-body">
+                     <div class="table-toolbar">
+                        
+                        <div class="btn-group pull-right">
+                           <button class="btn dropdown-toggle" data-toggle="dropdown">Tools <i class="icon-angle-down"></i>
+                           </button>
+                           <ul class="dropdown-menu pull-right">
+                              <li><a href="#">Print</a></li>
+                              <li><a href="#">Save as PDF</a></li>
+                              <li><a href="#">Export to Excel</a></li>
+                           </ul>
+                        </div>
+                     </div>
+                     <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
+                        <thead>
+                           <tr>
+                              <th>ID</th>
+                              <th>Ref</th>
+                              <th>Nom</th>	
+								<th>Type</th>
+								<th>Date</th>										
+                              <th>Show</th>
+                              <th>Download</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr >
+                              <td>1245</td>
+                              <td>45415m</td>
+                              <td>f1</td>  
+                              <td>xml</td>
+                              <td>10/2/2014</td>  							  
+                              <td><a class="edit" href="javascript:;">Show</a></td>
+                              <td><a class="delete" href="javascript:;">Download</a></td>
+                           </tr>
+
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+		 
+		 
+
+		 
          
         </div>
            </div>

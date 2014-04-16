@@ -1,5 +1,7 @@
 package AdminServlet;
 
+import historiqueDAO.gererHistorique;
+
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import connexion.authentification;
 import adminDAO.gerer_Client_societe;
 import entities.client;
 import entities.societe;
@@ -62,9 +65,15 @@ try {
 			
 			if (gc.ajouterSoc(so)){
 				System.out.println("operation dajout");
+				gererHistorique gh = new gererHistorique();
+				gh.Task("à ajouter une societe", request.getRemoteAddr(), "administrateur", authentification.email);
+				
 			}else{
 				gc.updateSoc(so);
 				System.out.println("operation de modification");
+				gererHistorique gh = new gererHistorique();
+				gh.Task("à mis à jours une societe", request.getRemoteAddr(), "administrateur", authentification.email);
+				
 			}
 			
 		} catch (JSONException e) {

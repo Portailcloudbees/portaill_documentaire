@@ -1,5 +1,7 @@
 package AdminServlet;
 
+import historiqueDAO.gererHistorique;
+
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -39,6 +41,7 @@ public class modif_delete_admin extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String mail=request.getParameter("mail");
 		gerer_admin ga = new gerer_admin();
+		
 		ga.deleteAdmin(mail);
 	}
 

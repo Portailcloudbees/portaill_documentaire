@@ -105,7 +105,7 @@
                <ul class="dropdown-menu">
                   <li><a href="extra_profile.html"><i class="icon-user"></i> My Profile</a>
                   </li>
-                  <li><a href="login.html"><i class="icon-key"></i> Log Out</a>
+                  <li><a href="deconnexion"><i class="icon-key"></i> Log Out</a>
                   </li>
                </ul>
             </li>
@@ -122,7 +122,7 @@
       <!-- BEGIN SIDEBAR -->
       <div class="page-sidebar navbar-collapse collapse">
          <!-- BEGIN SIDEBAR MENU -->        
-         <ul class="page-sidebar-menu">
+        <ul class="page-sidebar-menu">
             <li>
                <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
                <div class="sidebar-toggler hidden-phone"></div>
@@ -130,7 +130,7 @@
             </li>
             <li>
                <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
-               <form class="sidebar-search" action="extra_search.html" method="POST">
+               <form class="sidebar-search" action="forward?lien=extra_search.jsp" method="POST">
                   <div class="form-container">
                      <div class="input-box">
                         <a href="javascript:;" class="remove"></a>
@@ -142,7 +142,7 @@
                <!-- END RESPONSIVE QUICK SEARCH FORM -->
             </li>
             <li class="start active ">
-               <a href="index_client.html">
+               <a href="forward?lien=index_client.jsp">
                <i class="icon-home"></i> 
                <span class="title">Dashboard</span>
                <span class="selected"></span>
@@ -155,31 +155,17 @@
                <span class="title">User</span>
                <span class="arrow "></span>
                </a>
-			   <ul class="sub-menu">
+            <ul class="sub-menu">
                   <li>
-                     <a href="table_user.html">
+                     <a href="list_ajout_update_ut">
                      View User
                      <span class="arrow"></span>
                      </a>
                   </li>
-				  </ul>
+              </ul>
             </li>
-			<li class="">
-               <a href="javascript:;">
-               <i class="icon-leaf"></i> 
-               <span class="title">Privilege</span>
-               <span class="arrow "></span>
-               </a>
-			   <ul class="sub-menu">
-                  <li>
-                     <a href="priv_us.html">
-                     Choose Privilege
-                     <span class="arrow"></span>
-                     </a>
-                  </li>
-				  </ul>
-            </li>
-			<li>
+      
+         <li>
                <a class="active" href="javascript:;">
                <i class="icon-folder-open"></i> 
                <span class="title">Files</span>
@@ -187,25 +173,20 @@
                </a>
                <ul class="sub-menu">
                   <li>
-                     <a href="upload_file_cl.html">
+                     <a href="forward?lien=client_upload_file.jsp">
                      File Upload 
                      <span class="arrow"></span>
                      </a>
                   </li>
                  <li>
-                     <a href="cons_up_cl.html">
-                     View File Upload
+                     <a href="list_xml_up">
+                     View Uploaded Files
                      <span class="arrow"></span>
                      </a>
                   </li>
-                  <li>
-                     <a href="doc_traite_cl.html">
-                     View File Processed
-                     <span class="arrow"></span>
-                     </a>
-                  </li>
-				     <li>
-                     <a href="telecharge_file_cl.html">
+                 
+                 <li>
+                     <a href="list_download_xml">
                      Download File
                      <span class="arrow"></span>
                      </a>
@@ -218,26 +199,53 @@
                <span class="title">Notification</span>
                <span class="arrow "></span>
                </a>
-			   <ul class="sub-menu">
+            <ul class="sub-menu">
                   <li>
-                     <a href="notification_cl.html">
-                     Cearte  Notification 
+                     <a href="notif_send_page">
+                     Send  Notification 
                      <span class="arrow"></span>
                      </a>
                   </li>
-				  </ul>
+                   <li>
+                     <a href="client_user_list_notif_rep">
+                     List of notifications 
+                     <span class="arrow"></span>
+                     </a>
+                  </li>
+              </ul>
             </li>
-			<li class="last">
+             <li class="">
+               <a href="javascript:;">
+               <i class="icon-file-text"></i> 
+               <span class="title">Historique</span>
+               <span class="arrow "></span>
+               </a>
+            <ul class="sub-menu">
+                  <li>
+                     <a href="list_getlast_client_historique">
+                    View Historique 
+                     <span class="arrow"></span>
+                     </a>
+                  </li>
+              </ul>
+            </li>
+         <li class="last">
                <a href="javascript:;">
                <i class="icon-bar-chart"></i> 
                <span class="title">Statistique</span>
                <span class="arrow "></span>
                </a>
-			   <ul class="sub-menu">
+            <ul class="sub-menu">
                   <li>
-                     <a href="table_stat_cl.html">
+                     <a href="client_table_stat.jsp">
                      View  Statistique 
                      <span class="arrow"></span>
+                     </a>
+                  </li>
+              </ul>
+            </li>
+         
+         </ul>                 <span class="arrow"></span>
                      </a>
                   </li>
 				  </ul>
@@ -496,7 +504,21 @@
    <script src="assets/plugins/jquery-file-upload/js/vendor/canvas-to-blob.min.js"></script>
    <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
    <script src="assets/plugins/jquery-file-upload/js/jquery.iframe-transport.js"></script>
-  
+       <script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+   <script src="assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js" type="text/javascript" ></script>
+   <script src="assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+   <script src="assets/plugins/jquery.blockui.min.js" type="text/javascript"></script>  
+   <script src="assets/plugins/jquery.cookie.min.js" type="text/javascript"></script>
+   <script src="assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
+    <script src="assets/scripts/app.js"></script>   
+   <!-- END PAGE LEVEL SCRIPTS -->  
+     
+   <script>
+      jQuery(document).ready(function() {       
+         App.init();
+         
+      });
+   </script>
 </body>
 <!-- END BODY -->
 </html>

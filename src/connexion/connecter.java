@@ -50,14 +50,17 @@ public class connecter extends HttpServlet {
 			if (auth.connecter(login,pass)=="admin"){
 				authentification.c="admin";
 				authentification.email=login;
+				
 				this.getServletContext().getRequestDispatcher("/WEB-INF/index_admin.jsp").forward(request, response);
 		}else if (auth.connecter(login,pass)=="responsable"){
 			authentification.c="responsable";
 			authentification.email=login;
+			
 			this.getServletContext().getRequestDispatcher("/WEB-INF/index_client.jsp").forward(request, response);
 		}else if (auth.connecter(login,pass)=="utilisateur"){
 			authentification.c="utilisateur";
 			authentification.email=login;
+			
 			this.getServletContext().getRequestDispatcher("/WEB-INF/index_user.jsp").forward(request, response);
 		}else if (auth.connecter(login,pass)==""){
 			rep=" nexiste pas";

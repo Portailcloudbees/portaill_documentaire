@@ -1,5 +1,7 @@
 package AdminServlet;
 
+import historiqueDAO.gererHistorique;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -56,6 +58,9 @@ public class list_ajout_update_client extends HttpServlet {
 		if (connected.equals("super")){
 			this.getServletContext().getRequestDispatcher("/WEB-INF/super_admin_table_clients.jsp").forward(request, response);
 		}else{
+			gererHistorique gh = new gererHistorique();
+			gh.Task("à consulter la table des clients", request.getRemoteAddr(), "administrateur", authentification.email);
+			
 			this.getServletContext().getRequestDispatcher("/WEB-INF/admin_table_clients.jsp").forward(request, response);
 		}
 		
@@ -113,9 +118,15 @@ public class list_ajout_update_client extends HttpServlet {
 			
 			gerer_Client_societe gc = new gerer_Client_societe();
 			if (gc.ajouterClient(cl)){
+				gererHistorique gh = new gererHistorique();
+				gh.Task("à ajouter un client", request.getRemoteAddr(), "administrateur", authentification.email);
+				
 				
 			}else{
 				gc.updateClient(cl);
+				gererHistorique gh = new gererHistorique();
+				gh.Task("à mis à jours un client", request.getRemoteAddr(), "administrateur", authentification.email);
+				
 			}
 			
 		} catch (JSONException e) {

@@ -1,5 +1,7 @@
 package responsableServlet;
 
+import historiqueDAO.gererHistorique;
+
 import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
@@ -89,9 +91,14 @@ import entities.utilisateur_entities;
 				
 				gerer_utilisateur gu = new gerer_utilisateur();
 				if (gu.ajouterUtilisateur(ut)){
+					gererHistorique gh = new gererHistorique();
+					gh.Task("à ajouter un utilisateur", request.getRemoteAddr(), "responsable", authentification.email);
 					
 				}else{
 					gu.updateUt(ut);
+					gererHistorique gh = new gererHistorique();
+					gh.Task("à mis à jours un utilisateur", request.getRemoteAddr(), "responsable", authentification.email);
+					
 				}
 				
 			} catch (JSONException e) {

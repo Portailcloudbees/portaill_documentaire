@@ -19,6 +19,32 @@ public class gerer_reclamation {
 		
 	}
 	
+	public String getCompanyName(String email,String type){
+		String req="";
+		String nom_soc="";
+		if (type.equals("responsable")){
+			req="SELECT s.`nom_soc` from societe s,client_soc c where s.`mat_soc`=c.`mat_soc` and c.email_resp='"+email+"'";
+		}else{
+			req="SELECT s.`nom_soc` from societe s,client_soc c, utilisateur u where s.`mat_soc`=c.`mat_soc` and c.email_resp=u.email_resp and u.email_ut='"+email+"'";
+		}
+		
+		 try {
+	           Statement statement = ConnectionBD.getInstance()
+	                   .createStatement();
+	            ResultSet resultat = statement.executeQuery(req);
+
+	            while(resultat.next()){
+	            	nom_soc=resultat.getString("nom_soc");
+	            	
+	            }
+	            return  nom_soc;
+	        } catch (SQLException ex) {
+	           
+	            System.out.println("erreur recperation nom du societe "+ex.getMessage());
+	            return null;
+	        }
+	}
+	
 	public String getCompany(String req){
 		String mat_soc="";
         try {
@@ -40,14 +66,14 @@ public class gerer_reclamation {
 	}
 	
 	public boolean ajouterRec(reclamation rec){
-		String req ="insert into reclamation values (?,?,?,?,?)";
+		String req ="insert into reclamation(objet_rec,sujet_rec,traiter,email_sender,mat_soc) values (?,?,?,?,?)";
         try { 
          PreparedStatement ps = ConnectionBD.getInstance().prepareStatement(req);
          ps.setString(1,rec.getObjet_rec());
          ps.setString(2,rec.getSujet_rec());
-         ps.setDate(3,rec.getDate());
-         ps.setBoolean(4,rec.isTraiter());
-         ps.setString(5,rec.getEmail_sender());
+         ps.setBoolean(3,rec.isTraiter());
+         ps.setString(4,rec.getEmail_sender());
+         ps.setString(5, rec.getCompany());
          ps.executeUpdate();
          System.out.println("Ajout reclamation effectuée avec succès");
          return true;
@@ -146,6 +172,46 @@ public List<reclamation> ListReclamation(){
             return null;
         }
 }    
+
+
+public List<reclamation> ListReclamationClient(String mat){
+	
+	List<reclamation> listeRec = new ArrayList<reclamation>();
+	String comp="";
+	String req="Select * from reclamation where mat_soc='"+mat+"'";
+    try {
+       Statement statement = ConnectionBD.getInstance()
+               .createStatement();
+        ResultSet resultat = statement.executeQuery(req);
+
+        while(resultat.next()){
+        	reclamation rec= new reclamation();
+        	rec.setId_rec(resultat.getInt(1));
+        	rec.setObjet_rec(resultat.getString(2));
+        	rec.setSujet_rec(resultat.getString(3));
+        	rec.setDate(resultat.getDate(4));
+        	rec.setTraiter(resultat.getBoolean(5));
+        	rec.setEmail_sender(resultat.getString(6));
+        	String req1="Select c.mat_soc from utilisateur u,client_soc c where u.email_ut='"+resultat.getString(6)+"'";
+    		String req2="Select * from client_soc where email_resp='"+resultat.getString(6)+"'";
+        	if (getCompany(req1)==null){
+        		comp=getCompany(req1);
+        		System.out.println("req1");
+        	}else{
+        		comp=getCompany(req2);
+        		System.out.println("req2");
+        	}
+        	rec.setCompany(comp);     
+        	listeRec.add(rec);
+        }
+        return  listeRec;
+    } catch (SQLException ex) {
+       
+        System.out.println("erreur recperation list des reclamation "+ex.getMessage());
+        return null;
+    }
+} 
+
         
         public List<reclamation_rep> ListRep(){
     		

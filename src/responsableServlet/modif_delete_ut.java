@@ -1,5 +1,7 @@
 package responsableServlet;
 
+import historiqueDAO.gererHistorique;
+
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -8,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import connexion.authentification;
 import responsableDAO.gerer_utilisateur;
 
 
@@ -40,6 +43,9 @@ import responsableDAO.gerer_utilisateur;
 			String mail=request.getParameter("mail");
 			gerer_utilisateur gu = new gerer_utilisateur();
 			gu.deleteUtilisateur(mail);
+			gererHistorique gh = new gererHistorique();
+			gh.Task("à supprimer un utilisateur", request.getRemoteAddr(), "responsable", authentification.email);
+			
 		}
 
 	}

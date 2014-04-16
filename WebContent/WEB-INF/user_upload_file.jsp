@@ -1,4 +1,10 @@
-<!DOCTYPE html>
+<%@ page import="java.util.ArrayList" %>
+
+ <%@page import="responsableDAO.*"%>
+<%@ page import="java.util.List" %>
+ <%@page import="connexion.authentification"%>
+  <%@page import="entities.privilege_utilisateur"%><!DOCTYPE html>
+
 <!-- BEGIN HEAD -->
 <head>
    <meta charset="utf-8" />
@@ -31,11 +37,11 @@
 <!-- BEGIN BODY -->
 <body class="page-header-fixed">
    <!-- BEGIN HEADER -->   
-   <div class="header navbar navbar-inverse navbar-fixed-top">
+ <div class="header navbar navbar-inverse navbar-fixed-top">
       <!-- BEGIN TOP NAVIGATION BAR -->
       <div class="header-inner">
          <!-- BEGIN LOGO -->  
-         <a class="navbar-brand" href="index.html">
+         <a class="navbar-brand" href="forward?lien=index_user.jsp">
          <h3 style="color:white"> <b><center>I&nbsp;M&nbsp;E&nbsp;X</center></b></h3>
          </a>
          <!-- END LOGO -->
@@ -105,7 +111,7 @@
                <ul class="dropdown-menu">
                   <li><a href="extra_profile.html"><i class="icon-user"></i> My Profile</a>
                   </li>
-                  <li><a href="login.html"><i class="icon-key"></i> Log Out</a>
+                  <li><a href="deconnexion"><i class="icon-key"></i> Log Out</a>
                   </li>
                </ul>
             </li>
@@ -130,7 +136,7 @@
             </li>
             <li>
                <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
-               <form class="sidebar-search" action="extra_search.html" method="POST">
+               <form class="sidebar-search" action="forward?lien=extra_search.jsp" method="POST">
                   <div class="form-container">
                      <div class="input-box">
                         <a href="javascript:;" class="remove"></a>
@@ -142,13 +148,49 @@
                <!-- END RESPONSIVE QUICK SEARCH FORM -->
             </li>
             <li class="start active ">
-               <a href="index_us.html">
+               <a href="forward?lien=index_client.jsp">
                <i class="icon-home"></i> 
                <span class="title">Dashboard</span>
                <span class="selected"></span>
                </a>
             </li>
-			<li>
+             <% 
+               boolean uploadFile = false;
+          	 boolean deleteFile = false;
+          	 boolean sendFile = false;
+          	 boolean downloadFile = false;
+          	 boolean sendSms = false;
+          	 boolean sendEmail = false;
+          	 boolean viewStat = false;
+          	 boolean answerNotif = false;
+          	 boolean export = false;
+             boolean viewUpload=false;
+             boolean viewHistorique =false;
+             boolean sendNotif=false;
+             boolean listNotif=false;
+             
+               String email = authentification.email;
+               gerer_privilege_ut gu = new gerer_privilege_ut();
+               List<privilege_utilisateur> priv = gu.ListPrivilege(email);
+                for (int i=0; i<priv.size(); i++) {
+                   uploadFile=priv.get(i).isUploadFile();
+                   deleteFile=priv.get(i).isDeleteFile();
+                   
+                   sendFile=priv.get(i).isSendFile();
+                   downloadFile=priv.get(i).isDownloadFile();
+                   sendSms=priv.get(i).isSendSms();
+                   sendEmail=priv.get(i).isSendEmail();
+                   viewStat=priv.get(i).isViewStat();
+                   answerNotif=priv.get(i).isAnswerNotif();
+                   export=priv.get(i).isExport();
+                   viewUpload=priv.get(i).isViewUpload();
+                   viewHistorique=priv.get(i).isViewHistorique();
+                   sendNotif=priv.get(i).isSendNotif();
+                   listNotif=priv.get(i).isListNotif();
+                }
+            %>
+      
+         <li>
                <a class="active" href="javascript:;">
                <i class="icon-folder-open"></i> 
                <span class="title">Files</span>
@@ -156,28 +198,38 @@
                </a>
                <ul class="sub-menu">
                   <li>
-                     <a href="upload_file_us.html">
-                     File Upload 
-                     <span class="arrow"></span>
-                     </a>
+                  <% if (uploadFile){
+                   out.println("<a href='forward?lien=user_upload_file.jsp'>"+
+                           "File Upload"+ 
+                          " <span class='arrow'></span>"+
+                          " </a>");
+                   }else{
+                   out.println("pas de priv");
+                  }%>
+                     
                   </li>
                  <li>
-                     <a href="cons_up_us.html">
-                     View File Upload
-                     <span class="arrow"></span>
-                     </a>
+                    <% if (viewUpload){
+                   out.println("<a href='list_xml_up'>"+
+                           "View Uploaded Files"+
+                           "<span class='arrow'></span>"+
+                           "</a>");
+                   }else{
+                   out.println("pas de priv");
+                  }%>
+                     
                   </li>
+                 
                  <li>
-                     <a href="doc_traite_us.html">
-                     View File Processed
-                     <span class="arrow"></span>
-                     </a>
-                  </li>
-				<li>
-                     <a href="telecharge_file_us.html">
-                     Download File
-                     <span class="arrow"></span>
-                     </a>
+                      <% if (downloadFile){
+                   out.println("<a href='list_download_xml'>"+
+                           "Download File"+
+                           "<span class='arrow'></span>"+
+                           "</a>");
+                   }else{
+                   out.println("pas de priv");
+                  }%>
+                     
                   </li>
                </ul>
             </li>
@@ -187,31 +239,72 @@
                <span class="title">Notification</span>
                <span class="arrow "></span>
                </a>
-			   <ul class="sub-menu">
+            <ul class="sub-menu">
                   <li>
-                     <a href="notification_us.html">
-                     Cearte  Notification 
-                     <span class="arrow"></span>
-                     </a>
+                      <% if (sendNotif){
+                   out.println("<a href='notif_send_page'>"+
+                           "Send  Notification"+
+                           "<span class='arrow'></span>"+
+                           "</a>");
+                   }else{
+                   out.println("pas de priv");
+                  }%>
+                     
                   </li>
-				  </ul>
+                   <li>
+                      <% if (listNotif){
+                   out.println("<a href='client_user_list_notif_rep'>"+
+                           "List of notifications"+
+                           "<span class='arrow'></span>"+
+                           "</a>");
+                   }else{
+                   out.println("pas de priv");
+                  }%>
+                     
+                  </li>
+              </ul>
             </li>
-			<li class="last">
+             <li class="">
+               <a href="javascript:;">
+               <i class="icon-file-text"></i> 
+               <span class="title">Historique</span>
+               <span class="arrow "></span>
+               </a>
+            <ul class="sub-menu">
+                  <li>
+                        <% if (viewHistorique){
+                   out.println("<a href='client_notification.jsp'>"+
+                          " View Historique"+ 
+                           "<span class='arrow'></span>"+
+                           "</a>");
+                   }else{
+                   out.println("pas de priv");
+                  }%>
+                     
+                  </li>
+              </ul>
+            </li>
+         <li class="last">
                <a href="javascript:;">
                <i class="icon-bar-chart"></i> 
                <span class="title">Statistique</span>
                <span class="arrow "></span>
                </a>
-			   <ul class="sub-menu">
+            <ul class="sub-menu">
                   <li>
-                     <a href="table_stat_us.html">
-                     View  Statistique 
-                     <span class="arrow"></span>
-                     </a>
+                        <% if (viewStat){
+                   out.println("<a href='client_table_stat.jsp'>"+
+                           "View  Statistique"+ 
+                           "<span class='arrow'></span>"+
+                           "</a>");
+                   }else{
+                   out.println("pas de priv");
+                  }%>
+                     
                   </li>
-				  </ul>
+              </ul>
             </li>
-			
+         
          </ul>
          <!-- END SIDEBAR MENU -->
       </div>
@@ -276,7 +369,7 @@
                <ul class="page-breadcrumb breadcrumb">
                   <li>
                      <i class="icon-home"></i>
-                     <a href="index.html">Home</a> 
+                     <a href="forward?lien=index_user.jsp">Home</a> 
                      <i class="icon-angle-right"></i>
                   </li>
                   <li>
@@ -294,172 +387,165 @@
             <div class="col-md-12">
                </br>
 			   </br>
-               <form id="fileupload" action="//jquery-file-upload.appspot.com/" method="POST" enctype="multipart/form-data">
-                  <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
-                  <div class="row fileupload-buttonbar">
-                     <div class="col-lg-7">
+        
+        <div class="container">
+           
+            <br>
+            <!-- The file upload form used as target for the file upload widget -->
+            <form id="fileupload" action="UploadServlet" method="POST" enctype="multipart/form-data">
+                <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                <div class="row fileupload-buttonbar">
+                    <div class="span7">
                         <!-- The fileinput-button span is used to style the file input field as button -->
-                        <span class="btn green fileinput-button">
-                        <i class="icon-plus"></i>
-                        <span>Add files...</span>
-                        <input type="file" name="files[]" multiple>
+                        <span class="btn btn-success fileinput-button">
+                            <i class="icon-plus icon-white"></i>
+                            <span>Add files...</span>
+                            <input type="file" name="files[]" multiple>
                         </span>
-                        <button type="submit" class="btn blue start">
-                        <i class="icon-upload"></i>
-                        <span>Start upload</span>
+                        <button type="submit" class="btn btn-primary start">
+                            <i class="icon-upload icon-white"></i>
+                            <span>Start upload</span>
                         </button>
-                        <button type="reset" class="btn yellow cancel">
-                        <i class="icon-ban-circle"></i>
-                        <span>Cancel upload</span>
+                        <button type="reset" class="btn btn-warning cancel">
+                            <i class="icon-ban-circle icon-white"></i>
+                            <span>Cancel upload</span>
                         </button>
-                        <button type="button" class="btn red delete">
-                        <i class="icon-trash"></i>
-                        <span>Delete</span>
+                        <button type="button" class="btn btn-danger delete">
+                            <i class="icon-trash icon-white"></i>
+                            <span>Delete</span>
                         </button>
                         <input type="checkbox" class="toggle">
-                        <!-- The loading indicator is shown during file processing -->
-                        <span class="fileupload-loading"></span>
-                     </div>
-                     <!-- The global progress information -->
-                     <div class="col-lg-5 fileupload-progress fade">
+                    </div>
+                    <!-- The global progress information -->
+                    <div class="span5 fileupload-progress fade">
                         <!-- The global progress bar -->
-                        <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                           <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+                        <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                            <div class="bar" style="width:0%;"></div>
                         </div>
                         <!-- The extended global progress information -->
                         <div class="progress-extended">&nbsp;</div>
-                     </div>
-                  </div>
-                  <!-- The table listing the files available for upload/download -->
-                  <table role="presentation" class="table table-striped clearfix">
-                     <tbody class="files"></tbody>
-                  </table>
-               </form>
-               <div class="panel panel-success">
-                  <div class="panel-heading">
-                     <h3 class="panel-title">Demo Notes</h3>
-                  </div>
-                  <div class="panel-body">
-                     <ul>
-                        <li>The maximum file size for uploads in this demo is <strong>5 MB</strong> (default file size is unlimited).</li>
-                        <li>Only image files (<strong>JPG, GIF, PNG</strong>) are allowed in this demo (by default there is no file type restriction).</li>
-                        <li>Uploaded files will be deleted automatically after <strong>5 minutes</strong> (demo setting).</li>
-                     </ul>
-                  </div>
-               </div>
+                    </div>
+                </div>
+                <!-- The loading indicator is shown during file processing -->
+                <div class="fileupload-loading"></div>
+                <br>
+                <!-- The table listing the files available for upload/download -->
+                <table role="presentation" class="table table-striped"><tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody></table>
+            </form>
+            <br>
+           
+        </div>
+        <!-- modal-gallery is the modal dialog used for the image gallery -->
+        <div id="modal-gallery" class="modal modal-gallery hide fade" data-filter=":odd">
+            <div class="modal-header">
+                <a class="close" data-dismiss="modal">&times;</a>
+                <h3 class="modal-title"></h3>
             </div>
-         </div>
-         <!-- END PAGE CONTENT-->
-      </div>
-      <!-- END PAGE --> 
-   </div>
-   <!-- END CONTAINER -->
-   <!-- BEGIN FOOTER -->
-   <div class="footer">
-      <div class="footer-inner">
-         2013 &copy; Metronic by keenthemes.
-      </div>
-      <div class="footer-tools">
-         <span class="go-top">
-         <i class="icon-angle-up"></i>
-         </span>
-      </div>
-   </div>
-   <!-- END FOOTER -->
-   <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
-   <script id="template-upload" type="text/x-tmpl">
-      {% for (var i=0, file; file=o.files[i]; i++) { %}
-          <tr class="template-upload fade">
-              <td>
-                  <span class="preview"></span>
-              </td>
-              <td>
-                  <p class="name">{%=file.name%}</p>
-                  {% if (file.error) { %}
-                      <div><span class="label label-danger">Error</span> {%=file.error%}</div>
-                  {% } %}
-              </td>
-              <td>
-                  <p class="size">{%=o.formatFileSize(file.size)%}</p>
-                  {% if (!o.files.error) { %}
-                      <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                      <div class="progress-bar progress-bar-success" style="width:0%;"></div>
-                      </div>
-                  {% } %}
-              </td>
-              <td>
-                  {% if (!o.files.error && !i && !o.options.autoUpload) { %}
-                      <button class="btn blue start">
-                          <i class="icon-upload"></i>
-                          <span>Start</span>
-                      </button>
-                  {% } %}
-                  {% if (!i) { %}
-                      <button class="btn red cancel">
-                          <i class="icon-ban-circle"></i>
-                          <span>Cancel</span>
-                      </button>
-                  {% } %}
-              </td>
-          </tr>
-      {% } %}
-   </script>
-   <!-- The template to display files available for download -->
-   <script id="template-download" type="text/x-tmpl">
-      {% for (var i=0, file; file=o.files[i]; i++) { %}
-          <tr class="template-download fade">
-              <td>
-                  <span class="preview">
-                      {% if (file.thumbnailUrl) { %}
-                          <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
-                      {% } %}
-                  </span>
-              </td>
-              <td>
-                  <p class="name">
-                      {% if (file.url) { %}
-                          <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
-                      {% } else { %}
-                          <span>{%=file.name%}</span>
-                      {% } %}
-                  </p>
-                  {% if (file.error) { %}
-                      <div><span class="label label-danger">Error</span> {%=file.error%}</div>
-                  {% } %}
-              </td>
-              <td>
-                  <span class="size">{%=o.formatFileSize(file.size)%}</span>
-              </td>
-              <td>
-                  {% if (file.deleteUrl) { %}
-                      <button class="btn red delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
-                          <i class="icon-trash"></i>
-                          <span>Delete</span>
-                      </button>
-                      <input type="checkbox" name="delete" value="1" class="toggle">
-                  {% } else { %}
-                      <button class="btn yellow cancel">
-                          <i class="icon-ban-circle"></i>
-                          <span>Cancel</span>
-                      </button>
-                  {% } %}
-              </td>
-          </tr>
-      {% } %}
-   </script>
+            <div class="modal-body"><div class="modal-image"></div></div>
+            <div class="modal-footer">
+                <a class="btn modal-download" target="_blank">
+                    <i class="icon-download"></i>
+                    <span>Download</span>
+                </a>
+                <a class="btn btn-success modal-play modal-slideshow" data-slideshow="5000">
+                    <i class="icon-play icon-white"></i>
+                    <span>Slideshow</span>
+                </a>
+                <a class="btn btn-info modal-prev">
+                    <i class="icon-arrow-left icon-white"></i>
+                    <span>Previous</span>
+                </a>
+                <a class="btn btn-primary modal-next">
+                    <span>Next</span>
+                    <i class="icon-arrow-right icon-white"></i>
+                </a>
+            </div>
+        </div>
+</div>
+</div>
+</div>
+</div>
+
+        <!-- The template to display files available for upload -->
+        <script id="template-upload" type="text/x-tmpl">
+            {% for (var i=0, file; file=o.files[i]; i++) { %}
+        <tr class="template-upload fade">
+            <td class="preview"><span class="fade"></span></td>
+            <td class="name"><span>{%=file.name%}</span></td>
+            <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
+            {% if (file.error) { %}
+            <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
+            {% } else if (o.files.valid && !i) { %}
+            <td>
+                <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar" style="width:0%;"></div></div>
+            </td>
+            <td class="start">{% if (!o.options.autoUpload) { %}
+                <button class="btn btn-primary">
+                    <i class="icon-upload icon-white"></i>
+                    <span>Start</span>
+                </button>
+                {% } %}</td>
+            {% } else { %}
+            <td colspan="2"></td>
+            {% } %}
+            <td class="cancel">{% if (!i) { %}
+                <button class="btn btn-warning">
+                    <i class="icon-ban-circle icon-white"></i>
+                    <span>Cancel</span>
+                </button>
+                {% } %}</td>
+        </tr>
+        {% } %}
+    </script>
+    <!-- The template to display files available for download -->
+    <script id="template-download" type="text/x-tmpl">
+        {% for (var i=0, file; file=o.files[i]; i++) { %}
+        <tr class="template-download fade">
+            {% if (file.error) { %}
+            <td></td>
+            <td class="name"><span>{%=file.name%}</span></td>
+            <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
+            <td class="error" colspan="2"><span class="label label-important">Error</span> {%=file.error%}</td>
+            {% } else { %}
+            <td class="preview">{% if (file.thumbnail_url) { %}
+                <a href="{%=file.url%}" title="{%=file.name%}" rel="gallery" download="{%=file.name%}"><img src="{%=file.thumbnail_url%}"></a>
+                {% } %}</td>
+            <td class="name">
+                <a href="{%=file.url%}" title="{%=file.name%}" rel="{%=file.thumbnail_url&&'gallery'%}" download="{%=file.name%}">{%=file.name%}</a>
+            </td>
+            <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
+            <td colspan="2"></td>
+            {% } %}
+            <td class="delete">
+                <button class="btn btn-danger" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+                        <i class="icon-trash icon-white"></i>
+                    <span>Delete</span>
+                </button>
+                <input type="checkbox" name="delete" value="1">
+            </td>
+        </tr>
+        {% } %}
+    </script>
+  
+    <script src="js/jquery-1.8.2.min.js"></script>
+    <script src="js/vendor/jquery.ui.widget.js"></script>
+    <script src="js/tmpl.min.js"></script>
+    <script src="js/load-image.min.js"></script>
+    <script src="js/canvas-to-blob.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-image-gallery.min.js"></script>
+    <script src="js/jquery.iframe-transport.js"></script>
+    <script src="js/jquery.fileupload.js"></script>
+    <script src="js/jquery.fileupload-fp.js"></script>
+    <script src="js/jquery.fileupload-ui.js"></script>
+    <script src="js/locale.js"></script>
+    <script src="js/main.js"></script>
    <!-- BEGIN CORE PLUGINS -->   
    <!--[if lt IE 9]>
    <script src="assets/plugins/respond.min.js"></script>
    <script src="assets/plugins/excanvas.min.js"></script> 
    <![endif]-->   
-   <script src="assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
-   <script src="assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>   
-   <script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-   <script src="assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js" type="text/javascript" ></script>
-   <script src="assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-   <script src="assets/plugins/jquery.blockui.min.js" type="text/javascript"></script>  
-   <script src="assets/plugins/jquery.cookie.min.js" type="text/javascript"></script>
-   <script src="assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
+   
    <!-- END CORE PLUGINS -->
    <!-- BEGIN PAGE LEVEL PLUGINS -->
    <script src="assets/plugins/fancybox/source/jquery.fancybox.pack.js"></script>
@@ -475,36 +561,21 @@
    <script src="assets/plugins/jquery-file-upload/js/vendor/canvas-to-blob.min.js"></script>
    <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
    <script src="assets/plugins/jquery-file-upload/js/jquery.iframe-transport.js"></script>
-   <!-- The basic File Upload plugin -->
-   <script src="assets/plugins/jquery-file-upload/js/jquery.fileupload.js"></script>
-   <!-- The File Upload processing plugin -->
-   <script src="assets/plugins/jquery-file-upload/js/jquery.fileupload-process.js"></script>
-   <!-- The File Upload image preview & resize plugin -->
-   <script src="assets/plugins/jquery-file-upload/js/jquery.fileupload-image.js"></script>
-   <!-- The File Upload audio preview plugin -->
-   <script src="assets/plugins/jquery-file-upload/js/jquery.fileupload-audio.js"></script>
-   <!-- The File Upload video preview plugin -->
-   <script src="assets/plugins/jquery-file-upload/js/jquery.fileupload-video.js"></script>
-   <!-- The File Upload validation plugin -->
-   <script src="assets/plugins/jquery-file-upload/js/jquery.fileupload-validate.js"></script>
-   <!-- The File Upload user interface plugin -->
-   <script src="assets/plugins/jquery-file-upload/js/jquery.fileupload-ui.js"></script>
-   <!-- The main application script -->
-   <!-- The XDomainRequest Transport is included for cross-domain file deletion for IE 8 and IE 9 -->
-   <!--[if (gte IE 8)&(lt IE 10)]>
-   <script src="assets/plugins/jquery-file-upload/js/cors/jquery.xdr-transport.js"></script>
-   <![endif]-->
-   <!-- END:File Upload Plugin JS files-->
-   <script src="assets/scripts/app.js"></script>
-   <script src="assets/scripts/form-fileupload.js"></script>
+     <script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+   <script src="assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js" type="text/javascript" ></script>
+   <script src="assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+   <script src="assets/plugins/jquery.blockui.min.js" type="text/javascript"></script>  
+   <script src="assets/plugins/jquery.cookie.min.js" type="text/javascript"></script>
+   <script src="assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
+    <script src="assets/scripts/app.js"></script>   
+   <!-- END PAGE LEVEL SCRIPTS -->  
+     
    <script>
-      jQuery(document).ready(function() {
-      // initiate layout and plugins
-      App.init();
-      FormFileUpload.init();
+      jQuery(document).ready(function() {       
+         App.init();
+         
       });
    </script>
-   <!-- END JAVASCRIPTS -->
 </body>
 <!-- END BODY -->
 </html>

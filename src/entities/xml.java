@@ -9,6 +9,8 @@ public class xml {
 	private String type_doc;
 	private String email_user;
 	private String email_client;
+	private Date date_ajout;
+	private String etat_doc;
 	
 	public xml(){
 		
@@ -52,6 +54,22 @@ public class xml {
 
 	public void setType_doc(String type_doc) {
 		this.type_doc = type_doc;
+	}
+
+	public Date getDate_ajout() {
+		return date_ajout;
+	}
+
+	public void setDate_ajout(Date date_ajout) {
+		this.date_ajout = date_ajout;
+	}
+
+	public String getEtat_doc() {
+		return etat_doc;
+	}
+
+	public void setEtat_doc(String etat_doc) {
+		this.etat_doc = etat_doc;
 	}
 	
 	

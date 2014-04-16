@@ -1,5 +1,7 @@
 package AdminServlet;
 
+import historiqueDAO.gererHistorique;
+
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -53,6 +55,12 @@ public class ajout_rep_notif extends HttpServlet {
 		rep.setId_rec(Integer.parseInt(request.getParameter("id")));
 		gerer_reclamation gr = new gerer_reclamation();
 		gr.ajouterRep(rep);
+		gererHistorique gh = new gererHistorique();
+		if (authentification.c.equals("admin")){
+			gh.Task("à repondu à une notification", request.getRemoteAddr(), "administrateur", authentification.email);
+			
+		}
+		
 		this.getServletContext().getRequestDispatcher("/list_delete_reclamation").forward(request, response);
 		
 	}

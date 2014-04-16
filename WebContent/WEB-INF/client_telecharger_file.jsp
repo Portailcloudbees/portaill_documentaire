@@ -1,3 +1,5 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="entities.xml" %>
 <!DOCTYPE html>
 <head>
    <meta charset="utf-8" />
@@ -12,21 +14,18 @@
    <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
    <link href="assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
    <!-- END GLOBAL MANDATORY STYLES -->
-   <!-- BEGIN PAGE LEVEL PLUGIN STYLES --> 
-   <link href="assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" type="text/css"/>
-   <link href="assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
-   <link href="assets/plugins/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css"/>
-   <link href="assets/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css"/>
-   <link href="assets/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css"/>
-   <!-- END PAGE LEVEL PLUGIN STYLES -->
+   <!-- BEGIN PAGE LEVEL STYLES -->
+   <link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2_metro.css" />
+   <link rel="stylesheet" href="assets/plugins/data-tables/DT_bootstrap.css" />
+   <!-- END PAGE LEVEL STYLES -->
    <!-- BEGIN THEME STYLES --> 
    <link href="assets/css/style-metronic.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/style-responsive.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/plugins.css" rel="stylesheet" type="text/css"/>
-   <link href="assets/css/pages/tasks.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
    <link href="assets/css/custom.css" rel="stylesheet" type="text/css"/>
+   <link href="css/sms-style.css" rel="stylesheet" type="text/css"/>
    <!-- END THEME STYLES -->
    <link rel="shortcut icon" href="favicon.ico" />
 </head>
@@ -34,11 +33,12 @@
 <!-- BEGIN BODY -->
 <body class="page-header-fixed">
    <!-- BEGIN HEADER -->   
+   <!-- BEGIN HEADER -->   
    <div class="header navbar navbar-inverse navbar-fixed-top">
       <!-- BEGIN TOP NAVIGATION BAR -->
       <div class="header-inner">
          <!-- BEGIN LOGO -->  
-         <a class="navbar-brand" href="index.html">
+         <a class="navbar-brand" href="forward?lien=index_client.jsp">
          <h3 style="color:white"> <b><center>I&nbsp;M&nbsp;E&nbsp;X</center></b></h3>
          </a>
          <!-- END LOGO -->
@@ -92,7 +92,7 @@
                      </ul>
                   </li>
                   <li class="external">   
-                     <a href="inbox.html">See all messages <i class="m-icon-swapright"></i></a>
+                     <a href="forward?lien=inboxl">See all messages <i class="m-icon-swapright"></i></a>
                   </li>
                </ul>
             </li>
@@ -106,9 +106,9 @@
                <i class="icon-angle-down"></i>
                </a>
                <ul class="dropdown-menu">
-                  <li><a href="extra_profile.html"><i class="icon-user"></i> My Profile</a>
+                  <li><a href="forward?lien=extra_profile.jsp"><i class="icon-user"></i> My Profile</a>
                   </li>
-                  <li><a href="login.html"><i class="icon-key"></i> Log Out</a>
+                  <li><a href="deconnexion"><i class="icon-key"></i> Log Out</a>
                   </li>
                </ul>
             </li>
@@ -133,7 +133,7 @@
             </li>
             <li>
                <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
-               <form class="sidebar-search" action="extra_search.html" method="POST">
+               <form class="sidebar-search" action="forward?lien=extra_search.jsp" method="POST">
                   <div class="form-container">
                      <div class="input-box">
                         <a href="javascript:;" class="remove"></a>
@@ -145,7 +145,7 @@
                <!-- END RESPONSIVE QUICK SEARCH FORM -->
             </li>
             <li class="start active ">
-               <a href="index_client.html">
+               <a href="forward?lien=index_client.jsp">
                <i class="icon-home"></i> 
                <span class="title">Dashboard</span>
                <span class="selected"></span>
@@ -158,31 +158,17 @@
                <span class="title">User</span>
                <span class="arrow "></span>
                </a>
-			   <ul class="sub-menu">
+            <ul class="sub-menu">
                   <li>
-                     <a href="table_user.html">
+                     <a href="list_ajout_update_ut">
                      View User
                      <span class="arrow"></span>
                      </a>
                   </li>
-				  </ul>
+              </ul>
             </li>
-			<li class="">
-               <a href="javascript:;">
-               <i class="icon-leaf"></i> 
-               <span class="title">Privilege</span>
-               <span class="arrow "></span>
-               </a>
-			   <ul class="sub-menu">
-                  <li>
-                     <a href="priv_us.html">
-                     Choose Privilege
-                     <span class="arrow"></span>
-                     </a>
-                  </li>
-				  </ul>
-            </li>
-			<li>
+      
+         <li>
                <a class="active" href="javascript:;">
                <i class="icon-folder-open"></i> 
                <span class="title">Files</span>
@@ -190,25 +176,20 @@
                </a>
                <ul class="sub-menu">
                   <li>
-                     <a href="upload_file_cl.html">
+                     <a href="forward?lien=client_upload_file.jsp">
                      File Upload 
                      <span class="arrow"></span>
                      </a>
                   </li>
                  <li>
-                     <a href="cons_up_cl.html">
-                     View File Upload
+                     <a href="list_xml_up">
+                     View Uploaded Files
                      <span class="arrow"></span>
                      </a>
                   </li>
-                  <li>
-                     <a href="doc_traite_cl.html">
-                     View File Processed
-                     <span class="arrow"></span>
-                     </a>
-                  </li>
-				     <li>
-                     <a href="telecharge_file_cl.html">
+                 
+                 <li>
+                     <a href="list_download_xml">
                      Download File
                      <span class="arrow"></span>
                      </a>
@@ -221,31 +202,52 @@
                <span class="title">Notification</span>
                <span class="arrow "></span>
                </a>
-			   <ul class="sub-menu">
+            <ul class="sub-menu">
                   <li>
-                     <a href="notification_cl.html">
-                     Cearte  Notification 
+                     <a href="notif_send_page">
+                     Send  Notification 
                      <span class="arrow"></span>
                      </a>
                   </li>
-				  </ul>
+                   <li>
+                     <a href="client_user_list_notif_rep">
+                     List of notifications 
+                     <span class="arrow"></span>
+                     </a>
+                  </li>
+              </ul>
             </li>
-			<li class="last">
+             <li class="">
+               <a href="javascript:;">
+               <i class="icon-file-text"></i> 
+               <span class="title">Historique</span>
+               <span class="arrow "></span>
+               </a>
+            <ul class="sub-menu">
+                  <li>
+                     <a href="list_getlast_client_historique">
+                    View Historique 
+                     <span class="arrow"></span>
+                     </a>
+                  </li>
+              </ul>
+            </li>
+         <li class="last">
                <a href="javascript:;">
                <i class="icon-bar-chart"></i> 
                <span class="title">Statistique</span>
                <span class="arrow "></span>
                </a>
-			   <ul class="sub-menu">
+            <ul class="sub-menu">
                   <li>
-                     <a href="table_stat_cl.html">
+                     <a href="client_table_stat.jsp">
                      View  Statistique 
                      <span class="arrow"></span>
                      </a>
                   </li>
-				  </ul>
+              </ul>
             </li>
-			
+         
          </ul>
          <!-- END SIDEBAR MENU -->
       </div>
@@ -328,62 +330,172 @@
             </div>
          </div>
          <!-- END PAGE HEADER-->
-		 
-		 
+	 
   <div class="portlet box blue">
                   <div class="portlet-title">
-                     <div class="caption"><i class="icon-edit"></i>Download File</div>
-                     <div class="tools">
-                        <a href="javascript:;" class="collapse"></a>
-                        <a href="#portlet-config" data-toggle="modal" class="config"></a>
-                        <a href="javascript:;" class="reload"></a>
-                        <a href="javascript:;" class="remove"></a>
+                     <div class="caption"><i class="icon-globe"></i>Uploaded Files</div>
+                     <div class="actions">
+                        <div class="btn-group">
+                           <a class="btn default" href="#" data-toggle="dropdown">
+                           Columns
+                           <i class="icon-angle-down"></i>
+                           </a>
+                           <div id="sample_2_column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
+                              <label><input type="checkbox" checked data-column="0">Type</label>
+                              <label><input type="checkbox" checked data-column="1">Name</label>
+                              <label><input type="checkbox" checked data-column="2">Path</label>
+                              <label><input type="checkbox" checked data-column="3">Size</label>
+                              <label><input type="checkbox" checked data-column="4">Date</label>
+                              <label><input type="checkbox" checked data-column="5">Etat</label>
+                              
+                           </div>
+                        </div>
                      </div>
                   </div>
                   <div class="portlet-body">
-                     <div class="table-toolbar">
-                        
-                        <div class="btn-group pull-right">
-                           <button class="btn dropdown-toggle" data-toggle="dropdown">Tools <i class="icon-angle-down"></i>
-                           </button>
-                           <ul class="dropdown-menu pull-right">
-                              <li><a href="#">Print</a></li>
-                              <li><a href="#">Save as PDF</a></li>
-                              <li><a href="#">Export to Excel</a></li>
-                           </ul>
-                        </div>
-                     </div>
-                     <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
+                     <table class="table table-striped table-bordered table-hover table-full-width " id="sample_2">
                         <thead>
                            <tr>
-                              <th>ID</th>
-                              <th>Ref</th>
-                              <th>Nom</th>	
-								<th>Type</th>
-								<th>Date</th>										
-                              <th>Show</th>
-                              <th>Download</th>
+                              <th>Type</th>
+                              <th>Name</th>
+                              <th class="hidden-xs">Path</th>
+                              <th class="hidden-xs">Size</th>
+                              <th class="hidden-xs">Date</th>
+                              <th class="hidden-xs">Etat</th>
+                              <th > Telecharger </th>
+                              <th > Email </th>
+                              <th > SMS </th>
+                              <th >Delete </th>
                            </tr>
                         </thead>
                         <tbody>
-                           <tr >
-                              <td>1245</td>
-                              <td>45415m</td>
-                              <td>f1</td>  
-                              <td>xml</td>
-                              <td>10/2/2014</td>  							  
-                              <td><a class="edit" href="javascript:;">Show</a></td>
-                              <td><a class="delete" href="javascript:;">Download</a></td>
-                           </tr>
+                            <% 
+                        int j;
+                        ArrayList<xml> liste_xml = (ArrayList<xml>) request.getAttribute("list_de_xml");
+                        for (j=0; j<liste_xml.size(); j++) { 
+                            	
+                        %>
+                           <tr>
+                              <td><%= liste_xml.get(j).getType_doc() %></td>
+                              <td><%= liste_xml.get(j).getNom_doc() %></td>
+                              <td><%= liste_xml.get(j).getPath_doc() %></td>
+                              <td ><%= liste_xml.get(j).getTaille_doc() %></td>
+							  <td><%= liste_xml.get(j).getDate_ajout() %></td>
+							 <% 
+								 out.println("<td><span class='label label-sm label-success'>Ready </span></td>"
+				                            ); 
+							 %>
+							  <!-- <td><a class="fileDownloadSimpleRichExperience" href="#" onclick="down();" >Telecharger</a></td> -->
+							  <!-- <td><a class="download" href="javascript:;" >telecharger</a></td>-->
+                              <td><a onclick="down()" href="download_xml?fileName=<%= liste_xml.get(j).getNom_doc() %>&path=<%= liste_xml.get(j).getPath_doc() %>">telecharger</a></td>
+                              <td><a href="#email" data-toggle="modal" >email</a></td>
 
+                                   <div class="modal fade" id="email" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                       <div class="modal-dialog">
+                                          <div class="modal-content">
+                                             <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                                <h4 class="modal-title">Compose new</h4>
+                                             </div>
+                                             <div class="modal-body" style="height:100%">
+                                               <div id="form-main" align="center">
+ 
+                                                            
+       
+                                                     <p class="email" >
+                                                        <input name="email" type="text" class="validate[required,custom[email]] feedback-input" id="emailto" placeholder="Email" />
+                                                      </p>
+                                                     
+                                                      <p class="name">
+                                                        <input name="name" type="text" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" placeholder="Objet" id="sujet" />
+                                                      </p>
+                                                      
+                                                      <p class="text">
+                                                        <textarea name="text" class="validate[required,length[6,300]] feedback-input" id="contenue" placeholder="Message"></textarea>
+                                                      </p>
+   													
+   													   <p class="btn green fileinput-button">
+                                                          <input id="file" type="file" name="file" size="50" />
+                                                      </p>
+   
+                                                            
+                                                           </div>
+         
+      
+                                             </div>
+                                             <div class="modal-footer">
+                                           
+                                                <button type="button" id="sendmail" onclick="javascript:;" class="btn blue email">Save changes</button>
+                                                <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                                               
+                                             </div>
+                                          </div>
+                                          <!-- /.modal-content -->
+                                       </div>
+                                       <!-- /.modal-dialog -->
+                                    </div>
+
+
+
+
+
+
+
+
+
+
+                              <td><a href="#sms" data-toggle="modal" >Send Sms</a></td>
+                              <!--modal begin-->
+                                 <div class="modal fade" id="sms" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                       <div class="modal-dialog">
+                                          <div class="modal-content">
+                                             <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                                <h4 class="modal-title">Compose new</h4>
+                                             </div>
+                                             <div class="modal-body" style="height:100%">
+                                               <div id="form-main" align="center">
+ 
+                                                             <form class="form" id="form1" name="sms" action="Send_sms" method="GET">
+                                                               
+                                                               <p class="name">
+                                                                 <input name="to" type="text" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" placeholder="Phone Number" id="toSMS" />
+                                                               </p>
+
+
+                                                               <p class="text">
+                                                                 <textarea name="message" class="validate[required,length[6,300]] feedback-input" id="messageSMS" placeholder="Message"></textarea>
+                                                               </p>
+                                                            
+                                                           </div>
+         
+      
+                                             </div>
+                                             <div class="modal-footer">
+                                           
+                                                <button type="button" id="sendsms" onclick="javascript:;" class="btn blue">Save changes</button>
+                                                <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                                             	</form>
+                                             </div>
+                                          </div>
+                                          <!-- /.modal-content -->
+                                       </div>
+                                       <!-- /.modal-dialog -->
+                                    </div>
+
+                             <!--modal end-->
+
+
+                              <td><a class="delete" href="javascript:;" >Delete</a></td>
+                             
+                           </tr>
+                           
+                         <% } %>
                         </tbody>
                      </table>
                   </div>
                </div>
-		 
-		 
-
-		 
+           
          
         </div>
            </div>
@@ -399,17 +511,8 @@
          </span>
       </div>
    </div>
-   <!-- END FOOTER -->
-   <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
-   <!-- BEGIN CORE PLUGINS -->   
-   <!--[if lt IE 9]>
-   <script src="assets/plugins/respond.min.js"></script>
-   <script src="assets/plugins/excanvas.min.js"></script> 
-   <![endif]-->   
    <script src="assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
-   <script src="assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>   
-   <!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
-   <script src="assets/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
+   <script src="assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>    
    <script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
    <script src="assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js" type="text/javascript" ></script>
    <script src="assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
@@ -418,43 +521,54 @@
    <script src="assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
    <!-- END CORE PLUGINS -->
    <!-- BEGIN PAGE LEVEL PLUGINS -->
-   <script src="assets/plugins/jqvmap/jqvmap/jquery.vmap.js" type="text/javascript"></script>   
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js" type="text/javascript"></script>  
-   <script src="assets/plugins/flot/jquery.flot.js" type="text/javascript"></script>
-   <script src="assets/plugins/flot/jquery.flot.resize.js" type="text/javascript"></script>
-   <script src="assets/plugins/jquery.pulsate.min.js" type="text/javascript"></script>
-   <script src="assets/plugins/bootstrap-daterangepicker/moment.min.js" type="text/javascript"></script>
-   <script src="assets/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script>     
-   <script src="assets/plugins/gritter/js/jquery.gritter.js" type="text/javascript"></script>
-   <!-- IMPORTANT! fullcalendar depends on jquery-ui-1.10.3.custom.min.js for drag & drop support -->
-   <script src="assets/plugins/fullcalendar/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
-   <script src="assets/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.js" type="text/javascript"></script>
-   <script src="assets/plugins/jquery.sparkline.min.js" type="text/javascript"></script>  
+   <script type="text/javascript" src="assets/plugins/select2/select2.min.js"></script>
+   <script type="text/javascript" src="assets/plugins/data-tables/jquery.dataTables.min.js"></script>
+   <script type="text/javascript" src="assets/plugins/data-tables/DT_bootstrap.js"></script>
    <!-- END PAGE LEVEL PLUGINS -->
    <!-- BEGIN PAGE LEVEL SCRIPTS -->
-   <script src="assets/scripts/app.js" type="text/javascript"></script>
-   <script src="assets/scripts/index.js" type="text/javascript"></script>
-   <script src="assets/scripts/tasks.js" type="text/javascript"></script>        
-   <!-- END PAGE LEVEL SCRIPTS -->  
+   <script src="assets/scripts/app.js"></script>
+   <script src="assets/scripts/jquery.filedownload.js"></script>
+   
+   <script src="assets/scripts/table-advanced.js"></script>     
+     
+
+
+     <script>
+        $(document).ready(function(){
+	     	 $("#sendsms").click(function(){
+				$.get("Send_sms",
+					 {
+			       	 to:document.getElementById("toSMS").value,
+						 message:document.getElementById("messageSMS").value
+					 },
+						function(data,status){
+						  
+					  });
+				  });
+	     	 
+	     	$("#sendmail").click(function(){
+	            $.post("send_email",
+	                {
+	                   emailto:document.getElementById("emailto").value,
+	                   sujet:document.getElementById("sujet").value,
+	                   contenue:document.getElementById("contenue").value
+	                },
+	                  function(data,status){
+	                    alert("Email Sent");
+	                 });
+	              });
+	     	 
+	     	 
+			  });
+								        	   
+		 </script>
    <script>
-      jQuery(document).ready(function() {    
-         App.init(); // initlayout and core plugins
-         Index.init();
-         Index.initJQVMAP(); // init index page's custom scripts
-         Index.initCalendar(); // init index page's custom scripts
-         Index.initCharts(); // init index page's custom scripts
-         Index.initChat();
-         Index.initMiniCharts();
-         Index.initDashboardDaterange();
-         Index.initIntro();
-         Tasks.initDashboardWidget();
+      jQuery(document).ready(function() {       
+         App.init();
+         TableAdvanced.init();
       });
    </script>
+   
    <!-- END JAVASCRIPTS -->
 </body>
 <!-- END BODY -->

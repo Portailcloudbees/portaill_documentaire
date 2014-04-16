@@ -1,8 +1,14 @@
+<%@ page import="java.util.ArrayList" %>
+
+ <%@page import="responsableDAO.*"%>
+<%@ page import="java.util.List" %>
+ <%@page import="connexion.authentification"%>
+  <%@page import="entities.privilege_utilisateur"%>
 <!DOCTYPE html>
 <!-- BEGIN HEAD -->
 <head>
    <meta charset="utf-8" />
-   <title>IMEX | Notif-user</title>
+   <title>IMEX | Notification </title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -23,7 +29,7 @@
    <!-- BEGIN THEME STYLES --> 
    <link href="assets/css/style-metronic.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
-   <link href="assets/css/c.css" rel="stylesheet" type="text/css"/>
+   <link href="assets/css/notif_style.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/style-responsive.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/plugins.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/pages/tasks.css" rel="stylesheet" type="text/css"/>
@@ -37,11 +43,12 @@
 <!-- BEGIN BODY -->
 <body class="page-header-fixed">
    <!-- BEGIN HEADER -->   
+   <!-- BEGIN HEADER -->   
    <div class="header navbar navbar-inverse navbar-fixed-top">
       <!-- BEGIN TOP NAVIGATION BAR -->
       <div class="header-inner">
          <!-- BEGIN LOGO -->  
-         <a class="navbar-brand" href="index.html">
+         <a class="navbar-brand" href="forward?lien=index_user.jsp">
          <h3 style="color:white"> <b><center>I&nbsp;M&nbsp;E&nbsp;X</center></b></h3>
          </a>
          <!-- END LOGO -->
@@ -95,7 +102,7 @@
                      </ul>
                   </li>
                   <li class="external">   
-                     <a href="inbox.html">See all messages <i class="m-icon-swapright"></i></a>
+                     <a href="forward?lien=inboxl">See all messages <i class="m-icon-swapright"></i></a>
                   </li>
                </ul>
             </li>
@@ -109,9 +116,9 @@
                <i class="icon-angle-down"></i>
                </a>
                <ul class="dropdown-menu">
-                  <li><a href="extra_profile.html"><i class="icon-user"></i> My Profile</a>
+                  <li><a href="forward?lien=extra_profile.jsp"><i class="icon-user"></i> My Profile</a>
                   </li>
-                  <li><a href="login.html"><i class="icon-key"></i> Log Out</a>
+                  <li><a href="deconnexion"><i class="icon-key"></i> Log Out</a>
                   </li>
                </ul>
             </li>
@@ -128,7 +135,7 @@
       <!-- BEGIN SIDEBAR -->
       <div class="page-sidebar navbar-collapse collapse">
          <!-- BEGIN SIDEBAR MENU -->        
-         <ul class="page-sidebar-menu">
+            <ul class="page-sidebar-menu">
             <li>
                <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
                <div class="sidebar-toggler hidden-phone"></div>
@@ -136,7 +143,7 @@
             </li>
             <li>
                <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
-               <form class="sidebar-search" action="extra_search.html" method="POST">
+               <form class="sidebar-search" action="forward?lien=extra_search.jsp" method="POST">
                   <div class="form-container">
                      <div class="input-box">
                         <a href="javascript:;" class="remove"></a>
@@ -148,13 +155,49 @@
                <!-- END RESPONSIVE QUICK SEARCH FORM -->
             </li>
             <li class="start active ">
-               <a href="index_us.html">
+               <a href="forward?lien=index_user.jsp">
                <i class="icon-home"></i> 
                <span class="title">Dashboard</span>
                <span class="selected"></span>
                </a>
             </li>
-			<li>
+            <% 
+               boolean uploadFile = false;
+          	 boolean deleteFile = false;
+          	 boolean sendFile = false;
+          	 boolean downloadFile = false;
+          	 boolean sendSms = false;
+          	 boolean sendEmail = false;
+          	 boolean viewStat = false;
+          	 boolean answerNotif = false;
+          	 boolean export = false;
+             boolean viewUpload=false;
+             boolean viewHistorique =false;
+             boolean sendNotif=false;
+             boolean listNotif=false;
+             
+               String email = authentification.email;
+               gerer_privilege_ut gu = new gerer_privilege_ut();
+               List<privilege_utilisateur> priv = gu.ListPrivilege(email);
+                for (int i=0; i<priv.size(); i++) {
+                   uploadFile=priv.get(i).isUploadFile();
+                   deleteFile=priv.get(i).isDeleteFile();
+                   
+                   sendFile=priv.get(i).isSendFile();
+                   downloadFile=priv.get(i).isDownloadFile();
+                   sendSms=priv.get(i).isSendSms();
+                   sendEmail=priv.get(i).isSendEmail();
+                   viewStat=priv.get(i).isViewStat();
+                   answerNotif=priv.get(i).isAnswerNotif();
+                   export=priv.get(i).isExport();
+                   viewUpload=priv.get(i).isViewUpload();
+                   viewHistorique=priv.get(i).isViewHistorique();
+                   sendNotif=priv.get(i).isSendNotif();
+                   listNotif=priv.get(i).isListNotif();
+                }
+            %>
+      
+         <li>
                <a class="active" href="javascript:;">
                <i class="icon-folder-open"></i> 
                <span class="title">Files</span>
@@ -162,29 +205,38 @@
                </a>
                <ul class="sub-menu">
                   <li>
-                     <a href="upload_file_us.html">
-                     File Upload 
-                     <span class="arrow"></span>
-                     </a>
+                  <% if (uploadFile){
+                   out.println("<a href='forward?lien=user_upload_file.jsp'>"+
+                           "File Upload"+ 
+                          " <span class='arrow'></span>"+
+                          " </a>");
+                   }else{
+                   out.println("pas de priv");
+                  }%>
+                     
                   </li>
-                  <li>
-                     <a href="cons_up_us.html">
-                     View File Upload
-                     <span class="arrow"></span>
-                     </a>
+                 <li>
+                    <% if (viewUpload){
+                   out.println("<a href='list_xml_up'>"+
+                           "View Uploaded Files"+
+                           "<span class='arrow'></span>"+
+                           "</a>");
+                   }else{
+                   out.println("pas de priv");
+                  }%>
+                     
                   </li>
-                  <li>
-                     <a href="doc_traite_us.html">
-                     View File Processed
-                     <span class="arrow"></span>
-                     </a>
-                  </li>
-				        
-				  <li>
-                     <a href="telecharge_file_us.html">
-                     Download File
-                     <span class="arrow"></span>
-                     </a>
+                 
+                 <li>
+                      <% if (downloadFile){
+                   out.println("<a href='list_download_xml'>"+
+                           "Download File"+
+                           "<span class='arrow'></span>"+
+                           "</a>");
+                   }else{
+                   out.println("pas de priv");
+                  }%>
+                     
                   </li>
                </ul>
             </li>
@@ -194,31 +246,72 @@
                <span class="title">Notification</span>
                <span class="arrow "></span>
                </a>
-			   <ul class="sub-menu">
+            <ul class="sub-menu">
                   <li>
-                     <a href="notification_us.html">
-                    Create Notification 
-                     <span class="arrow"></span>
-                     </a>
+                      <% if (sendNotif){
+                   out.println("<a href='notif_send_page'>"+
+                           "Send  Notification"+
+                           "<span class='arrow'></span>"+
+                           "</a>");
+                   }else{
+                   out.println("pas de priv");
+                  }%>
+                     
                   </li>
-				  </ul>
+                   <li>
+                      <% if (listNotif){
+                   out.println("<a href='client_user_list_notif_rep'>"+
+                           "List of notifications"+
+                           "<span class='arrow'></span>"+
+                           "</a>");
+                   }else{
+                   out.println("pas de priv");
+                  }%>
+                     
+                  </li>
+              </ul>
             </li>
-			<li class="last">
+             <li class="">
+               <a href="javascript:;">
+               <i class="icon-file-text"></i> 
+               <span class="title">Historique</span>
+               <span class="arrow "></span>
+               </a>
+            <ul class="sub-menu">
+                  <li>
+                        <% if (viewHistorique){
+                   out.println("<a href='client_notification.jsp'>"+
+                          " View Historique"+ 
+                           "<span class='arrow'></span>"+
+                           "</a>");
+                   }else{
+                   out.println("pas de priv");
+                  }%>
+                     
+                  </li>
+              </ul>
+            </li>
+         <li class="last">
                <a href="javascript:;">
                <i class="icon-bar-chart"></i> 
                <span class="title">Statistique</span>
                <span class="arrow "></span>
                </a>
-			   <ul class="sub-menu">
+            <ul class="sub-menu">
                   <li>
-                     <a href="table_stat_us.html">
-                     View Statistique 
-                     <span class="arrow"></span>
-                     </a>
+                        <% if (viewStat){
+                   out.println("<a href='client_table_stat.jsp'>"+
+                           "View  Statistique"+ 
+                           "<span class='arrow'></span>"+
+                           "</a>");
+                   }else{
+                   out.println("pas de priv");
+                  }%>
+                     
                   </li>
-				  </ul>
+              </ul>
             </li>
-			
+         
          </ul>
 		 
          <!-- END SIDEBAR MENU -->
@@ -289,7 +382,7 @@
                <ul class="page-breadcrumb breadcrumb">
 			    <li>
                      <i class="icon-home"></i>
-                     <a href="index.html">Home</a> 
+                     <a href="forward?lien=index_user.jsp">Home</a> 
                      <i class="icon-angle-right"></i>
                   </li>
                   <li>
@@ -312,23 +405,23 @@
 		 
 	<div id="form-main" align="center">
   <div id="form-div">
-    <form class="form" id="form1">
+    <form class="form" id="form1" method="POST" action="notif_send_page">
       
       <p class="name">
-        <input name="name" type="text" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" placeholder="User" id="name" />
+        <input name="email" type="text" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" value="<%= request.getAttribute("email") %>" id="name" disabled/>
       </p>
 <p class="name">
-        <input name="name" type="text" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" placeholder="Company" id="name" />
+        <input name="company" type="text" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" value="<%= request.getAttribute("company") %>"  id="name" disabled/>
       </p>
 
     
 	  
 	  <p class="email" >
-        <input name="email" type="text" class="validate[required,custom[email]] feedback-input" id="email" placeholder="Objet" />
+        <input name="objet" type="text" class="validate[required,custom[email]] feedback-input" id="email" placeholder="Objet" />
       </p>
       
       <p class="text">
-        <textarea name="text" class="validate[required,length[6,300]] feedback-input" id="comment" placeholder="Message"></textarea>
+        <textarea name="message" class="validate[required,length[6,300]] feedback-input" id="comment" placeholder="Message"></textarea>
       </p>
 	
 		<center><button  type="submit" class="btn btn-default">Send</button>&nbsp;&nbsp;&nbsp;<button  type="reset" class="btn btn-default">Cancel</button></center>

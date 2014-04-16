@@ -96,6 +96,39 @@ var TableAdvanced = function () {
             var bVis = oTable.fnSettings().aoColumns[iCol].bVisible;
             oTable.fnSetColumnVis(iCol, (bVis ? false : true));
         });
+        
+        var nRow = $(this).parents('tr')[0];
+        var d =oTable.fnGetData(nRow);
+        
+
+
+        $('#sample_2 a.delete').live('click', function (e) {
+            e.preventDefault();
+
+            if (confirm("Are you sure to delete this row ?") == false) {
+                return;
+            }
+
+            var nRow = $(this).parents('tr')[0];
+            var d =oTable.fnGetData(nRow);
+            oTable.fnDeleteRow(nRow);
+           
+           
+            $.ajax({
+            	type:"GET",
+            	url: "./delete_xml",
+            	contentType: "application/x-www-form-urlencoded",
+            	dataType: "JSON",
+            	data: {path:d[2]},
+            	success: function(data) {
+            		alert("Deleted! ");
+            		}
+            	});
+            
+           
+        });
+
+        
     }
 
     return {

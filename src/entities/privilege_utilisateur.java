@@ -10,12 +10,64 @@ public class privilege_utilisateur {
 	private boolean viewStat;
 	private boolean answerNotif;
 	private boolean export;
-	
-	
+	private boolean viewUpload;
+	private boolean viewHistorique;
+    private boolean sendNotif;
+    private boolean listNotif;
 	
     public privilege_utilisateur(){
 		
 	}
+
+    
+    
+	public boolean isViewHistorique() {
+		return viewHistorique;
+	}
+
+
+
+	public void setViewHistorique(boolean viewHistorique) {
+		this.viewHistorique = viewHistorique;
+	}
+
+
+
+	public boolean isSendNotif() {
+		return sendNotif;
+	}
+
+
+
+	public void setSendNotif(boolean sendNotif) {
+		this.sendNotif = sendNotif;
+	}
+
+
+
+	public boolean isListNotif() {
+		return listNotif;
+	}
+
+
+
+	public void setListNotif(boolean listNotif) {
+		this.listNotif = listNotif;
+	}
+
+
+
+	public boolean isViewUpload() {
+		return viewUpload;
+	}
+
+
+
+	public void setViewUpload(boolean viewUpload) {
+		this.viewUpload = viewUpload;
+	}
+
+
 
 	public boolean isUploadFile() {
 		return uploadFile;

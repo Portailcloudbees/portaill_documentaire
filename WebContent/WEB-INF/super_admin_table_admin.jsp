@@ -237,7 +237,28 @@
               </ul>
               
 				  </li>
-                  <li class="">
+				  
+				  
+				  <li class="">
+               <a href="javascript:;">
+               <i class="icon-file-text"></i> 
+               <span class="title">Documents</span>
+               <span class="arrow "></span>
+               </a>
+			    <ul class="sub-menu">
+                  <li class="active">
+                     <a href="forward?lien=super_admin_doc_generation.jsp">
+                     Create Document
+                     <span class="arrow"></span>
+                     </a>                  
+                  </li>
+                  
+				  </ul>
+				  </li>
+				  
+				  
+				  
+                <li class="">
                <a href="javascript:;">
                <i class="icon-file-text"></i> 
                <span class="title">Historic</span>
@@ -245,17 +266,12 @@
                </a>
 			    <ul class="sub-menu">
                   <li class="active">
-                     <a href="forward?lien=historique_admin.jsp">
-                     historc of administrators
+                     <a href="list_getlast_historique">
+                      Dashboard traces
                      <span class="arrow"></span>
                      </a>
 					 </li>
-                    <li class="active">					 
-                      <a href="forward?lien=historique_client.jsp">
-                     historc of Clients
-                     <span class="arrow"></span>
-                     </a>
-					 </li>
+                    
                    </ul>					 
                   </li>
                           <li class="">

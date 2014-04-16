@@ -1,5 +1,7 @@
 package responsableServlet;
 
+import historiqueDAO.gererHistorique;
+
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -35,7 +37,7 @@ import entities.xml;
 @WebServlet("/UploadServlet")
 public class UploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    private static String email_client;  
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -48,11 +50,21 @@ public class UploadServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+	 gerer_xml gx = new gerer_xml();
+	 if (authentification.c.equals("responsable")){
+      	email_client=authentification.email;
+      
+      }else{
+      	email_client=gx.getEmail_client(authentification.email);
+      }    
+	 File dir = new File("c:/Upload/"+email_client+"/");
+	 if (!dir.exists()) {
+		   boolean result = dir.mkdir(); 
+	 }
     	System.out.println("get");
         if (request.getParameter("getfile") != null && !request.getParameter("getfile").isEmpty()) {
             
-        	File file = new File("c:/Upload/"+request.getParameter("getfile"));
+        	File file = new File("c:/Upload/"+email_client+"/"+request.getParameter("getfile"));
            
             if (file.exists()) {
                 int bytes = 0;
@@ -74,12 +86,14 @@ public class UploadServlet extends HttpServlet {
                 op.close();
             }
         } else if (request.getParameter("delfile") != null && !request.getParameter("delfile").isEmpty()) {
-            File file = new File("c:/Upload/"+ request.getParameter("delfile"));
+            File file = new File("c:/Upload/"+email_client+"/"+ request.getParameter("delfile"));
             if (file.exists()) {
                 file.delete(); // TODO:check and report success
+                String path="c:/Upload/"+email_client+"/"+ request.getParameter("delfile");
+                gx.deletefile(path);
             } 
         } else if (request.getParameter("getthumb") != null && !request.getParameter("getthumb").isEmpty()) {
-            File file = new File("c:/Upload/"+request.getParameter("getthumb"));
+            File file = new File("c:/Upload/"+email_client+"/"+request.getParameter("getthumb"));
                 if (file.exists()) {
                     System.out.println(file.getAbsolutePath());
                     String mimetype = getMimeType(file);
@@ -114,6 +128,15 @@ public class UploadServlet extends HttpServlet {
             PrintWriter writer = response.getWriter();
             writer.write("call POST with multipart form data");
         }
+        if (authentification.c.equals("responsable")){
+			gererHistorique gh = new gererHistorique();
+			gh.Task("à generer un fichier", request.getRemoteAddr(), "responsable", authentification.email);
+			
+		}else{
+			gererHistorique gh = new gererHistorique();
+			gh.Task("à generer un fichier", request.getRemoteAddr(), "utilisateur", authentification.email);
+			
+		}
     }
     
     /**
@@ -124,6 +147,10 @@ public class UploadServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 System.out.println("post");
+File dir = new File("c:/Upload/"+email_client+"/");
+if (!dir.exists()) {
+	   boolean result = dir.mkdir(); 
+}
         if (!ServletFileUpload.isMultipartContent(request)) {
             throw new IllegalArgumentException("Request is not multipart, please 'multipart/form-data' enctype for your form.");
         }
@@ -132,12 +159,23 @@ System.out.println("post");
         ServletFileUpload uploadHandler = new ServletFileUpload(new DiskFileItemFactory());
         PrintWriter writer = response.getWriter();
         response.setContentType("application/json");
+       
         JSONArray json = new JSONArray();
         try {
             List<FileItem> items = uploadHandler.parseRequest(request);
             for (FileItem item : items) {
                 if (!item.isFormField()) {
-                        File file = new File("c:/Upload/", item.getName());
+                	 System.out.println(authentification.c);
+                     if (authentification.c.equals("responsable")){
+                     	x.setEmail_client(authentification.email);
+                     	email_client=authentification.email;
+                     	x.setEmail_user(null);
+                     }else{
+                     	x.setEmail_client(gx.getEmail_client(authentification.email));
+                     	email_client=gx.getEmail_client(authentification.email);
+                     	x.setEmail_user(authentification.email);
+                     }    
+                	File file = new File("c:/Upload/"+email_client+"/", item.getName());
                         item.write(file);
                         JSONObject jsono = new JSONObject();
                         jsono.put("name", item.getName());
@@ -148,9 +186,19 @@ System.out.println("post");
                         jsono.put("delete_type", "GET");
                       
                         x.setNom_doc(item.getName());
-                        x.setPath_doc("c:/Upload/");
+                        x.setPath_doc("c:/Upload/"+email_client+"/"+item.getName());
                         x.setType_doc(getSuffix(item.getName()));
+                        if (authentification.c.equals("responsable")){
+                			gererHistorique gh = new gererHistorique();
+                			gh.Task("à generer un fichier de type"+getSuffix(item.getName()), request.getRemoteAddr(), "responsable", authentification.email);
+                			
+                		}else{
+                			gererHistorique gh = new gererHistorique();
+                			gh.Task("à generer un fichier de type"+getSuffix(item.getName()), request.getRemoteAddr(), "utilisateur", authentification.email);
+                			
+                		}
                         x.setTaille_doc(item.getSize());
+                        x.setEtat_doc("Ready");
                         System.out.println(authentification.c);
                         if (authentification.c.equals("responsable")){
                         	x.setEmail_client(authentification.email);

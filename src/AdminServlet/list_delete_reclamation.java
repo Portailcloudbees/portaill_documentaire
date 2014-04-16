@@ -1,5 +1,7 @@
 package AdminServlet;
 
+import historiqueDAO.gererHistorique;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,10 +48,13 @@ public class list_delete_reclamation extends HttpServlet {
 		
 		request.setAttribute("list_de_rep", l1);
 		request.setAttribute("list_de_rec", l);
+		
 		if (type.equals("super")){
 			this.getServletContext().getRequestDispatcher("/WEB-INF/super_admin_table_notifications.jsp").forward(request, response);
 				
 		}else{
+			gererHistorique gh = new gererHistorique();
+			gh.Task("à consulter les notification", request.getRemoteAddr(), "administrateur", authentification.email);
 			this.getServletContext().getRequestDispatcher("/WEB-INF/admin_table_notifications.jsp").forward(request, response);
 			
 		}

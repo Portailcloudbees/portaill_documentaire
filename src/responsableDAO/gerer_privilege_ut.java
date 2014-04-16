@@ -19,11 +19,11 @@ public gerer_privilege_ut(){
 	
 	public void resetPriv(String email){
 		String req ="insert into privilege_user(upload_file,delete_file,send_file,download_file,send_sms,send_email,"
-				+ "answer_notif,view_stat,export,email_ut)"
-				+ " values (?,?,?,?,?,?,?,?,?,?)";
+				+ "answer_notif,view_stat,viewupload,viewhistorique,sendnotif,listnotif,export,email_ut)"
+				+ " values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         try { 
          PreparedStatement ps = ConnectionBD.getInstance().prepareStatement(req);
-         
+
          ps.setBoolean(1,false);
          ps.setBoolean(2,false);
          ps.setBoolean(3,false);
@@ -33,7 +33,11 @@ public gerer_privilege_ut(){
          ps.setBoolean(7,false);
          ps.setBoolean(8,false);
          ps.setBoolean(9,false);
-         ps.setString(10,email);
+         ps.setBoolean(10,false);
+         ps.setBoolean(11,false);
+         ps.setBoolean(12,false);
+         ps.setBoolean(13,false);
+         ps.setString(14,email);
          ps.executeUpdate();
          System.out.println("privilege utilisateur initialisé avec succès");
         
@@ -45,7 +49,7 @@ public gerer_privilege_ut(){
 	}
 	
 	public void updatePriv(privilege_utilisateur pu,String email){
-		
+	
 		String requete = "update privilege_user set upload_file=?,"
 				+ " delete_file=?,"
 				+ " send_file =?,"
@@ -53,8 +57,13 @@ public gerer_privilege_ut(){
 				+ " send_Sms =?,"
 				+ " send_Email =?,"
 				+ " answer_notif=?,"
-				+ " export=?,"
-				+ " view_stat=? where email_ut='"+email+"'";
+				+ " view_stat=?,"
+				+"viewupload=?,"
+				+"viewhistorique=?,"
+				+"sendnotif=?,"
+				+"listnotif=?,"
+			
+				+ "export=? where email_ut='"+email+"'";
         try {
             PreparedStatement ps = ConnectionBD.getInstance().prepareStatement(requete);
             ps.setBoolean(1,pu.isUploadFile());
@@ -64,8 +73,12 @@ public gerer_privilege_ut(){
             ps.setBoolean(5,pu.isSendSms());
             ps.setBoolean(6,pu.isSendEmail());
             ps.setBoolean(7,pu.isAnswerNotif());
-            ps.setBoolean(8,pu.isExport());
-            ps.setBoolean(9,pu.isViewStat());
+            ps.setBoolean(8,pu.isViewStat());
+            ps.setBoolean(9,pu.isViewUpload());
+            ps.setBoolean(10, pu.isViewHistorique());
+            ps.setBoolean(11, pu.isSendNotif());
+            ps.setBoolean(12, pu.isListNotif());
+            ps.setBoolean(13, pu.isExport());
             
             ps.executeUpdate();
             System.out.println("Mise à jour privilege utilisateur effectuée avec succès");
@@ -99,6 +112,7 @@ public gerer_privilege_ut(){
             ResultSet resultat = statement.executeQuery(req);
 
             while(resultat.next()){
+
             	privilege_utilisateur pu = new privilege_utilisateur();
             	pu.setUploadFile(resultat.getBoolean(2));
             	pu.setDeleteFile(resultat.getBoolean(3));
@@ -107,8 +121,12 @@ public gerer_privilege_ut(){
             	pu.setSendSms(resultat.getBoolean(6));
             	pu.setSendEmail(resultat.getBoolean(7));
             	pu.setAnswerNotif(resultat.getBoolean(8));
-            	pu.setExport(resultat.getBoolean(9));
-            	pu.setViewStat(resultat.getBoolean(10));
+            	pu.setExport(resultat.getBoolean(14));
+            	pu.setViewStat(resultat.getBoolean(9));
+            	pu.setSendNotif(resultat.getBoolean(12));
+            	pu.setViewHistorique(resultat.getBoolean(11));
+            	pu.setViewUpload(resultat.getBoolean(10));
+            	pu.setListNotif(resultat.getBoolean(13));
             	
             	     
             	listepriv.add(pu);

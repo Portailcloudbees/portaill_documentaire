@@ -111,9 +111,9 @@
                <i class="icon-angle-down"></i>
                </a>
                <ul class="dropdown-menu">
-                  <li><a href="extra_profile.html"><i class="icon-user"></i> My Profile</a>
+                  <li><a href="forward?lien=extra_profile.jsp"><i class="icon-user"></i> My Profile</a>
                   </li>
-                  <li><a href="login.html"><i class="icon-key"></i> Log Out</a>
+                  <li><a href="deconnexion"><i class="icon-key"></i> Log Out</a>
                   </li>
                </ul>
             </li>
@@ -138,7 +138,7 @@
             </li>
             <li>
                <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
-               <form class="sidebar-search" action="extra_search.html" method="POST">
+               <form class="sidebar-search" action="forward?lien=extra_search.jsp" method="POST">
                   <div class="form-container">
                      <div class="input-box">
                         <a href="javascript:;" class="remove"></a>
@@ -158,36 +158,21 @@
             </li>
             
             <li class="">
-               <a href="table_user.jsp">
+               <a href="javascript:;">
                <i class="icon-user"></i> 
                <span class="title">User</span>
                <span class="arrow "></span>
                </a>
 			   <ul class="sub-menu">
                   <li>
-                     <a href="forward?lien=table_user.jsp">
+                     <a href="list_ajout_update_ut">
                      View User
                      <span class="arrow"></span>
                      </a>
                   </li>
 				  </ul>
             </li>
-			<li class="">
-               <a href="javascript:;">
-               <i class="icon-leaf"></i> 
-               <span class="title">Privilege</span>
-               <span class="arrow "></span>
-               </a>
-			   <ul class="sub-menu">
-                  <li>
-                     <a href="forward?lien=priv_us.jsp">
-                     Choose Privilege
-                     <span class="arrow"></span>
-                     </a>
-                  </li>
-				  </ul>
-            </li>
-			
+		
 			<li>
                <a class="active" href="javascript:;">
                <i class="icon-folder-open"></i> 
@@ -196,25 +181,20 @@
                </a>
                <ul class="sub-menu">
                   <li>
-                     <a href="upload_file_cl.html">
+                     <a href="forward?lien=client_upload_file.jsp">
                      File Upload 
                      <span class="arrow"></span>
                      </a>
                   </li>
                  <li>
-                     <a href="cons_up_cl.html">
-                     View File Upload
+                     <a href="list_xml_up">
+                     View Uploaded Files
                      <span class="arrow"></span>
                      </a>
                   </li>
-                  <li>
-                     <a href="doc_traite_cl.html">
-                     View File Processed
-                     <span class="arrow"></span>
-                     </a>
-                  </li>
+                 
 				     <li>
-                     <a href="telecharge_file_cl.html">
+                     <a href="list_download_xml">
                      Download File
                      <span class="arrow"></span>
                      </a>
@@ -229,12 +209,33 @@
                </a>
 			   <ul class="sub-menu">
                   <li>
-                     <a href="notification_cl.html">
-                     Cearte  Notification 
+                     <a href="notif_send_page">
+                     Send  Notification 
+                     <span class="arrow"></span>
+                     </a>
+                  </li>
+                   <li>
+                     <a href="client_user_list_notif_rep">
+                     List of notifications 
                      <span class="arrow"></span>
                      </a>
                   </li>
 				  </ul>
+            </li>
+             <li class="">
+               <a href="javascript:;">
+               <i class="icon-file-text"></i> 
+               <span class="title">Historique</span>
+               <span class="arrow "></span>
+               </a>
+            <ul class="sub-menu">
+                  <li>
+                     <a href="client_notification.jsp">
+                    View Historique 
+                     <span class="arrow"></span>
+                     </a>
+                  </li>
+              </ul>
             </li>
 			<li class="last">
                <a href="javascript:;">
@@ -244,7 +245,7 @@
                </a>
 			   <ul class="sub-menu">
                   <li>
-                     <a href="table_stat_cl.html">
+                     <a href="client_table_stat.jsp">
                      View  Statistique 
                      <span class="arrow"></span>
                      </a>
@@ -253,7 +254,7 @@
             </li>
 			
          </ul>
-		 
+		
          <!-- END SIDEBAR MENU -->
       </div>
       <!-- END SIDEBAR -->
@@ -366,6 +367,10 @@
                 		  boolean c7=false;
                 		  boolean c8=false;
                 		  boolean c9=false;
+                		  boolean c10=false;
+                		  boolean c11=false;
+                		  boolean c12=false;
+                		  boolean c13=false;
                 		  
                 		  for (i=0; i<liste_priv.size(); i++) { 
                              c1 = liste_priv.get(i).isUploadFile();
@@ -377,10 +382,10 @@
                              c7 = liste_priv.get(i).isAnswerNotif();
                              c8 = liste_priv.get(i).isViewStat();
                              c9 = liste_priv.get(i).isExport();
-                           
-                            System.out.println(c1);
-                            System.out.println(c2);
-
+                             c10 = liste_priv.get(i).isViewUpload();
+                             c11 = liste_priv.get(i).isViewHistorique();
+							c12 = liste_priv.get(i).isListNotif();
+							c13 = liste_priv.get(i).isSendNotif();
                         }
                         %>
  <form method="post" action="list_update_priv_ut">
@@ -390,7 +395,7 @@
 				<legend><center><h5 style="color:#27a9e3;"><b>File management </b></h4></center></legend>
              <input type="checkbox" name="CHOIX1" align="right" value="uploadfile" <%if (c1){out.println("CHECKED");} %>> Upload file &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="CHOIX2" value="deletfile" <%if (c2){out.println("CHECKED");} %>>Delete file</br></br>
 			 <input type="checkbox" name="CHOIX3" align="right" value="sendfile" <%if (c3){out.println("CHECKED");} %>>Send file &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="CHOIX4" value="downloadfile" <%if (c4){out.println("CHECKED");} %>>Download file</br></br>
-               
+             <input type="checkbox" name="CHOIX10" align="right" value="viewupload" <%if (c10){out.println("CHECKED");} %>>List Uploaded Files  
               
             </fieldset>
 		</td>
@@ -409,8 +414,9 @@
 		</br>
 		</br>
 			<fieldset style="border:solid 1px #27a9e3; padding:35px; width:400px;" >
-				<legend><center><h5 style="color:#27a9e3;"><b>statistical </b></h4></center></legend>
-             <center><input type="checkbox" name="CHOIX7" value="viewstatistic" <%if (c7){out.println("CHECKED");} %>>View statistic</center></br></br>
+				<legend><center><h5 style="color:#27a9e3;"><b>statistics / Historic </b></h4></center></legend>
+             <input type="checkbox" name="CHOIX7" value="viewstatistic" <%if (c7){out.println("CHECKED");} %>>View statistic</br></br>
+             <input type="checkbox" name="CHOIX11" value="viewhistorique" <%if (c11){out.println("CHECKED");} %>>View historique
               
               
             </fieldset>
@@ -421,7 +427,9 @@
 		</br>
 			<fieldset style="border:solid 1px #27a9e3; padding:35px; width:400px;" >
 				<legend><center><h5 style="color:#27a9e3;"><b>Notification </b></h4></center></legend>
-           <center><input type="checkbox" name="CHOIX8"value="answernotification" <%if (c8){out.println("CHECKED");} %>>Answer Notification </center></br></br>
+           <input type="checkbox" name="CHOIX8"value="answernotification" <%if (c8){out.println("CHECKED");} %>>Answer Notification</br></br>
+           <input type="checkbox" name="CHOIX12"value="viewnotification" <%if (c12){out.println("CHECKED");} %>>View Notifications</br></br>
+           <input type="checkbox" name="CHOIX13"value="sendnotification" <%if (c13){out.println("CHECKED");} %>>Send Notifications
 
             </fieldset>
 		</td>

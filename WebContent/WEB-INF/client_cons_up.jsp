@@ -1,3 +1,6 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="entities.xml" %>
+
 <!DOCTYPE html>
 <!-- BEGIN HEAD -->
 <head>
@@ -9,37 +12,39 @@
    <meta content="" name="author" />
    <meta name="MobileOptimized" content="320">
    <!-- BEGIN GLOBAL MANDATORY STYLES -->          
+
    <link href="assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
    <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
    <link href="assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
    <!-- END GLOBAL MANDATORY STYLES -->
-   <!-- BEGIN PAGE LEVEL PLUGIN STYLES --> 
-   <link href="assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" type="text/css"/>
-   <link href="assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
-   <link href="assets/plugins/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css"/>
-   <link href="assets/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css"/>
-   <link href="assets/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css"/>
-   <!-- END PAGE LEVEL PLUGIN STYLES -->
+   <!-- BEGIN PAGE LEVEL STYLES -->
+   <link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2_metro.css" />
+   <link rel="stylesheet" href="assets/plugins/data-tables/DT_bootstrap.css" />
+   <!-- END PAGE LEVEL STYLES -->
    <!-- BEGIN THEME STYLES --> 
    <link href="assets/css/style-metronic.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/style-responsive.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/plugins.css" rel="stylesheet" type="text/css"/>
-   <link href="assets/css/pages/tasks.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
    <link href="assets/css/custom.css" rel="stylesheet" type="text/css"/>
    <!-- END THEME STYLES -->
    <link rel="shortcut icon" href="favicon.ico" />
+   
+   	 
+   
+   
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
 <body class="page-header-fixed">
    <!-- BEGIN HEADER -->   
+   <!-- BEGIN HEADER -->   
    <div class="header navbar navbar-inverse navbar-fixed-top">
       <!-- BEGIN TOP NAVIGATION BAR -->
       <div class="header-inner">
          <!-- BEGIN LOGO -->  
-         <a class="navbar-brand" href="index.html">
+         <a class="navbar-brand" href="forward?lien=index_client.jsp">
          <h3 style="color:white"> <b><center>I&nbsp;M&nbsp;E&nbsp;X</center></b></h3>
          </a>
          <!-- END LOGO -->
@@ -93,7 +98,7 @@
                      </ul>
                   </li>
                   <li class="external">   
-                     <a href="inbox.html">See all messages <i class="m-icon-swapright"></i></a>
+                     <a href="forward?lien=inboxl">See all messages <i class="m-icon-swapright"></i></a>
                   </li>
                </ul>
             </li>
@@ -107,9 +112,9 @@
                <i class="icon-angle-down"></i>
                </a>
                <ul class="dropdown-menu">
-                  <li><a href="extra_profile.html"><i class="icon-user"></i> My Profile</a>
+                  <li><a href="forward?lien=extra_profile.jsp"><i class="icon-user"></i> My Profile</a>
                   </li>
-                  <li><a href="login.html"><i class="icon-key"></i> Log Out</a>
+                  <li><a href="deconnexion"><i class="icon-key"></i> Log Out</a>
                   </li>
                </ul>
             </li>
@@ -134,7 +139,7 @@
             </li>
             <li>
                <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
-               <form class="sidebar-search" action="extra_search.html" method="POST">
+               <form class="sidebar-search" action="forward?lien=extra_search.jsp" method="POST">
                   <div class="form-container">
                      <div class="input-box">
                         <a href="javascript:;" class="remove"></a>
@@ -144,9 +149,9 @@
                   </div>
                </form>
                <!-- END RESPONSIVE QUICK SEARCH FORM -->
-                       </li>
+            </li>
             <li class="start active ">
-               <a href="index_client.html">
+               <a href="forward?lien=index_client.jsp">
                <i class="icon-home"></i> 
                <span class="title">Dashboard</span>
                <span class="selected"></span>
@@ -159,31 +164,17 @@
                <span class="title">User</span>
                <span class="arrow "></span>
                </a>
-			   <ul class="sub-menu">
+            <ul class="sub-menu">
                   <li>
-                     <a href="table_user.html">
+                     <a href="list_ajout_update_ut">
                      View User
                      <span class="arrow"></span>
                      </a>
                   </li>
-				  </ul>
+              </ul>
             </li>
-			<li class="">
-               <a href="javascript:;">
-               <i class="icon-leaf"></i> 
-               <span class="title">Privilege</span>
-               <span class="arrow "></span>
-               </a>
-			   <ul class="sub-menu">
-                  <li>
-                     <a href="priv_us.html">
-                     Choose Privilege
-                     <span class="arrow"></span>
-                     </a>
-                  </li>
-				  </ul>
-            </li>
-			<li>
+      
+         <li>
                <a class="active" href="javascript:;">
                <i class="icon-folder-open"></i> 
                <span class="title">Files</span>
@@ -191,25 +182,20 @@
                </a>
                <ul class="sub-menu">
                   <li>
-                     <a href="upload_file_cl.html">
+                     <a href="forward?lien=client_upload_file.jsp">
                      File Upload 
                      <span class="arrow"></span>
                      </a>
                   </li>
                  <li>
-                     <a href="cons_up_cl.html">
-                     View File Upload
+                     <a href="list_xml_up">
+                     View Uploaded Files
                      <span class="arrow"></span>
                      </a>
                   </li>
-                  <li>
-                     <a href="doc_traite_cl.html">
-                     View File Processed
-                     <span class="arrow"></span>
-                     </a>
-                  </li>
-				     <li>
-                     <a href="telecharge_file_cl.html">
+                 
+                 <li>
+                     <a href="list_download_xml">
                      Download File
                      <span class="arrow"></span>
                      </a>
@@ -222,31 +208,52 @@
                <span class="title">Notification</span>
                <span class="arrow "></span>
                </a>
-			   <ul class="sub-menu">
+            <ul class="sub-menu">
                   <li>
-                     <a href="notification_cl.html">
-                     Cearte  Notification 
+                     <a href="notif_send_page">
+                     Send  Notification 
                      <span class="arrow"></span>
                      </a>
                   </li>
-				  </ul>
+                   <li>
+                     <a href="client_user_list_notif_rep">
+                     List of notifications 
+                     <span class="arrow"></span>
+                     </a>
+                  </li>
+              </ul>
             </li>
-			<li class="last">
+             <li class="">
+               <a href="javascript:;">
+               <i class="icon-file-text"></i> 
+               <span class="title">Historique</span>
+               <span class="arrow "></span>
+               </a>
+            <ul class="sub-menu">
+                  <li>
+                     <a href="list_getlast_client_historique">
+                    View Historique 
+                     <span class="arrow"></span>
+                     </a>
+                  </li>
+              </ul>
+            </li>
+         <li class="last">
                <a href="javascript:;">
                <i class="icon-bar-chart"></i> 
                <span class="title">Statistique</span>
                <span class="arrow "></span>
                </a>
-			   <ul class="sub-menu">
+            <ul class="sub-menu">
                   <li>
-                     <a href="table_stat_cl.html">
+                     <a href="client_table_stat.jsp">
                      View  Statistique 
                      <span class="arrow"></span>
                      </a>
                   </li>
-				  </ul>
+              </ul>
             </li>
-			
+         
          </ul>
          <!-- END SIDEBAR MENU -->
       </div>
@@ -331,55 +338,69 @@
 		 
   <div class="portlet box blue">
                   <div class="portlet-title">
-                     <div class="caption"><i class="icon-edit"></i>File Upload</div>
-                     <div class="tools">
-                        <a href="javascript:;" class="collapse"></a>
-                        <a href="#portlet-config" data-toggle="modal" class="config"></a>
-                        <a href="javascript:;" class="reload"></a>
-                        <a href="javascript:;" class="remove"></a>
+                     <div class="caption"><i class="icon-globe"></i>Uploaded Files</div>
+                     <div class="actions">
+                        <div class="btn-group">
+                           <a class="btn default" href="#" data-toggle="dropdown">
+                           Columns
+                           <i class="icon-angle-down"></i>
+                           </a>
+                           <div id="sample_2_column_toggler" class="dropdown-menu hold-on-click dropdown-checkboxes pull-right">
+                              <label><input type="checkbox" checked data-column="0">Type</label>
+                              <label><input type="checkbox" checked data-column="1">Name</label>
+                              <label><input type="checkbox" checked data-column="2">Path</label>
+                              <label><input type="checkbox" checked data-column="3">Size</label>
+                              <label><input type="checkbox" checked data-column="4">Date</label>
+                              <label><input type="checkbox" checked data-column="5">Etat</label>
+                              <label><input type="checkbox" checked data-column="6">Delete</label>
+                              <label><input type="checkbox" checked data-column="7">StreamServ</label>
+                           </div>
+                        </div>
                      </div>
                   </div>
                   <div class="portlet-body">
-                     <div class="table-toolbar">
-                        <div class="btn-group pull-right">
-                           <button class="btn dropdown-toggle" data-toggle="dropdown">Tools <i class="icon-angle-down"></i>
-                           </button>
-                           <ul class="dropdown-menu pull-right">
-                              <li><a href="#">Print</a></li>
-                              <li><a href="#">Save as PDF</a></li>
-                              <li><a href="#">Export to Excel</a></li>
-                           </ul>
-                        </div>
-                     </div>
-                     <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
+                     <table class="table table-striped table-bordered table-hover table-full-width " id="sample_2">
                         <thead>
                            <tr>
-                              <th>ID</th>
-                              <th>Ref</th>
-                              <th>Nom</th>	
-								<th>Type</th>
-								<th>Date</th>										
-                              <th>Show</th>
-                              <th>Delete</th>
+                              <th>Type</th>
+                              <th>Name</th>
+                              <th class="hidden-xs">Path</th>
+                              <th class="hidden-xs">Size</th>
+                              <th class="hidden-xs">Date</th>
+                              <th class="hidden-xs">Etat</th>
+                              <th class="hidden-xs"> Delete </th>
+                              <th class="hidden-xs">StreamServ </th>
                            </tr>
                         </thead>
                         <tbody>
+                            <% 
+                        int j;
+                        ArrayList<xml> liste_xml = (ArrayList<xml>) request.getAttribute("list_de_xml");
+                        for (j=0; j<liste_xml.size(); j++) { 
+                            	
+                        %>
                            <tr >
-                              <td>1245</td>
-                              <td>45415m</td>
-                              <td>f1</td>  
-                              <td>xml</td>
-                              <td>10/2/2014</td>  							  
-                              <td><a class="edit" href="javascript:;">Show</a></td>
-                              <td><a class="delete" href="javascript:;">Delete</a></td>
+                              <td><%= liste_xml.get(j).getType_doc() %></td>
+                              <td><%= liste_xml.get(j).getNom_doc() %></td>
+                              <td><%= liste_xml.get(j).getPath_doc() %></td>
+                              <td ><%= liste_xml.get(j).getTaille_doc() %></td>
+							 <td><%= liste_xml.get(j).getDate_ajout() %></td>
+							 <% if (liste_xml.get(j).getEtat_doc().equals("Ready")){
+								out.println("<td><span class='label label-sm label-danger'>"+ liste_xml.get(j).getEtat_doc()+" </span></td>"
+	                            ); 
+							 }else{
+								 out.println("<td><span class='label label-sm label-info'>"+ liste_xml.get(j).getEtat_doc()+" </span></td>"
+				                            ); 
+							 }%>
+                            <td><a class="delete" href="javascript:;">Delete</a></td>
+                            <td>Send</td>
                            </tr>
-                           
+                         <% } %>
                         </tbody>
                      </table>
                   </div>
                </div>
-
-		 
+               
          
         </div>
            </div>
@@ -395,17 +416,8 @@
          </span>
       </div>
    </div>
-   <!-- END FOOTER -->
-   <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
-   <!-- BEGIN CORE PLUGINS -->   
-   <!--[if lt IE 9]>
-   <script src="assets/plugins/respond.min.js"></script>
-   <script src="assets/plugins/excanvas.min.js"></script> 
-   <![endif]-->   
    <script src="assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
-   <script src="assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>   
-   <!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
-   <script src="assets/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
+   <script src="assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>    
    <script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
    <script src="assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js" type="text/javascript" ></script>
    <script src="assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
@@ -414,44 +426,19 @@
    <script src="assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
    <!-- END CORE PLUGINS -->
    <!-- BEGIN PAGE LEVEL PLUGINS -->
-   <script src="assets/plugins/jqvmap/jqvmap/jquery.vmap.js" type="text/javascript"></script>   
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js" type="text/javascript"></script>  
-   <script src="assets/plugins/flot/jquery.flot.js" type="text/javascript"></script>
-   <script src="assets/plugins/flot/jquery.flot.resize.js" type="text/javascript"></script>
-   <script src="assets/plugins/jquery.pulsate.min.js" type="text/javascript"></script>
-   <script src="assets/plugins/bootstrap-daterangepicker/moment.min.js" type="text/javascript"></script>
-   <script src="assets/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script>     
-   <script src="assets/plugins/gritter/js/jquery.gritter.js" type="text/javascript"></script>
-   <!-- IMPORTANT! fullcalendar depends on jquery-ui-1.10.3.custom.min.js for drag & drop support -->
-   <script src="assets/plugins/fullcalendar/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
-   <script src="assets/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.js" type="text/javascript"></script>
-   <script src="assets/plugins/jquery.sparkline.min.js" type="text/javascript"></script>  
+   <script type="text/javascript" src="assets/plugins/select2/select2.min.js"></script>
+   <script type="text/javascript" src="assets/plugins/data-tables/jquery.dataTables.min.js"></script>
+   <script type="text/javascript" src="assets/plugins/data-tables/DT_bootstrap.js"></script>
    <!-- END PAGE LEVEL PLUGINS -->
    <!-- BEGIN PAGE LEVEL SCRIPTS -->
-   <script src="assets/scripts/app.js" type="text/javascript"></script>
-   <script src="assets/scripts/index.js" type="text/javascript"></script>
-   <script src="assets/scripts/tasks.js" type="text/javascript"></script>        
-   <!-- END PAGE LEVEL SCRIPTS -->  
+   <script src="assets/scripts/app.js"></script>
+   <script src="assets/scripts/table-advanced.js"></script>     
    <script>
-      jQuery(document).ready(function() {    
-         App.init(); // initlayout and core plugins
-         Index.init();
-         Index.initJQVMAP(); // init index page's custom scripts
-         Index.initCalendar(); // init index page's custom scripts
-         Index.initCharts(); // init index page's custom scripts
-         Index.initChat();
-         Index.initMiniCharts();
-         Index.initDashboardDaterange();
-         Index.initIntro();
-         Tasks.initDashboardWidget();
+      jQuery(document).ready(function() {       
+         App.init();
+         TableAdvanced.init();
       });
    </script>
-   <!-- END JAVASCRIPTS -->
 </body>
 <!-- END BODY -->
 </html>

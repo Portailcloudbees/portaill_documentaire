@@ -141,7 +141,8 @@
                <span class="selected"></span>
                </a>
             </li>
-            <%  boolean addClient = false;
+            <% 
+               boolean addClient = false;
                boolean viewClient = false;
                boolean deleteClient = false;
                boolean updateClient = false;

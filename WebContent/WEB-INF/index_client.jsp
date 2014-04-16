@@ -156,7 +156,7 @@
             </li>
             
             <li class="">
-               <a href="table_user.jsp">
+               <a href="javascript:;">
                <i class="icon-user"></i> 
                <span class="title">User</span>
                <span class="arrow "></span>
@@ -185,19 +185,14 @@
                      </a>
                   </li>
                  <li>
-                     <a href="client_cons_up.jsp">
-                     View File Upload
+                     <a href="list_xml_up">
+                     View Uploaded Files
                      <span class="arrow"></span>
                      </a>
                   </li>
-                  <li>
-                     <a href="client_doc_traite.jsp">
-                     View File Processed
-                     <span class="arrow"></span>
-                     </a>
-                  </li>
+                 
 				     <li>
-                     <a href="client_telecharge_file.jsp">
+                     <a href="list_download_xml">
                      Download File
                      <span class="arrow"></span>
                      </a>
@@ -212,12 +207,33 @@
                </a>
 			   <ul class="sub-menu">
                   <li>
-                     <a href="client_notification.jsp">
-                     Cearte  Notification 
+                     <a href="notif_send_page">
+                     Send  Notification 
+                     <span class="arrow"></span>
+                     </a>
+                  </li>
+                   <li>
+                     <a href="client_user_list_notif_rep">
+                     List of notifications 
                      <span class="arrow"></span>
                      </a>
                   </li>
 				  </ul>
+            </li>
+             <li class="">
+               <a href="javascript:;">
+               <i class="icon-file-text"></i> 
+               <span class="title">Historique</span>
+               <span class="arrow "></span>
+               </a>
+            <ul class="sub-menu">
+                  <li>
+                     <a href="list_getlast_client_historique">
+                    View Historique 
+                     <span class="arrow"></span>
+                     </a>
+                  </li>
+              </ul>
             </li>
 			<li class="last">
                <a href="javascript:;">

@@ -153,16 +153,16 @@ public List<reclamation> ListReclamation(){
             	rec.setDate(resultat.getDate(4));
             	rec.setTraiter(resultat.getBoolean(5));
             	rec.setEmail_sender(resultat.getString(6));
-            	String req1="Select * from utilisateur where email_ut='"+resultat.getString(6)+"'";
-        		String req2="Select * from client_soc where email_resp='"+resultat.getString(6)+"'";
-            	if (getCompany(req1)==null){
-            		comp=getCompany(req1);
-            		System.out.println("req1");
-            	}else{
-            		comp=getCompany(req2);
-            		System.out.println("req2");
-            	}
-            	rec.setCompany(comp);     
+            	//String req1="Select * from utilisateur where email_ut='"+resultat.getString(6)+"'";
+        		//String req2="Select * from client_soc where email_resp='"+resultat.getString(6)+"'";
+            	//if (getCompany(req1)==null){
+            		//comp=getCompany(req1);
+            		//System.out.println(comp);
+            	//}else{
+            		//comp=getCompany(req2);
+            		//System.out.println(comp);
+            	//}
+            	rec.setCompany(resultat.getString(7));     
             	listeRec.add(rec);
             }
             return  listeRec;
@@ -241,6 +241,32 @@ public List<reclamation> ListReclamationClient(String mat){
         
         }
 	
+        
+        		public int getRec(String matsoc){
+        	
+        	   int c = 0;
+        		String req="";
+        		if (matsoc==null){
+        			req="SELECT count(*) FROM `reclamation` WHERE `traiter`=0 ";
+        		}else{
+        			req="SELECT count(*) FROM `reclamation` WHERE `traiter`=0 and mat_soc='"+matsoc+"'";
+        		}
+        	    try {
+        	       Statement statement = ConnectionBD.getInstance()
+        	               .createStatement();
+        	        ResultSet resultat = statement.executeQuery(req);
+        	        while(resultat.next()){
+        	     
+        	        	c= resultat.getInt(1);
+        	        }
+        	        return c;
+        	    } catch (SQLException ex) {
+        	       
+        	        System.out.println("erreur recperation nombre notif rec "+ex.getMessage());
+        	        return 0;
+        	    }
+        		
+        	}
 	
 	
 	

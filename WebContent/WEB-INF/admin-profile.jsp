@@ -4,6 +4,8 @@
   <%@ page import="java.util.List" %>
  <%@page import="connexion.authentification"%>
   <%@page import="entities.privilege_admin"%>
+  <%@page import="profile.*"%>
+  
   <%@ page import="connexion.*" %>
 <%@ page import="historiqueDAO.gererHistorique" %>
 <%@ page import="adminDAO.gerer_reclamation" %>
@@ -111,7 +113,7 @@
                <i class="icon-angle-down"></i>
                </a>
                <ul class="dropdown-menu">
-                  <li><a href="forward?lien=admin-profile.jsp"><i class="icon-user"></i> My Profile</a>
+                  <li><a href="forward?lien=super-profile.jsp"><i class="icon-user"></i> My Profile</a>
                   </li>
                  
                   <li class="divider"></li>
@@ -353,7 +355,87 @@
             </div>
          </div>
          <!-- END PAGE HEADER-->
-         
+                 
+   		
+<div class="tab-pane" id="tab_1_3">
+                        <div class="row profile-account">
+                           <div class="col-md-3">
+                              <ul class="ver-inline-menu tabbable margin-bottom-10">
+                                 <li class="active">
+                                    <a data-toggle="tab" href="#tab_1-1">
+                                    <i class="icon-cog"></i> 
+                                    Personal info
+                                    </a> 
+                                    <span class="after"></span>                                    
+                                 </li>
+                         
+                                 <li ><a data-toggle="tab" href="#tab_3-3"><i class="icon-lock"></i> Change Password</a></li>
+                                
+                              </ul>
+                           </div>
+                           <%
+                       
+                           String [] valeur= gpi.getInfo(authentification.email, authentification.c);
+                           
+                           
+                           %>
+                           <div class="col-md-9">
+                              <div class="tab-content">
+                                 <div id="tab_1-1" class="tab-pane active">
+                                    <form role="form" name="f1" action="#">
+                                       <div class="form-group">
+                                          <label class="control-label">First Name</label>
+                                          <input type="text" name="firstn" value="<%=valeur[0] %>" class="form-control" />
+                                       </div>
+                                       <div class="form-group">
+                                          <label class="control-label">Last Name</label>
+                                          <input type="text" name="lastn" value="<%=valeur[1] %>" class="form-control" />
+                                       </div>
+                                       <div class="form-group">
+                                          <label class="control-label">Mobile Number</label>
+                                          <input type="text" name="mobile" value="<%=valeur[2] %>" class="form-control" />
+                                       </div>
+                                     
+                                       <div class="margiv-top-10">
+                                          <a href="#" onclick="updateInfo()" class="btn green">Save Changes</a>
+                                          <a href="#" class="btn default">Cancel</a>
+                                       </div>
+                                       <br>
+                                       <div id="resultat" style="color:red; margin-left:250px"></div>
+                                    </form>
+                                    
+                                 </div>
+                                 
+                                 <div id="tab_3-3" class="tab-pane">
+                                    <form name="f2" >
+                                       <div class="form-group">
+                                          <label class="control-label">Current Password</label>
+                                          <input type="password" name="current" class="form-control" />
+                                       </div>
+                                       <div class="form-group">
+                                          <label class="control-label">New Password</label>
+                                          <input type="password" name="new1" class="form-control" />
+                                       </div>
+                                       <div class="form-group">
+                                          <label class="control-label">Re-type New Password</label>
+                                          <input type="password" name="new2"  class="form-control" />
+                                       </div>
+                                       <div class="margin-top-10">
+                                          
+                                           <a href="#" onclick="updatePass()" class="btn green">Change Password</a>
+                                          <a href="#" class="btn default">Cancel</a>
+                                       </div>
+                                       <div id="resultat1" style="color:red; margin-left:250px"></div>
+                                    </form>
+                                    
+                                 </div>
+                               
+                              </div>
+                           </div>
+                           <!--end col-md-9-->                                   
+                        </div>
+                     </div>
+            
         </div>
            </div>
               </div>
@@ -368,6 +450,68 @@
          </span>
       </div>
    </div>
+   
+   <script>
+          function updateInfo(){
+        	  
+        	  if (document.f1.firstn.value=="" || document.f1.lastn.value=="" || document.f1.mobile.value==""){
+        		  document.getElementById('resultat').innerHTML="Please fill in the fields";
+        		 
+        	  }else{
+        		  var table = [];
+                  table.push( { "firstn" : document.f1.firstn.value ,
+                  		    "lastn": document.f1.lastn.value ,
+                  		    "mobile":document.f1.mobile.value  }
+                  );
+                 
+                  $.ajax({
+                  	type:"GET",
+                  	url: "./profileServlet",
+                  	contentType: "application/x-www-form-urlencoded",
+                  	dataType: "JSON",
+                  	data: {ligne:JSON.stringify(table)},
+                  	success: function(data) {
+                  		 document.getElementById('resultat').innerHTML="update is successful";
+                  		}
+                  		})
+               }
+        	  
+          }
+          
+          function updatePass(){
+        	  if (document.f2.current.value=="" || document.f2.new1.value=="" || document.f2.new2.value==""){
+        		  document.getElementById('resultat1').innerHTML="Please fill in the fields";
+        	  }else if (document.f2.new1.value!=document.f2.new2.value){
+        		  document.getElementById('resultat1').innerHTML="mouch kifkif"; 
+        	
+        		 
+        	  }else{
+        		  var table = [];
+                  table.push( { "current" : document.f2.current.value ,
+                  		    "newp": document.f2.new1.value   }
+                  );
+                 
+                  $.ajax({
+                  	type:"POST",
+                  	url: "./profileServlet",
+                  	contentType: "application/x-www-form-urlencoded",
+                  	dataType: "JSON",
+                  	data: {ligne:JSON.stringify(table)},
+                  	success: function(dat) {
+                  		
+                  		 document.getElementById('resultat1').innerHTML=dat.responseText;
+                  		},
+                  	error: function (err){
+                  		document.getElementById('resultat1').innerHTML=err.responseText;
+                  	}
+                  		});
+        	  }
+      
+          }
+        
+        
+        </script>
+   
    <!-- END FOOTER -->
    <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
    <!-- BEGIN CORE PLUGINS -->   
@@ -387,13 +531,7 @@
    <script src="assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
    <!-- END CORE PLUGINS -->
    <!-- BEGIN PAGE LEVEL PLUGINS -->
-   <script src="assets/plugins/jqvmap/jqvmap/jquery.vmap.js" type="text/javascript"></script>   
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js" type="text/javascript"></script>  
+   
    <script src="assets/plugins/flot/jquery.flot.js" type="text/javascript"></script>
    <script src="assets/plugins/flot/jquery.flot.resize.js" type="text/javascript"></script>
    <script src="assets/plugins/jquery.pulsate.min.js" type="text/javascript"></script>
@@ -413,15 +551,7 @@
    <script>
       jQuery(document).ready(function() {    
          App.init(); // initlayout and core plugins
-         Index.init();
-         Index.initJQVMAP(); // init index page's custom scripts
-         Index.initCalendar(); // init index page's custom scripts
-         Index.initCharts(); // init index page's custom scripts
-         Index.initChat();
-         Index.initMiniCharts();
-         Index.initDashboardDaterange();
-         Index.initIntro();
-         Tasks.initDashboardWidget();
+         
       });
    </script>
    <!-- END JAVASCRIPTS -->

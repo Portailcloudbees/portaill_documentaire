@@ -1,16 +1,20 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="entities.reclamation" %>
-<%@ page import="entities.reclamation_rep" %>
+<%@ page import="entities.*" %>
+<%@ page import="connexion.authentification" %>
+<%@ page import="adminDAO.gerer_privilege_admin" %>
+<%@ page import="java.util.List" %>
 <%@ page import="connexion.*" %>
 <%@ page import="historiqueDAO.gererHistorique" %>
 <%@ page import="adminDAO.gerer_reclamation" %>
 <%@ page import="profile.gererprofile" %>
 
- <html lang="en" class="no-js"> 
+<!DOCTYPE html>
+
+<!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <!-- BEGIN HEAD -->
 <head>
    <meta charset="utf-8" />
-   <title>IMEX | Acceuil</title>
+   <title>Imex | Data Tables - Editable Tables</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -59,7 +63,7 @@
                <% gererHistorique gh = new gererHistorique();
                   gerer_reclamation gr = new gerer_reclamation();
                    int coun = gr.getRec(null);
-               	   int count = gh.getLast(null);
+               	   int count = gh.getLast("administrateur");
                %>
                <span class="badge"><%=count %></span>
                </a>
@@ -145,32 +149,38 @@
                   </div>
                </form>
                <!-- END RESPONSIVE QUICK SEARCH FORM -->
- </li>
-           <li class="">
-               <a href="forward?lien=index_super_admin.jsp">
+            </li>
+            <li class=" ">
+               <a href="forward?lien=index_admin.jsp">
                <i class="icon-home"></i> 
                <span class="title">Dashboard</span>
-               <span class="arrow"></span>
+                <span class="arrow "></span>
                </a>
             </li>
-            
-            <li class="">
-              
-               <a href="table_responsive.jsp">
-               <i class="icon-user"></i> 
-               <span class="title">Administrateurs</span>
-               <span class="arrow "></span>
-               </a>
-                           <ul class="sub-menu">
-                  <li class="active">
-                   
-                     <a href="list_ajout_update_admin">
-                     View Administrateur
-                     <span class="arrow"></span>
-                     </a>                  
-                  </li>
-               </ul>
-            </li>
+            <%  boolean addClient = false;
+               boolean viewClient = false;
+               boolean deleteClient = false;
+               boolean updateClient = false;
+               boolean viewNotif = false;
+               boolean answerNotif = false;
+               boolean export = false;
+               boolean stat = false;
+               boolean historic = false;
+               String email = authentification.email;
+               gerer_privilege_admin gp = new gerer_privilege_admin();
+               List<privilege_admin> priv = gp.ListPrivilege(email);
+                for (int i=0; i<priv.size(); i++) {
+                   addClient=priv.get(i).isAddClient();
+                   viewClient=priv.get(i).isViewClient();
+                   deleteClient=priv.get(i).isDeleteClient();
+                   updateClient=priv.get(i).isUpdateClient();
+                   viewNotif=priv.get(i).isViewNotif();
+                   answerNotif=priv.get(i).isAnswerNotif();
+                   export=priv.get(i).isExport();
+                   stat=priv.get(i).isViewStat();
+                   historic=priv.get(i).isViewHistoric();
+                }
+            %>
             <li class="">
                <a href="javascript:;">
                <i class="icon-file-text"></i> 
@@ -178,65 +188,61 @@
                <span class="arrow "></span>
                </a>
              <ul class="sub-menu">
-                  <li class="active">
-                     <a href="listclients">
-                     View Clients
-                     <span class="arrow"></span>
-                     </a>                  
-                  </li>
+                  <% if (viewClient){
+                   out.println("<li class='active'>"+
+                                   "<a href='listclients?type=admin'>"+
+                                         "View Clients"+
+                                 "<span class='arrow'></span>"+
+                                 "</a></li>");
+                   }else{
+                   out.println("pas de priv");
+                  }%>
                </ul>
             </li>
-            <li class="start active">
+            <li class="">
                <a href="javascript:;">
                <i class="icon-file-text"></i> 
                <span class="title">Notifications</span>
-               <span class="selected"></span>
-               </a>
-             <ul class="sub-menu">
-                  <li class="active">
-                     <a href="list_delete_reclamation">
-                     View Notifications
-                     <span class="arrow"></span>
-                     </a>                  
-                  </li>
-                  
-              </ul>
-				  </li>
-				  
-				  
-				  <li class="">
-               <a href="javascript:;">
-               <i class="icon-file-text"></i> 
-               <span class="title">Documents</span>
                <span class="arrow "></span>
                </a>
-			    <ul class="sub-menu">
-                  <li class="active">
-                     <a href="forward?lien=super_admin_doc_generation.jsp">
-                     Create Document
-                     <span class="arrow"></span>
-                     </a>                  
-                  </li>
+             <ul class="sub-menu">
+             <%
+               if (viewNotif){
+                  out.println("<li class='active'>"+
+                                  "<a href='list_delete_reclamation'>"+
+                                     "View Notifications"+
+                                  "<span class='arrow'></span>"+
+                                  "</a>"+                  
+                                 "</li>");
+               }else{
+                  out.println("pas de priv");
+               }
+             
+             %>
                   
-				  </ul>
-				  </li>
-				  
-				  
-                  <li class="">
+                     </ul>
+              </li>
+                  <li class="start active">
                <a href="javascript:;">
                <i class="icon-file-text"></i> 
                <span class="title">Historic</span>
-               <span class="arrow "></span>
+               <span class="selected"></span>
                </a>
-			    <ul class="sub-menu">
-                  <li class="active">
-                     <a href="list_getlast_historique">
-                      Dashboard traces
-                     <span class="arrow"></span>
-                     </a>
-					 </li>
+             <ul class="sub-menu">
+                  <%
+                        if (historic){
+                           out.println("<li class='active'>"+               
+                                    "<a href='list_getlast_historique'>"+
+                            "historic of Clients"+
+                            "<span class='arrow'></span>"+
+                            "</a>"+
+                      "</li>");
+                        }else{
+                           out.println("pas de priv");
+                        }
+                  %>
                     
-                   </ul>					 
+                   </ul>                
                   </li>
                           <li class="">
                <a href="javascript:;">
@@ -244,16 +250,23 @@
                <span class="title">Statistics</span>
                <span class="arrow "></span>
                </a>
-			    <ul class="sub-menu">
-                  <li class="active">
-                     <a href="forward?lien=table_statistique_admin.jsp">
-                     View Statistics
-                     <span class="arrow"></span>
-                     </a>                  
-                  </li>
-				  </ul>
-				  </li>
-             
+             <ul class="sub-menu">
+                  <% if (stat){
+                    out.println("<li class='active'>"+
+                              "<a href='forward?lien=table_statistique_admin.jsp'>"+
+                      "View Statistics"+
+                      "<span class='arrow'></span>"+
+                      "</a>"+                  
+                   "</li>");
+                  }else{
+                  out.println("pas de priv");  
+                  }
+                  %>
+                  </ul>
+              </li>
+                   
+               </ul>
+            </li>
                </ul>
             </li>
          </ul>
@@ -263,6 +276,25 @@
       <!-- BEGIN PAGE -->
       <div class="page-content">
          <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->               
+         <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                     <h4 class="modal-title">Modal title</h4>
+                  </div>
+                  <div class="modal-body">
+                     Widget settings form goes here
+                  </div>
+                  <div class="modal-footer">
+                     <button type="button" class="btn blue">Save changes</button>
+                     <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                  </div>
+               </div>
+               <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+         </div>
          <!-- /.modal -->
          <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
          <!-- BEGIN STYLE CUSTOMIZER -->
@@ -311,40 +343,53 @@
                </div>
             </div>
          </div>
-         <!-- END BEGIN STYLE CUSTOMIZER -->  
+         <!-- END BEGIN STYLE CUSTOMIZER -->            
          <!-- BEGIN PAGE HEADER-->
+         
          <div class="row">
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  Notifications <small>See All</small>
+                  Traces <small>See traces </small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
+                  <li class="btn-group">
+                     <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
+                     <span>Actions</span> <i class="icon-angle-down"></i>
+                     </button>
+                     <ul class="dropdown-menu pull-right" role="menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                     </ul>
+                  </li>
                   <li>
                      <i class="icon-home"></i>
                      <a href="forward?lien=index.jsp">Home</a> 
                      <i class="icon-angle-right"></i>
                   </li>
-                  <li><a href="#">Notifications</a> <i class="icon-angle-right"></i></li>
-				  <li><a href="#">View Notifications</a> </li>
-                  <li class="pull-right">
-                     <div id="dashboard-report-range" class="dashboard-date-range tooltips" data-placement="top" data-original-title="Change dashboard date range">
-                        <i class="icon-calendar"></i>
-                        <span></span>
-                        <i class="icon-angle-down"></i>
-                     </div>
+                  <li>
+                     <a href="#">Traces</a>
+                     <i class="icon-angle-right"></i>
                   </li>
+                  <li><a href="#">Traces Users</a></li>
                </ul>
                <!-- END PAGE TITLE & BREADCRUMB-->
             </div>
          </div>
          <!-- END PAGE HEADER-->
-		   <div class="row">
+         <!-- BEGIN PAGE CONTENT-->
+         
+         
+         
+          <div class="row">
             <div class="col-md-12">
-               <!-- BEGIN EXAMPLE TABLE PORTLET-->
-              <div class="portlet box blue">
+             <!-- BEGIN EXAMPLE TABLE users-->
+               <div class="portlet box blue">
                   <div class="portlet-title">
-                     <div class="caption"><i class="icon-edit"></i>Editable Table</div>
+                     <div class="caption"><i class="icon-edit"></i>Clients traces</div>
                      <div class="tools">
                         <a href="javascript:;" class="collapse"></a>
                         <a href="#portlet-config" data-toggle="modal" class="config"></a>
@@ -354,105 +399,78 @@
                   </div>
                   <div class="portlet-body">
                      <div class="table-toolbar">
-                     
+                                
+                             <%int m;
+                           String log="";
+                           ArrayList<historique> liste_client1 = (ArrayList<historique>) request.getAttribute("list_de_client");
+                           for ( m=0; m<liste_client1.size(); m++) { 
+                            log+= " date: "+liste_client1.get(m).getDate()+
+                                             "/n ip adress: "+liste_client1.get(m).getIpAdresse()+
+                                             "/n email: "+liste_client1.get(m).getEmail() +
+                                             "/n tache: "+ liste_client1.get(m).getTache()+
+                                             "/n--------------------------------------- /n"; } 
+                              %>
+                        <div class="btn-group pull-right">
+                           <button class="btn dropdown-toggle" data-toggle="dropdown">Tools <i class="icon-angle-down"></i>
+                           </button>
+                           <ul class="dropdown-menu pull-right">
+                              <li><a href="#">Print</a></li>
+                              <li><a href="#">Save as PDF</a></li>
+                              <li><a href="export_to_txt?txt=<%= log%>">Export to log file</a></li>
+                           </ul>
+                        </div>
                      </div>
-                     <table class="table table-striped table-hover table-bordered" id="sample_editable_notif">
+                     <table class="table table-striped table-hover table-bordered" id="sample_editable_client">
                         <thead>
                            <tr>
-                              <th style="display:none;"></th>
-                              <th>Date</th>
+                           	  <th>Ref </th>
+                              <th>Date </th>
+                              <th>IP adress</th>
                               <th>Email</th>
-                              <th>Company</th>
-                              <th>Object</th>
-							  <th>State</th>
-                              <th>Display</th>
-                              <th>Answer</th>
+              				  <th>Task</th>
                               <th>Delete</th>
                            </tr>
                         </thead>
                         <tbody>
-                               <% 
-                        int i;
-                        ArrayList<reclamation> liste_rec = (ArrayList<reclamation>) request.getAttribute("list_de_rec");
-                        for (i=0; i<liste_rec.size(); i++) { 
-                            	
-                        %>
+                           <%int k;
+                           
+                           ArrayList<historique> liste_client = (ArrayList<historique>) request.getAttribute("list_de_client");
+                           for ( k=0; k<liste_client.size();k++) { 
+                               	
+                           %>
                            <tr >
-                       		 <td style="display:none;"><%=liste_rec.get(i).getId_rec()%></td>
-                              <td><%= liste_rec.get(i).getDate() %></td>
-                              <td><%= liste_rec.get(i).getEmail_sender() %></td>
-                              <td><%= liste_rec.get(i).getCompany() %></td>
-                              <td><%= liste_rec.get(i).getObjet_rec() %></td>
-                              <td><% if( liste_rec.get(i).isTraiter()==false){
-                            	  	out.println("<span class='label label-sm label-danger'>non traite</span>");
-                            	  	} else{ 
-                            		out.println("<span class='label label-sm label-success'>traite</span>");
-                            	  } %></td>
-                              <td><a href="#<%=liste_rec.get(i).getId_rec()%>" data-toggle="modal">display</a></td>
-                 <div class="modal fade" id="<%=liste_rec.get(i).getId_rec()%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-               <div class="modal-content">
-                  <div class="modal-header">
-                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                     <h4 class="modal-title"><%= liste_rec.get(i).getObjet_rec() %></h4>
-                  </div>
-                  <div class="modal-body">
-                  		<div >
-                  		<h3>Notification Content</h3>
-                        <%= liste_rec.get(i).getSujet_rec() %>
-                        </div>
-                        <div>
-                        	<h3>Response :</h3>
-                        <%
-                        int j;
-                        String cont="";
-                        ArrayList<reclamation_rep> liste_rep = (ArrayList<reclamation_rep>) request.getAttribute("list_de_rep");
-                       
-                        for (j=0; j<liste_rep.size(); j++) {
-                        	 if (liste_rec.get(i).getId_rec()==liste_rep.get(j).getId_rec()){
-                        		 cont=cont+"Date: "+liste_rep.get(j).getDate_rep()+"<br>"+
-                        		      "Email: "+liste_rep.get(j).getEmail_rep()+"<br>"+
-                        		      "Full Name: "+liste_rep.get(j).getNom_prenom_rep()+"<br>"+
-                        		      "Content: "+liste_rep.get(j).getContenue_rep()+"<br>"+
-                        		      "<br/><hr><br/>";
-                        	 }
-                        	}
-                        if (cont==""){
-                        	out.println("<h4>No response</h4>");
-                        }else{
-                        	out.println(cont);
-                        }
-                         
-                         %>
-                        </div>
-                  </div>
-                  <div class="modal-footer">
-                     
-                     <button type="button" class="btn default" data-dismiss="modal">Close</button>
-                  </div>
-               </div>
-               <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-         </div>
-                              
-                              
-                              <td><a href="ajout_rep_notif?id=<%out.println(liste_rec.get(i).getId_rec());%>">Answer</a></td>
+                               <td><%= liste_client.get(k).getId() %></td>
+                         	  <td><%= liste_client.get(k).getDate() %></td>
+                              <td><%= liste_client.get(k).getIpAdresse() %></td>
+                              <td><%= liste_client.get(k).getEmail() %></td>
+                              <td><%= liste_client.get(k).getTache() %></td>                            
                               <td><a class="delete" href="javascript:;">Delete</a></td>
                            </tr>
-                          <% } %>
+                         <% } %>
+                          
+                           
+                            
+                         
                         </tbody>
                      </table>
                   </div>
                </div>
+                 <!-- END EXAMPLE TABLE PORTLET-->
+               
+             
+            </div>
+         </div>
          
-        </div>
-           </div>
-              </div>
-        </div>
+         
+         <!-- END PAGE CONTENT -->
+      </div>
+      <!-- END PAGE -->
+   </div>
+   <!-- END CONTAINER -->
+   <!-- BEGIN FOOTER -->
    <div class="footer">
       <div class="footer-inner">
-         2014 &copy; IMEX.
+         2014 &copy; Imex.
       </div>
       <div class="footer-tools">
          <span class="go-top">
@@ -467,7 +485,7 @@
    <script src="assets/plugins/respond.min.js"></script>
    <script src="assets/plugins/excanvas.min.js"></script> 
    <![endif]-->   
-      <script src="assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
+   <script src="assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
    <script src="assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>    
    <script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
    <script src="assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js" type="text/javascript" ></script>
@@ -482,18 +500,16 @@
    <script type="text/javascript" src="assets/plugins/data-tables/DT_bootstrap.js"></script>
    <!-- END PAGE LEVEL PLUGINS -->
    <!-- BEGIN PAGE LEVEL SCRIPTS -->
-   <script src="assets/scripts/app.js"></script>   
-   <!-- END PAGE LEVEL SCRIPTS -->  
-   <script src="assets/scripts/table-editable-notif.js"></script>    
+   <script src="assets/scripts/app.js"></script>
+   <script src="assets/scripts/table-editable-historique-admin.js"></script> 
+   <script src="assets/scripts/table-editable-historique-client.js"></script>    
    <script>
       jQuery(document).ready(function() {       
          App.init();
-         TableEditableNotif.init();
+         histoadmin.init();
+         histoclient.init();
       });
    </script>
-   
-
-   <!-- END JAVASCRIPTS -->
 </body>
 <!-- END BODY -->
 </html>

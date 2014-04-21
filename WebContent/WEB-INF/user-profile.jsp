@@ -1,18 +1,20 @@
+<%@ page import="java.util.ArrayList" %>
 
- <%@page import="adminDAO.gerer_privilege_admin"%>
- <%@ page import="java.util.ArrayList" %>
-  <%@ page import="java.util.List" %>
+ <%@page import="responsableDAO.*"%>
+<%@ page import="java.util.List" %>
  <%@page import="connexion.authentification"%>
-  <%@page import="entities.privilege_admin"%>
-  <%@ page import="connexion.*" %>
+  <%@page import="entities.privilege_utilisateur"%>
+    <%@ page import="connexion.*" %>
 <%@ page import="historiqueDAO.gererHistorique" %>
 <%@ page import="adminDAO.gerer_reclamation" %>
 <%@ page import="profile.gererprofile" %>
-<html lang="en" class="no-js"> 
+<!DOCTYPE html>
+
+<!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <!-- BEGIN HEAD -->
 <head>
    <meta charset="utf-8" />
-   <title>IMEX | Acceuil</title>
+   <title>IMEX | Acceuil-User</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -59,26 +61,14 @@
          <ul class="nav navbar-nav pull-right">
             <!-- BEGIN NOTIFICATION DROPDOWN -->
             
-            <li class="dropdown" id="header_notification_bar">
-               <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-               <i class="icon-warning-sign"></i>
-               <% gererHistorique gh = new gererHistorique();
+         
+               <% 
                   gerer_reclamation gr = new gerer_reclamation();
-                   int coun = gr.getRec(null);
-               	   int count = gh.getLast("administrateur");
+                   int coun = gr.getRec(gr.getCompany("select mat_soc from client_soc where email_resp=(select email_resp from utilisateur where email_ut='"+authentification.email+"')"));
+               	   
                %>
-               <span class="badge"><%=count %></span>
-               </a>
-               <ul class="dropdown-menu extended notification">
-                  <li>
-                     <p>You have <%=count %> new histories</p>
-                  </li>
-                
-                  <li class="external">   
-                     <a href="list_getlast_historique">See all histories <i class="m-icon-swapright"></i></a>
-                  </li>
-               </ul>
-            </li>
+               
+         
             
             <!-- END NOTIFICATION DROPDOWN -->
             
@@ -95,7 +85,7 @@
                   </li>
 
                   <li class="external">   
-                     <a href="list_delete_reclamation">See all notifications <i class="m-icon-swapright"></i></a>
+                     <a href="client_user_list_notif_rep">See all notifications <i class="m-icon-swapright"></i></a>
                   </li>
                </ul>
             </li>
@@ -111,7 +101,7 @@
                <i class="icon-angle-down"></i>
                </a>
                <ul class="dropdown-menu">
-                  <li><a href="forward?lien=admin-profile.jsp"><i class="icon-user"></i> My Profile</a>
+                  <li><a href="forward?lien=user-profile.jsp"><i class="icon-user"></i> My Profile</a>
                   </li>
                  
                   <li class="divider"></li>
@@ -153,125 +143,146 @@
                <!-- END RESPONSIVE QUICK SEARCH FORM -->
             </li>
             <li class="start active ">
-               <a href="forward?lien=index_admin.jsp">
+               <a href="forward?lien=index_user.jsp">
                <i class="icon-home"></i> 
                <span class="title">Dashboard</span>
                <span class="selected"></span>
                </a>
             </li>
-            <%  boolean addClient = false;
-            	boolean viewClient = false;
-            	boolean deleteClient = false;
-            	boolean updateClient = false;
-            	boolean viewNotif = false;
-            	boolean answerNotif = false;
-            	boolean export = false;
-            	boolean stat = false;
-            	boolean historic = false;
-            	String email = authentification.email;
-            	gerer_privilege_admin gp = new gerer_privilege_admin();
-            	List<privilege_admin> priv = gp.ListPrivilege(email);
+              <% 
+               boolean uploadFile = false;
+          	 boolean deleteFile = false;
+          	 boolean sendFile = false;
+          	 boolean downloadFile = false;
+          	 boolean sendSms = false;
+          	 boolean sendEmail = false;
+          	 boolean viewStat = false;
+          	 boolean answerNotif = false;
+          	 boolean export = false;
+             boolean viewUpload=false;
+             boolean viewHistorique =false;
+             boolean sendNotif=false;
+             boolean listNotif=false;
+             
+               String email = authentification.email;
+               gerer_privilege_ut gu = new gerer_privilege_ut();
+               List<privilege_utilisateur> priv = gu.ListPrivilege(email);
                 for (int i=0; i<priv.size(); i++) {
-                	 addClient=priv.get(i).isAddClient();
-                	 viewClient=priv.get(i).isViewClient();
-                	 deleteClient=priv.get(i).isDeleteClient();
-                	 updateClient=priv.get(i).isUpdateClient();
-                	 viewNotif=priv.get(i).isViewNotif();
-                	 answerNotif=priv.get(i).isAnswerNotif();
-                	 export=priv.get(i).isExport();
-                	 stat=priv.get(i).isViewStat();
-                	 historic=priv.get(i).isViewHistoric();
+                   uploadFile=priv.get(i).isUploadFile();
+                   deleteFile=priv.get(i).isDeleteFile();
+                   
+                   sendFile=priv.get(i).isSendFile();
+                   downloadFile=priv.get(i).isDownloadFile();
+                   sendSms=priv.get(i).isSendSms();
+                   sendEmail=priv.get(i).isSendEmail();
+                   viewStat=priv.get(i).isViewStat();
+                   answerNotif=priv.get(i).isAnswerNotif();
+                   export=priv.get(i).isExport();
+                   viewUpload=priv.get(i).isViewUpload();
+                   viewHistorique=priv.get(i).isViewHistorique();
+                   sendNotif=priv.get(i).isSendNotif();
+                   listNotif=priv.get(i).isListNotif();
                 }
             %>
-            <li class="">
-               <a href="javascript:;">
-               <i class="icon-file-text"></i> 
-               <span class="title">Clients</span>
+      
+         <li>
+               <a class="active" href="javascript:;">
+               <i class="icon-folder-open"></i> 
+               <span class="title">Files</span>
                <span class="arrow "></span>
                </a>
-			    <ul class="sub-menu">
-                  <% if (viewClient){
-                	 out.println("<li class='active'>"+
-                          	        "<a href='listclients?type=admin'>"+
-                  	                    "View Clients"+
-                                 "<span class='arrow'></span>"+
-                  					"</a></li>");
-                	 }else{
-                	 out.println("pas de priv");
-                	}%>
-               </ul>
-            </li>
-            <li class="">
-               <a href="javascript:;">
-               <i class="icon-file-text"></i> 
-               <span class="title">Notifications</span>
-               <span class="arrow "></span>
-               </a>
-			    <ul class="sub-menu">
-			    <%
-			    	if (viewNotif){
-			    		out.println("<li class='active'>"+
-			                    		 "<a href='list_delete_reclamation'>"+
-	                    					 "View Notifications"+
-	                    				 "<span class='arrow'></span>"+
-	                    				 "</a>"+                  
-	                  				"</li>");
-			    	}else{
-			    		out.println("pas de priv");
-			    	}
-			    
-			    %>
-                  
-                  	</ul>
-				  </li>
-                  <li class="">
-               <a href="javascript:;">
-               <i class="icon-file-text"></i> 
-               <span class="title">Historic</span>
-               <span class="arrow "></span>
-               </a>
-			    <ul class="sub-menu">
-                  <%
-                  		if (historic){
-                  			out.println("<li class='active'>"+					 
-                                    "<a href='list_getlast_historique'>"+
-                            "historic of Clients"+
-                            "<span class='arrow'></span>"+
-                            "</a>"+
-       					 "</li>");
-                  		}else{
-                  			out.println("pas de priv");
-                  		}
-                  %>
-                    
-                   </ul>					 
+               <ul class="sub-menu">
+                  <li>
+                  <% if (uploadFile){
+                   out.println("<a href='forward?lien=user_upload_file.jsp'>"+
+                           "File Upload"+ 
+                          " <span class='arrow'></span>"+
+                          " </a>");
+                   }else{
+                   out.println("pas de priv");
+                  }%>
+                     
                   </li>
-                          <li class="">
+                 <li>
+                    <% if (viewUpload){
+                   out.println("<a href='list_xml_up'>"+
+                           "View Uploaded Files"+
+                           "<span class='arrow'></span>"+
+                           "</a>");
+                   }else{
+                   out.println("pas de priv");
+                  }%>
+                     
+                  </li>
+                 
+                 <li>
+                      <% if (downloadFile){
+                   out.println("<a href='list_download_xml'>"+
+                           "Download File"+
+                           "<span class='arrow'></span>"+
+                           "</a>");
+                   }else{
+                   out.println("pas de priv");
+                  }%>
+                     
+                  </li>
+               </ul>
+            </li>
+            <li class="">
                <a href="javascript:;">
                <i class="icon-file-text"></i> 
-               <span class="title">Statistics</span>
+               <span class="title">Notification</span>
                <span class="arrow "></span>
                </a>
-			    <ul class="sub-menu">
-                  <% if (stat){
-                	  out.println("<li class='active'>"+
-                              "<a href='forward?lien=table_statistique_admin.jsp'>"+
-                      "View Statistics"+
-                      "<span class='arrow'></span>"+
-                      "</a>"+                  
-                   "</li>");
-                  }else{
-                	out.println("pas de priv");  
-                  }
-                  %>
-                  </ul>
-				  </li>
-                   
-               </ul>
+            <ul class="sub-menu">
+                  <li>
+                      <% if (sendNotif){
+                   out.println("<a href='notif_send_page'>"+
+                           "Send  Notification"+
+                           "<span class='arrow'></span>"+
+                           "</a>");
+                   }else{
+                   out.println("pas de priv");
+                  }%>
+                     
+                  </li>
+                   <li>
+                      <% if (listNotif){
+                   out.println("<a href='client_user_list_notif_rep'>"+
+                           "List of notifications"+
+                           "<span class='arrow'></span>"+
+                           "</a>");
+                   }else{
+                   out.println("pas de priv");
+                  }%>
+                     
+                  </li>
+              </ul>
             </li>
-               </ul>
+             
+         <li class="last">
+               <a href="javascript:;">
+               <i class="icon-bar-chart"></i> 
+               <span class="title">Statistique</span>
+               <span class="arrow "></span>
+               </a>
+            <ul class="sub-menu">
+                  <li>
+                        <% if (viewStat){
+                   out.println("<a href='client_table_stat.jsp'>"+
+                           "View  Statistique"+ 
+                           "<span class='arrow'></span>"+
+                           "</a>");
+                   }else{
+                   out.println("pas de priv");
+                  }%>
+                     
+                  </li>
+              </ul>
             </li>
+         
          </ul>
+		 
          <!-- END SIDEBAR MENU -->
       </div>
       <!-- END SIDEBAR -->
@@ -289,9 +300,7 @@
                   <span>THEME COLOR</span>
                   <ul>
                      <li class="color-black current color-default" data-style="default"></li>
-                     <li class="color-blue" data-style="blue"></li>
-                     <li class="color-brown" data-style="brown"></li>
-                     <li class="color-purple" data-style="purple"></li>
+                     <li class="color-blue"></li>
                      <li class="color-grey" data-style="grey"></li>
                      <li class="color-white color-light" data-style="light"></li>
                   </ul>
@@ -332,12 +341,12 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  Dashboard <small>Documentary portal</small>
+                  Portail documentaire <small></small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li>
                      <i class="icon-home"></i>
-                     <a href="forward?lien=index.jsp">Home</a> 
+                     <a href="forward?lien=index_user.jsp">Home</a> 
                      <i class="icon-angle-right"></i>
                   </li>
                   <li><a href="#">Dashboard</a></li>
@@ -353,7 +362,77 @@
             </div>
          </div>
          <!-- END PAGE HEADER-->
-         
+           		
+<div class="tab-pane" id="tab_1_3">
+                        <div class="row profile-account">
+                           <div class="col-md-3">
+                              <ul class="ver-inline-menu tabbable margin-bottom-10">
+                                 <li class="active">
+                                    <a data-toggle="tab" href="#tab_1-1">
+                                    <i class="icon-cog"></i> 
+                                    Personal info
+                                    </a> 
+                                    <span class="after"></span>                                    
+                                 </li>
+                         
+                                 <li ><a data-toggle="tab" href="#tab_3-3"><i class="icon-lock"></i> Change Password</a></li>
+                                
+                              </ul>
+                           </div>
+                           <%
+                          gererprofile gp = new gererprofile();
+                           String [] valeur= gp.getInfo(authentification.email, authentification.c);
+                           
+                           
+                           %>
+                           <div class="col-md-9">
+                              <div class="tab-content">
+                                 <div id="tab_1-1" class="tab-pane active">
+                                    <form role="form" name="f1" action="#">
+                                       <div class="form-group">
+                                          <label class="control-label">First Name</label>
+                                          <input type="text" name="firstn" value="<%=valeur[0] %>" class="form-control" />
+                                       </div>
+                                       <div class="form-group">
+                                          <label class="control-label">Last Name</label>
+                                          <input type="text" name="lastn" value="<%=valeur[1] %>" class="form-control" />
+                                       </div>
+                                       <div class="form-group">
+                                          <label class="control-label">Mobile Number</label>
+                                          <input type="text" name="mobile" value="<%=valeur[2] %>" class="form-control" />
+                                       </div>
+                                     
+                                       <div class="margiv-top-10">
+                                          <a href="#" onclick="updateInfo()" class="btn green">Save Changes</a>
+                                          <a href="#" class="btn default">Cancel</a>
+                                       </div>
+                                       <br>
+                                       <div id="resultat" style="color:red; margin-left:250px"></div>
+                                    </form>
+                                    
+                                 </div>
+                                 
+                                 <div id="tab_3-3" class="tab-pane">
+                                    <form name="f2" >
+                                       <div class="form-group">
+                                          <label class="control-label">Current Password</label>
+                                          <input type="password" name="current" class="form-control" />
+                                       </div>
+                                       <div class="form-group">
+                                          <label class="control-label">New Password</label>
+                                          <input type="password" name="new1" class="form-control" />
+                                       </div>
+                                       <div class="form-group">
+                                          <label class="control-label">Re-type New Password</label>
+                                          <input type="password" name="new2"  class="form-control" />
+                                       </div>
+                                       <div class="margin-top-10">
+                                          
+                                           <a href="#" onclick="updatePass()" class="btn green">Change Password</a>
+                                          <a href="#" class="btn default">Cancel</a>
+                                       </div>
+                                       <div id="resultat1" style="color:red; margin-left:250px"></div>
+                       
         </div>
            </div>
               </div>
@@ -368,6 +447,66 @@
          </span>
       </div>
    </div>
+   <script>
+          function updateInfo(){
+        	  
+        	  if (document.f1.firstn.value=="" || document.f1.lastn.value=="" || document.f1.mobile.value==""){
+        		  document.getElementById('resultat').innerHTML="Please fill in the fields";
+        		 
+        	  }else{
+        		  var table = [];
+                  table.push( { "firstn" : document.f1.firstn.value ,
+                  		    "lastn": document.f1.lastn.value ,
+                  		    "mobile":document.f1.mobile.value  }
+                  );
+                 
+                  $.ajax({
+                  	type:"GET",
+                  	url: "./profileServlet",
+                  	contentType: "application/x-www-form-urlencoded",
+                  	dataType: "JSON",
+                  	data: {ligne:JSON.stringify(table)},
+                  	success: function(data) {
+                  		 document.getElementById('resultat').innerHTML="update is successful";
+                  		}
+                  		})
+               }
+        	  
+          }
+          
+          function updatePass(){
+        	  if (document.f2.current.value=="" || document.f2.new1.value=="" || document.f2.new2.value==""){
+        		  document.getElementById('resultat1').innerHTML="Please fill in the fields";
+        	  }else if (document.f2.new1.value!=document.f2.new2.value){
+        		  document.getElementById('resultat1').innerHTML="mouch kifkif"; 
+        	
+        		 
+        	  }else{
+        		  var table = [];
+                  table.push( { "current" : document.f2.current.value ,
+                  		    "newp": document.f2.new1.value   }
+                  );
+                 
+                  $.ajax({
+                  	type:"POST",
+                  	url: "./profileServlet",
+                  	contentType: "application/x-www-form-urlencoded",
+                  	dataType: "JSON",
+                  	data: {ligne:JSON.stringify(table)},
+                  	success: function(dat) {
+                  		
+                  		 document.getElementById('resultat1').innerHTML=dat.responseText;
+                  		},
+                  	error: function (err){
+                  		document.getElementById('resultat1').innerHTML=err.responseText;
+                  	}
+                  		});
+        	  }
+      
+          }
+        
+        
+        </script>
    <!-- END FOOTER -->
    <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
    <!-- BEGIN CORE PLUGINS -->   
@@ -387,13 +526,7 @@
    <script src="assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
    <!-- END CORE PLUGINS -->
    <!-- BEGIN PAGE LEVEL PLUGINS -->
-   <script src="assets/plugins/jqvmap/jqvmap/jquery.vmap.js" type="text/javascript"></script>   
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js" type="text/javascript"></script>  
+   
    <script src="assets/plugins/flot/jquery.flot.js" type="text/javascript"></script>
    <script src="assets/plugins/flot/jquery.flot.resize.js" type="text/javascript"></script>
    <script src="assets/plugins/jquery.pulsate.min.js" type="text/javascript"></script>
@@ -413,15 +546,7 @@
    <script>
       jQuery(document).ready(function() {    
          App.init(); // initlayout and core plugins
-         Index.init();
-         Index.initJQVMAP(); // init index page's custom scripts
-         Index.initCalendar(); // init index page's custom scripts
-         Index.initCharts(); // init index page's custom scripts
-         Index.initChat();
-         Index.initMiniCharts();
-         Index.initDashboardDaterange();
-         Index.initIntro();
-         Tasks.initDashboardWidget();
+      
       });
    </script>
    <!-- END JAVASCRIPTS -->

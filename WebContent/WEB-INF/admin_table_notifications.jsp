@@ -5,6 +5,11 @@
 <%@ page import="java.util.List" %>
  <%@page import="connexion.authentification"%>
   <%@page import="entities.privilege_admin"%>
+  
+  <%@ page import="connexion.*" %>
+<%@ page import="historiqueDAO.gererHistorique" %>
+<%@ page import="adminDAO.gerer_reclamation" %>
+<%@ page import="profile.gererprofile" %>
  <html lang="en" class="no-js"> 
 <!-- BEGIN HEAD -->
 <head>
@@ -43,7 +48,7 @@
       <div class="header-inner">
          <!-- BEGIN LOGO -->  
          <a class="navbar-brand" href="forward?lien=index_super_admin.jsp">
-      <h3 style="color:white"> <b><center>I&nbsp;M&nbsp;E&nbsp;X</center></b></h3>
+      			 <img style="width:100px; height:25px " src="assets/img/logon.png" alt="logo" class="img-responsive" />
          </a>
          <!-- END LOGO -->
          <!-- BEGIN RESPONSIVE MENU TOGGLER --> 
@@ -51,49 +56,60 @@
          <!-- BEGIN TOP NAVIGATION MENU -->
          <ul class="nav navbar-nav pull-right">
             <!-- BEGIN NOTIFICATION DROPDOWN -->
+            
             <li class="dropdown" id="header_notification_bar">
                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                <i class="icon-warning-sign"></i>
-               <span class="badge">6</span>
+               <% gererHistorique gh = new gererHistorique();
+                  gerer_reclamation gr = new gerer_reclamation();
+                   int coun = gr.getRec(null);
+               	   int count = gh.getLast("administrateur");
+               %>
+               <span class="badge"><%=count %></span>
                </a>
                <ul class="dropdown-menu extended notification">
                   <li>
-                     <p>You have 14 new notifications</p>
+                     <p>You have <%=count %> new histories</p>
                   </li>
                 
                   <li class="external">   
-                     <a href="#">See all notifications <i class="m-icon-swapright"></i></a>
+                     <a href="list_getlast_historique">See all histories <i class="m-icon-swapright"></i></a>
                   </li>
                </ul>
             </li>
+            
             <!-- END NOTIFICATION DROPDOWN -->
+            
             <!-- BEGIN INBOX DROPDOWN -->
             <li class="dropdown" id="header_inbox_bar">
                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
                   data-close-others="true">
                <i class="icon-envelope"></i>
-               <span class="badge">5</span>
+               <span class="badge"><%=coun %></span>
                </a>
                <ul class="dropdown-menu extended inbox">
                   <li>
-                     <p>You have 12 new messages</p>
+                     <p>You have <%=coun %> new notifications</p>
                   </li>
 
                   <li class="external">   
-                     <a href="forward?lien=inbox.jsp">See all messages <i class="m-icon-swapright"></i></a>
+                     <a href="list_delete_reclamation">See all notifications <i class="m-icon-swapright"></i></a>
                   </li>
                </ul>
             </li>
             <!-- END INBOX DROPDOWN -->
+            
             <!-- BEGIN USER LOGIN DROPDOWN -->
             <li class="dropdown user">
                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-               
-               <span class="username">Bob Nilson</span>
+               <%
+               		gererprofile gpi = new gererprofile(); 
+                    String[] info = gpi.getInfo(authentification.email, authentification.c);  %>
+               <span class="username"><%=info[0]+" "+info[1] %></span>
                <i class="icon-angle-down"></i>
                </a>
                <ul class="dropdown-menu">
-                  <li><a href="forward?lien=extra_profile.jsp"><i class="icon-user"></i> My Profile</a>
+                  <li><a href="forward?lien=super-profile.jsp"><i class="icon-user"></i> My Profile</a>
                   </li>
                  
                   <li class="divider"></li>
@@ -116,14 +132,14 @@
       <div class="page-sidebar navbar-collapse collapse">
          <!-- BEGIN SIDEBAR MENU -->        
          <ul class="page-sidebar-menu">
-            <li>
+           <li>
                <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
                <div class="sidebar-toggler hidden-phone"></div>
                <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
             </li>
             <li>
                <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
-               <form class="sidebar-search" action="forward?lien=extra_search.jsp" method="POST">
+               <form class="sidebar-search" action="" method="POST">
                   <div class="form-container">
                      <div class="input-box">
                         <a href="javascript:;" class="remove"></a>
@@ -133,27 +149,26 @@
                   </div>
                </form>
                <!-- END RESPONSIVE QUICK SEARCH FORM -->
- </li>
-            <li class="start active ">
+            </li>
+            <li class="">
                <a href="forward?lien=index_admin.jsp">
                <i class="icon-home"></i> 
                <span class="title">Dashboard</span>
-               <span class="selected"></span>
+              <span class="arrow "></span>
                </a>
             </li>
-            <% 
-               boolean addClient = false;
-               boolean viewClient = false;
-               boolean deleteClient = false;
-               boolean updateClient = false;
-               boolean viewNotif = false;
-               boolean answerNotif = false;
-               boolean export = false;
-               boolean stat = false;
-               boolean historic = false;
-               String email = authentification.email;
-               gerer_privilege_admin gp = new gerer_privilege_admin();
-               List<privilege_admin> priv = gp.ListPrivilege(email);
+            <%  boolean addClient = false;
+              boolean viewClient = false;
+              boolean deleteClient = false;
+              boolean updateClient = false;
+              boolean viewNotif = false;
+              boolean answerNotif = false;
+              boolean export = false;
+              boolean stat = false;
+              boolean historic = false;
+              String email = authentification.email;
+              gerer_privilege_admin gp = new gerer_privilege_admin();
+              List<privilege_admin> priv = gp.ListPrivilege(email);
                 for (int i=0; i<priv.size(); i++) {
                    addClient=priv.get(i).isAddClient();
                    viewClient=priv.get(i).isViewClient();
@@ -172,62 +187,62 @@
                <span class="title">Clients</span>
                <span class="arrow "></span>
                </a>
-             <ul class="sub-menu">
+          <ul class="sub-menu">
                   <% if (viewClient){
                    out.println("<li class='active'>"+
-                                   "<a href='listclients?type=admin'>"+
-                                         "View Clients"+
+                                    "<a href='listclients?type=admin'>"+
+                                        "View Clients"+
                                  "<span class='arrow'></span>"+
-                                 "</a></li>");
+                            "</a></li>");
                    }else{
                    out.println("pas de priv");
                   }%>
                </ul>
             </li>
-            <li class="">
+            <li class="start active ">
                <a href="javascript:;">
                <i class="icon-file-text"></i> 
                <span class="title">Notifications</span>
-               <span class="arrow "></span>
+                <span class="selected"></span>
                </a>
-             <ul class="sub-menu">
-             <%
-               if (viewNotif){
-                  out.println("<li class='active'>"+
-                                  "<a href='list_delete_reclamation'>"+
-                                     "View Notifications"+
-                                  "<span class='arrow'></span>"+
-                                  "</a>"+                  
-                                 "</li>");
-               }else{
-                  out.println("pas de priv");
-               }
-             
-             %>
+          <ul class="sub-menu">
+          <%
+            if (viewNotif){
+              out.println("<li class='active'>"+
+                               "<a href='list_delete_reclamation'>"+
+                                 "View Notifications"+
+                               "<span class='arrow'></span>"+
+                               "</a>"+                  
+                            "</li>");
+            }else{
+              out.println("pas de priv");
+            }
+          
+          %>
                   
-                     </ul>
-              </li>
+                    </ul>
+          </li>
                   <li class="">
                <a href="javascript:;">
                <i class="icon-file-text"></i> 
                <span class="title">Historic</span>
                <span class="arrow "></span>
                </a>
-             <ul class="sub-menu">
+          <ul class="sub-menu">
                   <%
-                        if (historic){
-                           out.println("<li class='active'>"+               
-                                    "<a href='forward?lien=historique_client.jsp'>"+
+                      if (historic){
+                        out.println("<li class='active'>"+           
+                                    "<a href='list_getlast_historique'>"+
                             "historic of Clients"+
                             "<span class='arrow'></span>"+
                             "</a>"+
-                      "</li>");
-                        }else{
-                           out.println("pas de priv");
-                        }
+                 "</li>");
+                      }else{
+                        out.println("pas de priv");
+                      }
                   %>
                     
-                   </ul>                
+                   </ul>           
                   </li>
                           <li class="">
                <a href="javascript:;">
@@ -235,7 +250,7 @@
                <span class="title">Statistics</span>
                <span class="arrow "></span>
                </a>
-             <ul class="sub-menu">
+          <ul class="sub-menu">
                   <% if (stat){
                     out.println("<li class='active'>"+
                               "<a href='forward?lien=table_statistique_admin.jsp'>"+
@@ -248,7 +263,7 @@
                   }
                   %>
                   </ul>
-              </li>
+          </li>
                    
                </ul>
             </li>
@@ -342,7 +357,7 @@
                <!-- BEGIN EXAMPLE TABLE PORTLET-->
               <div class="portlet box blue">
                   <div class="portlet-title">
-                     <div class="caption"><i class="icon-edit"></i>Editable Table</div>
+                     <div class="caption"><i class="icon-edit"></i>Clients Notifications</div>
                      <div class="tools">
                         <a href="javascript:;" class="collapse"></a>
                         <a href="#portlet-config" data-toggle="modal" class="config"></a>
@@ -362,7 +377,7 @@
                               <th>Email</th>
                               <th>Company</th>
                               <th>Object</th>
-							  <th>State</th>
+							                <th>State</th>
                               <th>Display</th>
                               <th>Answer</th>
                               <th>Delete</th>
@@ -382,9 +397,9 @@
                               <td><%= liste_rec.get(i).getCompany() %></td>
                               <td><%= liste_rec.get(i).getObjet_rec() %></td>
                               <td><% if( liste_rec.get(i).isTraiter()==false){
-                            	  	out.println("non traite");
+                            	  	out.println("<span class='label label-sm label-danger'>non traite</span>");
                             	  	} else{ 
-                            		out.println("traite");
+                            		out.println("<span class='label label-sm label-success'>traite</span>");
                             	  } %></td>
                               <td><a href="#<%=liste_rec.get(i).getId_rec()%>" data-toggle="modal">display</a></td>
                  <div class="modal fade" id="<%=liste_rec.get(i).getId_rec()%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

@@ -1,5 +1,14 @@
 
- <html lang="en" class="no-js"> 
+ <%@page import="adminDAO.gerer_reclamation"%>
+<%@page import="historiqueDAO.gererHistorique"%>
+<%@page import="profile.gererprofile"%>
+
+ <%@ page import="connexion.*" %>
+<%@ page import="historiqueDAO.gererHistorique" %>
+<%@ page import="adminDAO.gerer_reclamation" %>
+<%@ page import="profile.gererprofile" %>
+
+<html lang="en" class="no-js"> 
 <!-- BEGIN HEAD -->
 <head>
    <meta charset="utf-8" />
@@ -15,11 +24,6 @@
    <link href="assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
    <!-- END GLOBAL MANDATORY STYLES -->
    <!-- BEGIN PAGE LEVEL PLUGIN STYLES --> 
-   <link href="assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" type="text/css"/>
-   <link href="assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
-   <link href="assets/plugins/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css"/>
-   <link href="assets/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css"/>
-   <link href="assets/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css"/>
    <!-- END PAGE LEVEL PLUGIN STYLES -->
    <!-- BEGIN THEME STYLES --> 
    <link href="assets/css/style-metronic.css" rel="stylesheet" type="text/css"/>
@@ -29,6 +33,13 @@
    <link href="assets/css/pages/tasks.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
    <link href="assets/css/custom.css" rel="stylesheet" type="text/css"/>
+   
+        <script src="assets/clock/amcharts.js" type="text/javascript"></script>
+        <script src="assets/clock/gauge.js" type="text/javascript"></script>
+        <script src="assets/clock/clock.js" type="text/javascript"></script>
+       
+        <link href="assets/clock/style.css" rel="stylesheet" type="text/css"/>
+        
    <!-- END THEME STYLES -->
    <link rel="shortcut icon" href="favicon.ico" />
 </head>
@@ -41,7 +52,7 @@
       <div class="header-inner">
          <!-- BEGIN LOGO -->  
          <a class="navbar-brand" href="forward?lien=index_super_admin.jsp">
-      <h3 style="color:white"> <b><center>I&nbsp;M&nbsp;E&nbsp;X</center></b></h3>
+      			 <img style="width:100px; height:25px " src="assets/img/logon.png" alt="logo" class="img-responsive" />
          </a>
          <!-- END LOGO -->
          <!-- BEGIN RESPONSIVE MENU TOGGLER --> 
@@ -49,49 +60,60 @@
          <!-- BEGIN TOP NAVIGATION MENU -->
          <ul class="nav navbar-nav pull-right">
             <!-- BEGIN NOTIFICATION DROPDOWN -->
+            
             <li class="dropdown" id="header_notification_bar">
                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                <i class="icon-warning-sign"></i>
-               <span class="badge">6</span>
+               <% gererHistorique gh = new gererHistorique();
+                  gerer_reclamation gr = new gerer_reclamation();
+                   int coun = gr.getRec(null);
+               	   int count = gh.getLast(null);
+               %>
+               <span class="badge"><%=count %></span>
                </a>
                <ul class="dropdown-menu extended notification">
                   <li>
-                     <p>You have 14 new notifications</p>
+                     <p>You have <%=count %> new histories</p>
                   </li>
                 
                   <li class="external">   
-                     <a href="#">See all notifications <i class="m-icon-swapright"></i></a>
+                     <a href="list_getlast_historique">See all histories <i class="m-icon-swapright"></i></a>
                   </li>
                </ul>
             </li>
+            
             <!-- END NOTIFICATION DROPDOWN -->
+            
             <!-- BEGIN INBOX DROPDOWN -->
             <li class="dropdown" id="header_inbox_bar">
                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
                   data-close-others="true">
                <i class="icon-envelope"></i>
-               <span class="badge">5</span>
+               <span class="badge"><%=coun %></span>
                </a>
                <ul class="dropdown-menu extended inbox">
                   <li>
-                     <p>You have 12 new messages</p>
+                     <p>You have <%=coun %> new notifications</p>
                   </li>
 
                   <li class="external">   
-                     <a href="forward?lien=inbox.jsp">See all messages <i class="m-icon-swapright"></i></a>
+                     <a href="list_delete_reclamation">See all notifications <i class="m-icon-swapright"></i></a>
                   </li>
                </ul>
             </li>
             <!-- END INBOX DROPDOWN -->
+            
             <!-- BEGIN USER LOGIN DROPDOWN -->
             <li class="dropdown user">
                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-               
-               <span class="username">Bob Nilson</span>
+               <%
+               		gererprofile gpi = new gererprofile(); 
+                    String[] info = gpi.getInfo(authentification.email, authentification.c);  %>
+               <span class="username"><%=info[0]+" "+info[1] %></span>
                <i class="icon-angle-down"></i>
                </a>
                <ul class="dropdown-menu">
-                  <li><a href="forward?lien=extra_profile.jsp"><i class="icon-user"></i> My Profile</a>
+                  <li><a href="forward?lien=super-profile.jsp"><i class="icon-user"></i> My Profile</a>
                   </li>
                  
                   <li class="divider"></li>
@@ -114,14 +136,14 @@
       <div class="page-sidebar navbar-collapse collapse">
          <!-- BEGIN SIDEBAR MENU -->        
          <ul class="page-sidebar-menu">
-            <li>
+           <li>
                <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
                <div class="sidebar-toggler hidden-phone"></div>
                <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
             </li>
             <li>
                <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
-               <form class="sidebar-search" action="forward?lien=extra_search.jsp" method="POST">
+               <form class="sidebar-search" action="" method="POST">
                   <div class="form-container">
                      <div class="input-box">
                         <a href="javascript:;" class="remove"></a>
@@ -238,28 +260,7 @@
                   </li>
 				  </ul>
 				  </li>
-                   <li class="">
-               <a href="javascript:;">
-               <i class="icon-file-text"></i> 
-               <span class="title">Privilege</span>
-               <span class="arrow "></span>
-               </a>
-			    <ul class="sub-menu">
-                  <li class="active">
-                     <a href="list_update_priv_admin">
-                     Privilege for Administrators
-                     <span class="arrow"></span>
-                     </a>                  
-                  </li>
-                                       <li class="active">
-                     <a href="forward?lien=table_statistique.jsp">
-                     Put Privilege for Clients
-                     <span class="arrow"></span>
-                     </a>                  
-                  </li>
-                  
-               </ul>
-            </li>
+       
                </ul>
             </li>
          </ul>
@@ -333,10 +334,10 @@
                   </li>
                   <li><a href="#">Dashboard</a></li>
                   <li class="pull-right">
-                     <div id="dashboard-report-range" class="dashboard-date-range tooltips" data-placement="top" data-original-title="Change dashboard date range">
+                     <div id="dashboard-report-range" class="dashboard-date-range tooltips" data-placement="top" >
                         <i class="icon-calendar"></i>
                         <span></span>
-                        <i class="icon-angle-down"></i>
+                        
                      </div>
                   </li>
                </ul>
@@ -345,6 +346,17 @@
          </div>
          <!-- END PAGE HEADER-->
          
+         <div id="chartdiv" style=" width:300px; height:300px;">
+         </div>
+         
+          <div class="note note-success" >
+                        <h4 class="block">Welcome !! </h4>
+                        <p>
+                        	
+                        </p>
+            </div>
+         
+            
         </div>
            </div>
               </div>
@@ -359,6 +371,7 @@
          </span>
       </div>
    </div>
+
    <!-- END FOOTER -->
    <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
    <!-- BEGIN CORE PLUGINS -->   
@@ -378,13 +391,7 @@
    <script src="assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
    <!-- END CORE PLUGINS -->
    <!-- BEGIN PAGE LEVEL PLUGINS -->
-   <script src="assets/plugins/jqvmap/jqvmap/jquery.vmap.js" type="text/javascript"></script>   
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js" type="text/javascript"></script>  
+  
    <script src="assets/plugins/flot/jquery.flot.js" type="text/javascript"></script>
    <script src="assets/plugins/flot/jquery.flot.resize.js" type="text/javascript"></script>
    <script src="assets/plugins/jquery.pulsate.min.js" type="text/javascript"></script>
@@ -404,15 +411,7 @@
    <script>
       jQuery(document).ready(function() {    
          App.init(); // initlayout and core plugins
-         Index.init();
-         Index.initJQVMAP(); // init index page's custom scripts
-         Index.initCalendar(); // init index page's custom scripts
-         Index.initCharts(); // init index page's custom scripts
-         Index.initChat();
-         Index.initMiniCharts();
-         Index.initDashboardDaterange();
-         Index.initIntro();
-         Tasks.initDashboardWidget();
+       
       });
    </script>
    <!-- END JAVASCRIPTS -->

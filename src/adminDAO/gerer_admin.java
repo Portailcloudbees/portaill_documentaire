@@ -17,6 +17,7 @@ public class gerer_admin {
 		
 	}
 	
+	
 	public boolean ajouterAdmin(administrateur ad){
 		String req ="insert into admin values (?,?,?,?)";
 		 gerer_privilege_admin ga = new gerer_privilege_admin();

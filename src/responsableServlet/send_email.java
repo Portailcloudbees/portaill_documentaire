@@ -73,10 +73,10 @@ List<File> uploadedFiles = saveUploadedFiles(request);
 		String recipient = request.getParameter("emailto");
 		String subject = request.getParameter("sujet");
 		String content = request.getParameter("contenue");
-		String user="ahmedkhalil.bejaoui@esprit.tn";
-		String pass="esprit2013";
+		String user="khammourichayma@gmail.com";
+		String pass="95198061";
 		String resultMessage = "";
-
+       
 		try {
 			EmailUtility.sendEmailWithAttachment(host, port, user, pass,
 					recipient, subject, content, uploadedFiles);

@@ -1,7 +1,12 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="entities.client" %>
-<%@ page import="entities.societe" %>
-
+<%@ page import="java.sql.Date" %>
+<%@ page import="statistiqueDAO.*" %>
+<%@ page import="entities.statistique" %>
+<%@ page import="java.util.List" %>
+<%@ page import="connexion.*" %>
+<%@ page import="historiqueDAO.gererHistorique" %>
+<%@ page import="adminDAO.gerer_reclamation" %>
+<%@ page import="profile.gererprofile" %>
 
 
 
@@ -33,13 +38,23 @@
    <link href="assets/css/plugins.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
    <link href="assets/css/custom.css" rel="stylesheet" type="text/css"/>
-   <link rel="stylesheet" href="../amcharts/style.css"	type="text/css">
-
+   <link rel="stylesheet" href="assets/amcharts/style.css"	type="text/css">
+   
+   
+ 
+        
 		<script src="assets/amcharts/amcharts.js" type="text/javascript"></script>
 		<script src="assets/amcharts/serial.js" type="text/javascript"></script>
 		<script src="assets/amcharts/amstock.js" type="text/javascript"></script>		
    <!-- END THEME STYLES -->
    <link rel="shortcut icon" href="favicon.ico" />
+   <script src="assets/amcharts/exporting/amexport.js" type="text/javascript"></script>
+        <script src="assets/amcharts/exporting/rgbcolor.js" type="text/javascript"></script>
+        <script src="assets/amcharts/exporting/canvg.js" type="text/javascript"></script>
+        <script src="assets/amcharts/exporting/jspdf.js" type="text/javascript"></script>
+        <script src="assets/amcharts/exporting/filesaver.js" type="text/javascript"></script>
+        <script src="assets/amcharts/exporting/jspdf.plugin.addimage.js" type="text/javascript"></script>
+       
    		<script type="text/javascript">
 
 			var chartData1 = [];
@@ -47,13 +62,55 @@
 			var chartData3 = [];
 			var chartData4 = [];
 			
+			
 			generateChartData();
 			
-			function generateChartData() {
-				var firstDate = new Date();
+            function generateChartData() {
+            var firstDate = new Date(); 
+            
+            <% int tot = 0;
+                        int i;
+                        gererstatistique gs = new gererstatistique();
+                        List c = gs.test();
+                        ArrayList<statistique> liste = (ArrayList<statistique>) c ;
+                        for ( i=0; i<liste.size(); i++) { 
+                          Date dat = liste.get(i).getDate();  
+                          System.out.println(dat.getYear());
+                        %>
+                   
+               var d = <%=dat.getDate()%>;
+               var m = <%=dat.getMonth()%>;
+               var y = <%=dat.getYear()%>+1900;
+               
+               var finall = new Date(y,m,d);
+               
+               finall.setHours(0, 0, 0, 0);
+              <% 
+              	 if (i==0){
+              		 tot = liste.get(i).getNbr_client();
+              	 }else{
+              		 tot += liste.get(i).getNbr_client();
+              	 } %>
+               var a1 = <%= tot %> ;
+               var b1 = <%= tot %>;
+         
+               chartData1.push({
+                  date: finall,
+                  value: a1,
+                  volume: b1
+               });
+             
+            <% } %>
+         }
+                   
+
+
+
+			function generateChartData1() {
+				var firstDate = new Date(); alert (firstDate.getDate());
 				firstDate.setDate(firstDate.getDate() - 500);
 				firstDate.setHours(0, 0, 0, 0);
-			
+			   
 				for (var i = 0; i < 500; i++) {
 					var newDate = new Date(firstDate);
 					newDate.setDate(newDate.getDate() + i);
@@ -91,11 +148,14 @@
 						volume: b4
 					});
 				}
+				
+				
+				
 			}
 			
 			AmCharts.makeChart("chartdiv", {
 				type: "stock",
-				pathToImages: "../amcharts/images/",
+				pathToImages: "assets/amcharts/images/",
 			
 				dataSets: [{
 					title: "first data set",
@@ -153,7 +213,7 @@
 			
 					showCategoryAxis: false,
 					title: "Value",
-					percentHeight: 70,
+					percentHeight: 80,
 			
 					stockGraphs: [{
 						id: "g1",
@@ -224,7 +284,36 @@
 						label: "MAX"
 					}]
 				},
-			
+				exportConfig: {
+                    menuTop: "21px",
+                    menuBottom: "auto",
+                    menuRight: "21px",
+                    backgroundColor: "#efefef",
+
+                    menuItemStyle	: {
+                    backgroundColor			: '#EFEFEF',
+                    rollOverBackgroundColor	: '#DDDDDD'},
+
+                    menuItems: [{
+                        textAlign: 'center',
+                        icon: 'assets/amcharts/images/export.png',
+                        onclick:function(){},
+                        items: [{
+                            title: 'JPG',
+                            format: 'jpg'
+                        }, {
+                            title: 'PNG',
+                            format: 'png'
+                        }, {
+                            title: 'SVG',
+                            format: 'svg'
+                        }, {
+                            title: 'PDF',
+                            format: 'pdf'
+                        }]
+                    }]
+                },
+				
 				dataSetSelector: {
 					position: "left"
 				}
@@ -240,105 +329,72 @@
       <div class="header-inner">
          <!-- BEGIN LOGO -->  
          <a class="navbar-brand" href="forward?lien=index_super_admin.jsp">
-         <img src="assets/img/logo.png" alt="logo" class="img-responsive" />
+             <img style="width:100px; height:25px " src="assets/img/logon.png" alt="logo" class="img-responsive" />
          </a>
          <!-- END LOGO -->
          <!-- BEGIN RESPONSIVE MENU TOGGLER --> 
-         <a href="javascript:;" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-         <img src="assets/img/menu-toggler.png" alt="" />
-         </a> 
          <!-- END RESPONSIVE MENU TOGGLER -->
          <!-- BEGIN TOP NAVIGATION MENU -->
          <ul class="nav navbar-nav pull-right">
             <!-- BEGIN NOTIFICATION DROPDOWN -->
+            
             <li class="dropdown" id="header_notification_bar">
-               <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
-                  data-close-others="true">
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                <i class="icon-warning-sign"></i>
-               <span class="badge">6</span>
+               <% gererHistorique gh = new gererHistorique();
+                  gerer_reclamation gr = new gerer_reclamation();
+                   int coun = gr.getRec(null);
+                   int count = gh.getLast();
+               %>
+               <span class="badge"><%=count %></span>
                </a>
                <ul class="dropdown-menu extended notification">
                   <li>
-                     <p>You have 14 new notifications</p>
+                     <p>You have <%=count %> new histories</p>
                   </li>
-                  <li>
-                     <ul class="dropdown-menu-list scroller" style="height: 250px;">
-                        <li>  
-                           <a href="#">
-                           <span class="label label-icon label-success"><i class="icon-plus"></i></span>
-                           New user registered. 
-                           <span class="time">Just now</span>
-                           </a>          
-                        </li>
-                 </ul>
-                  </li>
+                
                   <li class="external">   
-                     <a href="#">See all notifications <i class="m-icon-swapright"></i></a>
+                     <a href="list_getlast_historique">See all histories <i class="m-icon-swapright"></i></a>
                   </li>
                </ul>
             </li>
+            
             <!-- END NOTIFICATION DROPDOWN -->
+            
             <!-- BEGIN INBOX DROPDOWN -->
             <li class="dropdown" id="header_inbox_bar">
                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
                   data-close-others="true">
                <i class="icon-envelope"></i>
-               <span class="badge">5</span>
+               <span class="badge"><%=coun %></span>
                </a>
                <ul class="dropdown-menu extended inbox">
                   <li>
-                     <p>You have 12 new messages</p>
+                     <p>You have <%=coun %> new notifications</p>
                   </li>
-                  <li>
-                     <ul class="dropdown-menu-list scroller" style="height: 250px;">
-                        <li>  
-                           <a href="inbox.html?a=view">
-                           <span class="photo"><img src="./assets/img/avatar2.jpg" alt=""/></span>
-                           <span class="subject">
-                           <span class="from">Lisa Wong</span>
-                           <span class="time">Just Now</span>
-                           </span>
-                           <span class="message">
-                           Vivamus sed auctor nibh congue nibh. auctor nibh
-                           auctor nibh...
-                           </span>  
-                           </a>
-                        </li>
-                     </ul>
-                  </li>
+
                   <li class="external">   
-                     <a href="inbox.html">See all messages <i class="m-icon-swapright"></i></a>
+                     <a href="list_delete_reclamation">See all notifications <i class="m-icon-swapright"></i></a>
                   </li>
                </ul>
             </li>
             <!-- END INBOX DROPDOWN -->
-            <!-- BEGIN TODO DROPDOWN -->
-            <li class="dropdown" id="header_task_bar">
-               <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-               <i class="icon-tasks"></i>
-               <span class="badge">5</span>
-               </a>
-               <ul class="dropdown-menu extended tasks">
-                  <li>
-                     <p>You have 12 pending tasks</p>
-                  </li>
-                 
-                  <li class="external">   
-                     <a href="#">See all tasks <i class="m-icon-swapright"></i></a>
-                  </li>
-               </ul>
-            </li>
-            <!-- END TODO DROPDOWN -->
+            
             <!-- BEGIN USER LOGIN DROPDOWN -->
             <li class="dropdown user">
                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-               <span class="username">Bienvenue Bob Nilson</span>
+               <%
+                  gererprofile gpi = new gererprofile(); 
+                    String[] info = gpi.getInfo(authentification.email, authentification.c);  %>
+               <span class="username"><%=info[0]+" "+info[1] %></span>
                <i class="icon-angle-down"></i>
                </a>
                <ul class="dropdown-menu">
-                  <li><a href="extra_profile.html"><i class="icon-user"></i> My Profile</a>
+                  <li><a href="forward?lien=super-profile.jsp"><i class="icon-user"></i> My Profile</a>
                   </li>
+                 
                   <li class="divider"></li>
+                  
                   <li><a href="deconnexion"><i class="icon-key"></i> Log Out</a>
                   </li>
                </ul>
@@ -357,14 +413,14 @@
       <div class="page-sidebar navbar-collapse collapse">
          <!-- BEGIN SIDEBAR MENU -->        
          <ul class="page-sidebar-menu">
-            <li>
+           <li>
                <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
                <div class="sidebar-toggler hidden-phone"></div>
                <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
             </li>
             <li>
                <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
-               <form class="sidebar-search" action="extra_search.html" method="POST">
+               <form class="sidebar-search" action="" method="POST">
                   <div class="form-container">
                      <div class="input-box">
                         <a href="javascript:;" class="remove"></a>
@@ -375,11 +431,11 @@
                </form>
                <!-- END RESPONSIVE QUICK SEARCH FORM -->
  </li>
-            <li class="start active ">
+            <li class="">
                <a href="forward?lien=index_super_admin.jsp">
                <i class="icon-home"></i> 
                <span class="title">Dashboard</span>
-               <span class="selected"></span>
+                <span class="arrow"></span>
                </a>
             </li>
             
@@ -431,32 +487,27 @@
                   
 				  </ul>
 				  </li>
-                  <li class="">
+                      <li class="">
                <a href="javascript:;">
                <i class="icon-file-text"></i> 
                <span class="title">Historic</span>
                <span class="arrow "></span>
                </a>
-			    <ul class="sub-menu">
+             <ul class="sub-menu">
                   <li class="active">
-                     <a href="forward?lien=historique_admin.jsp">
-                     historc of administrators
+                     <a href="list_getlast_historique">
+                      Dashboard traces
                      <span class="arrow"></span>
                      </a>
-					 </li>
-                    <li class="active">					 
-                      <a href="forward?lien=historique_client.jsp">
-                     historc of Clients
-                     <span class="arrow"></span>
-                     </a>
-					 </li>
-                   </ul>					 
+                </li>
+                    
+                   </ul>                
                   </li>
-                          <li class="">
+                          <li class="start active">
                <a href="javascript:;">
                <i class="icon-file-text"></i> 
                <span class="title">Statistics</span>
-               <span class="arrow "></span>
+               <span class="selected"></span>
                </a>
 			    <ul class="sub-menu">
                   <li class="active">
@@ -467,28 +518,7 @@
                   </li>
 				  </ul>
 				  </li>
-                   <li class="">
-               <a href="javascript:;">
-               <i class="icon-file-text"></i> 
-               <span class="title">Privilege</span>
-               <span class="arrow "></span>
-               </a>
-			    <ul class="sub-menu">
-                  <li class="active">
-                     <a href="list_update_priv_admin">
-                     Put Privilege for Administrators
-                     <span class="arrow"></span>
-                     </a>                  
-                  </li>
-                                       <li class="active">
-                     <a href="forward?lien=table_statistique.jsp">
-                     Put Privilege for Clients
-                     <span class="arrow"></span>
-                     </a>                  
-                  </li>
-                  
-               </ul>
-            </li>
+            
                </ul>
             </li>
          </ul>

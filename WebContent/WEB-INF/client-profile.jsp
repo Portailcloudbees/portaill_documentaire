@@ -1,20 +1,19 @@
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="entities.historique" %>
-
-
-  <%@ page import="connexion.*" %>
+ <%@page import="adminDAO.gerer_privilege_admin"%>
+ <%@ page import="java.util.ArrayList" %>
+  <%@ page import="java.util.List" %>
+ <%@page import="connexion.authentification"%>
+  <%@page import="entities.privilege_admin"%>
+  <%@page import="profile.*"%>
+    <%@ page import="connexion.*" %>
 <%@ page import="historiqueDAO.gererHistorique" %>
 <%@ page import="adminDAO.gerer_reclamation" %>
 <%@ page import="profile.gererprofile" %>
-
-
-<!DOCTYPE html>
-
-<!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+ <html lang="en" class="no-js"> 
 <!-- BEGIN HEAD -->
+
 <head>
    <meta charset="utf-8" />
-   <title>Imex | Data Tables - Editable Tables</title>
+   <title>IMEX | Acceuil-Client</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -25,35 +24,23 @@
    <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
    <link href="assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
    <!-- END GLOBAL MANDATORY STYLES -->
-   <!-- BEGIN PAGE LEVEL STYLES -->
-   <link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2_metro.css" />
-   <link rel="stylesheet" href="assets/plugins/data-tables/DT_bootstrap.css" />
-   <!-- END PAGE LEVEL STYLES -->
+   <!-- BEGIN PAGE LEVEL PLUGIN STYLES --> 
+   <link href="assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" type="text/css"/>
+   <link href="assets/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+   <link href="assets/plugins/fullcalendar/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css"/>
+   <link href="assets/plugins/jqvmap/jqvmap/jqvmap.css" rel="stylesheet" type="text/css"/>
+   <link href="assets/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" type="text/css"/>
+   <!-- END PAGE LEVEL PLUGIN STYLES -->
    <!-- BEGIN THEME STYLES --> 
    <link href="assets/css/style-metronic.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/style-responsive.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/plugins.css" rel="stylesheet" type="text/css"/>
+   <link href="assets/css/pages/tasks.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
    <link href="assets/css/custom.css" rel="stylesheet" type="text/css"/>
    <!-- END THEME STYLES -->
    <link rel="shortcut icon" href="favicon.ico" />
-   <script>
-   	function exporttxt(){
-   		alert("ici");
-   		$.ajax({
-        	type:"GET",
-        	url: "./export_to_txt",
-        	contentType: "application/x-www-form-urlencoded",
-        	
-        	success: function(data) {
-        		//alert("Success");
-        		}
-        	});
-        
-   	}
-   
-   </script>
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -167,11 +154,11 @@
                </form>
                <!-- END RESPONSIVE QUICK SEARCH FORM -->
             </li>
-            <li class="">
+            <li class="start active ">
                <a href="forward?lien=index_client.jsp">
                <i class="icon-home"></i> 
                <span class="title">Dashboard</span>
-               <span class="arrow"></span>
+               <span class="selected"></span>
                </a>
             </li>
             
@@ -240,11 +227,11 @@
                   </li>
 				  </ul>
             </li>
-             <li  class="start active ">
+             <li class="">
                <a href="javascript:;">
                <i class="icon-file-text"></i> 
                <span class="title">Historique</span>
-               <span class="selected"></span>
+               <span class="arrow "></span>
                </a>
             <ul class="sub-menu">
                   <li>
@@ -279,25 +266,6 @@
       <!-- BEGIN PAGE -->
       <div class="page-content">
          <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->               
-         <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-               <div class="modal-content">
-                  <div class="modal-header">
-                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                     <h4 class="modal-title">Modal title</h4>
-                  </div>
-                  <div class="modal-body">
-                     Widget settings form goes here
-                  </div>
-                  <div class="modal-footer">
-                     <button type="button" class="btn blue">Save changes</button>
-                     <button type="button" class="btn default" data-dismiss="modal">Close</button>
-                  </div>
-               </div>
-               <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-         </div>
          <!-- /.modal -->
          <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
          <!-- BEGIN STYLE CUSTOMIZER -->
@@ -309,9 +277,7 @@
                   <span>THEME COLOR</span>
                   <ul>
                      <li class="color-black current color-default" data-style="default"></li>
-                     <li class="color-blue" data-style="blue"></li>
-                     <li class="color-brown" data-style="brown"></li>
-                     <li class="color-purple" data-style="purple"></li>
+                     <li class="color-blue"></li>
                      <li class="color-grey" data-style="grey"></li>
                      <li class="color-white color-light" data-style="light"></li>
                   </ul>
@@ -346,141 +312,118 @@
                </div>
             </div>
          </div>
-         <!-- END BEGIN STYLE CUSTOMIZER -->            
+         <!-- END BEGIN STYLE CUSTOMIZER -->  
          <!-- BEGIN PAGE HEADER-->
-         
          <div class="row">
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  Traces <small>See traces </small>
+                  Portail documentaire <small></small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
-                  <li class="btn-group">
-                     <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
-                     <span>Actions</span> <i class="icon-angle-down"></i>
-                     </button>
-                     <ul class="dropdown-menu pull-right" role="menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                     </ul>
-                  </li>
                   <li>
                      <i class="icon-home"></i>
                      <a href="forward?lien=index.jsp">Home</a> 
                      <i class="icon-angle-right"></i>
                   </li>
-                  <li>
-                     <a href="#">Traces</a>
-                     <i class="icon-angle-right"></i>
+                  <li><a href="#">Dashboard</a></li>
+                  <li class="pull-right">
+                     <div id="dashboard-report-range" class="dashboard-date-range tooltips" data-placement="top" data-original-title="Change dashboard date range">
+                        <i class="icon-calendar"></i>
+                        <span></span>
+                        <i class="icon-angle-down"></i>
+                     </div>
                   </li>
-                  <li><a href="#">Traces Users</a></li>
                </ul>
                <!-- END PAGE TITLE & BREADCRUMB-->
             </div>
          </div>
-             <%int j;
-                           String txt="";
-                           ArrayList<historique> liste_user1 = (ArrayList<historique>) request.getAttribute("list_de_user");
-                           for ( j=0; j<liste_user1.size(); j++) { 
-                            txt+= "date: "+liste_user1.get(j).getDate()+
-                                             "/n ip adress: "+liste_user1.get(j).getIpAdresse()+
-                                             "/n email: "+liste_user1.get(j).getEmail()+
-                                             "/n tache: "+liste_user1.get(j).getTache()+
-                                             "/n--------------------------------------- /n"; } 
-                                           
-                             %>
-         
-         
-         
          <!-- END PAGE HEADER-->
-         <!-- BEGIN PAGE CONTENT-->
-         <div class="row">
-            <div class="col-md-12">
-             <!-- BEGIN EXAMPLE TABLE users-->
-               <div class="portlet box blue">
-                  <div class="portlet-title">
-                     <div class="caption"><i class="icon-edit"></i>Administrators traces</div>
-                     <div class="tools">
-                        <a href="javascript:;" class="collapse"></a>
-                        <a href="#portlet-config" data-toggle="modal" class="config"></a>
-                        <a href="javascript:;" class="reload"></a>
-                        <a href="javascript:;" class="remove"></a>
-                     </div>
-                  </div>
-                  <div class="portlet-body">
-                     <div class="table-toolbar">
-                      
-                        <div class="btn-group pull-right">
-                           <button class="btn dropdown-toggle" data-toggle="dropdown">Tools <i class="icon-angle-down"></i>
-                           </button>
-                           <ul class="dropdown-menu pull-right">
-                              <li><a href="#">Print</a></li>
-                              <li><a href="#">Save as PDF</a></li>
-                             
-                              <li><a  href="export_to_txt?txt=<%= txt%>">Export to log file</a></li>
-                           </ul>
+         <%
+                          
+                           String [] valeur= gpi.getInfo(authentification.email, authentification.c);
+                           
+                           
+                           %>
+                    <div class="tab-pane" id="tab_1_3">
+                        <div class="row profile-account">
+                           <div class="col-md-3">
+                              <ul class="ver-inline-menu tabbable margin-bottom-10">
+                                 <li class="active">
+                                    <a data-toggle="tab" href="#tab_1-1">
+                                    <i class="icon-cog"></i> 
+                                    Personal info
+                                    </a> 
+                                    <span class="after"></span>                                    
+                                 </li>
+                         
+                                 <li ><a data-toggle="tab" href="#tab_3-3"><i class="icon-lock"></i> Change Password</a></li>
+                                
+                              </ul>
+                           </div>
+                           <div class="col-md-9">
+                              <div class="tab-content">
+                                 <div id="tab_1-1" class="tab-pane active">
+                                    <form role="form" name="f1" action="#">
+                                       <div class="form-group">
+                                          <label class="control-label">First Name</label>
+                                          <input type="text" name="firstn" value="<%=valeur[0] %>" class="form-control" />
+                                       </div>
+                                       <div class="form-group">
+                                          <label class="control-label">Last Name</label>
+                                          <input type="text" name="lastn" value="<%=valeur[1] %>" class="form-control" />
+                                       </div>
+                                       <div class="form-group">
+                                          <label class="control-label">Mobile Number</label>
+                                          <input type="text" name="mobile" value="<%=valeur[2] %>" class="form-control" />
+                                       </div>
+                                     
+                                       <div class="margiv-top-10">
+                                          <a href="#" onclick="updateInfo()" class="btn green">Save Changes</a>
+                                          <a href="#" class="btn default">Cancel</a>
+                                       </div>
+                                       <br>
+                                       <div id="resultat" style="color:red; margin-left:250px"></div>
+                                    </form>
+                                    
+                                 </div>
+                                 
+                                 <div id="tab_3-3" class="tab-pane">
+                                    <form name="f2" >
+                                       <div class="form-group">
+                                          <label class="control-label">Current Password</label>
+                                          <input type="password" name="current" class="form-control" />
+                                       </div>
+                                       <div class="form-group">
+                                          <label class="control-label">New Password</label>
+                                          <input type="password" name="new1" class="form-control" />
+                                       </div>
+                                       <div class="form-group">
+                                          <label class="control-label">Re-type New Password</label>
+                                          <input type="password" name="new2"  class="form-control" />
+                                       </div>
+                                       <div class="margin-top-10">
+                                          
+                                           <a href="#" onclick="updatePass()" class="btn green">Change Password</a>
+                                          <a href="#" class="btn default">Cancel</a>
+                                       </div>
+                                       <div id="resultat1" style="color:red; margin-left:250px"></div>
+                                    </form>
+                                    
+                                 </div>
+                               
+                              </div>
+                           </div>
+                           <!--end col-md-9-->                                   
                         </div>
                      </div>
-                     <table class="table table-striped table-hover table-bordered" id="sample_editable_user">
-                        <thead>
-                           <tr>
-                             <th>Ref </th>
-                              <th>Date </th>
-                              <th>IP adress</th>
-                              <th>Email</th>
-              				  <th>Task</th>
-                              <th>Delete</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           
-                           <%int i;
-                           
-                           ArrayList<historique> liste_user = (ArrayList<historique>) request.getAttribute("list_de_user");
-                           for ( i=0; i<liste_user.size(); i++) { 
-                               	
-                           %>
-                           <tr >
-                               <td><%= liste_user.get(i).getId() %></td>
-                         	  <td><%= liste_user.get(i).getDate() %></td>
-                              <td><%= liste_user.get(i).getIpAdresse() %></td>
-                              <td><%= liste_user.get(i).getEmail() %></td>
-                              <td><%= liste_user.get(i).getTache() %></td>     
-                              <% txt= "date: "+liste_user.get(i).getDate()+
-                                             "\n ip adress: "+liste_user.get(i).getIpAdresse()+
-                                             "\n email:"+liste_user.get(i).getEmail()+
-                                             "\n tache"+liste_user.get(i).getTache()+
-                                             "--------------------------------------- \n"; %>                       
-                              <td><a class="delete" href="javascript:;">Delete</a></td>
-                           </tr>
-                         <% } %>
-                        </tbody>
-                     </table>
-                  </div>
-               </div>
-                 <!-- END EXAMPLE TABLE PORTLET-->
-               
-             
-            </div>
-         </div>
-         
-         
-       
-         
-         
-         <!-- END PAGE CONTENT -->
-      </div>
-      <!-- END PAGE -->
-   </div>
-   <!-- END CONTAINER -->
-   <!-- BEGIN FOOTER -->
+        </div>
+           </div>
+              </div>
+        </div>
    <div class="footer">
       <div class="footer-inner">
-         2014 &copy; Imex.
+         2014 &copy; IMEX.
       </div>
       <div class="footer-tools">
          <span class="go-top">
@@ -491,12 +434,77 @@
    <!-- END FOOTER -->
    <!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
    <!-- BEGIN CORE PLUGINS -->   
-   <!--[if lt IE 9]>
+   <!--[if lt IE 9]>-->
+    <script>
+          function updateInfo(){
+        	  
+        	  if (document.f1.firstn.value=="" || document.f1.lastn.value=="" || document.f1.mobile.value==""){
+        		  document.getElementById('resultat').innerHTML="Please fill in the fields";
+        		 
+        	  }else{
+        		  var table = [];
+                  table.push( { "firstn" : document.f1.firstn.value ,
+                  		    "lastn": document.f1.lastn.value ,
+                  		    "mobile":document.f1.mobile.value  }
+                  );
+                 
+                  $.ajax({
+                  	type:"GET",
+                  	url: "./profileServlet",
+                  	contentType: "application/x-www-form-urlencoded",
+                  	dataType: "JSON",
+                  	data: {ligne:JSON.stringify(table)},
+                  	success: function(data) {
+                  		 document.getElementById('resultat').innerHTML="update is successful";
+                  		},
+                      	error: function (err){
+                      		document.getElementById('resultat').innerHTML=err.responseText;
+                      	}
+                  		})
+               }
+        	  
+          }
+          
+          function updatePass(){
+        	  if (document.f2.current.value=="" || document.f2.new1.value=="" || document.f2.new2.value==""){
+        		  document.getElementById('resultat1').innerHTML="Please fill in the fields";
+        	  }else if (document.f2.new1.value!=document.f2.new2.value){
+        		  document.getElementById('resultat1').innerHTML="mouch kifkif"; 
+        	
+        		 
+        	  }else{
+        		  var table = [];
+                  table.push( { "current" : document.f2.current.value ,
+                  		    "newp": document.f2.new1.value   }
+                  );
+                 
+                  $.ajax({
+                  	type:"POST",
+                  	url: "./profileServlet",
+                  	contentType: "application/x-www-form-urlencoded",
+                  	dataType: "JSON",
+                  	data: {ligne:JSON.stringify(table)},
+                  	success: function(dat) {
+                  		
+                  		 document.getElementById('resultat1').innerHTML=dat.responseText;
+                  		},
+                  	error: function (err){
+                  		document.getElementById('resultat1').innerHTML=err.responseText;
+                  	}
+                  		});
+        	  }
+      
+          }
+        
+        
+        </script>
    <script src="assets/plugins/respond.min.js"></script>
    <script src="assets/plugins/excanvas.min.js"></script> 
    <![endif]-->   
    <script src="assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
-   <script src="assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>    
+   <script src="assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>   
+   <!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+   <script src="assets/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
    <script src="assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
    <script src="assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js" type="text/javascript" ></script>
    <script src="assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
@@ -505,21 +513,30 @@
    <script src="assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
    <!-- END CORE PLUGINS -->
    <!-- BEGIN PAGE LEVEL PLUGINS -->
-   <script type="text/javascript" src="assets/plugins/select2/select2.min.js"></script>
-   <script type="text/javascript" src="assets/plugins/data-tables/jquery.dataTables.js"></script>
-   <script type="text/javascript" src="assets/plugins/data-tables/DT_bootstrap.js"></script>
+   
+   <script src="assets/plugins/flot/jquery.flot.js" type="text/javascript"></script>
+   <script src="assets/plugins/flot/jquery.flot.resize.js" type="text/javascript"></script>
+   <script src="assets/plugins/jquery.pulsate.min.js" type="text/javascript"></script>
+   <script src="assets/plugins/bootstrap-daterangepicker/moment.min.js" type="text/javascript"></script>
+   <script src="assets/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script>     
+   <script src="assets/plugins/gritter/js/jquery.gritter.js" type="text/javascript"></script>
+   <!-- IMPORTANT! fullcalendar depends on jquery-ui-1.10.3.custom.min.js for drag & drop support -->
+   <script src="assets/plugins/fullcalendar/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
+   <script src="assets/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.js" type="text/javascript"></script>
+   <script src="assets/plugins/jquery.sparkline.min.js" type="text/javascript"></script>  
    <!-- END PAGE LEVEL PLUGINS -->
    <!-- BEGIN PAGE LEVEL SCRIPTS -->
-   <script src="assets/scripts/app.js"></script>
-   
-   <script src="assets/scripts/table-editable-historique-user.js"></script>    
+   <script src="assets/scripts/app.js" type="text/javascript"></script>
+   <script src="assets/scripts/index.js" type="text/javascript"></script>
+   <script src="assets/scripts/tasks.js" type="text/javascript"></script>        
+   <!-- END PAGE LEVEL SCRIPTS -->  
    <script>
-      jQuery(document).ready(function() {       
-         App.init();
-         
-         histouser.init();
+      jQuery(document).ready(function() {    
+         App.init(); // initlayout and core plugins
+        
       });
    </script>
+   <!-- END JAVASCRIPTS -->
 </body>
 <!-- END BODY -->
 </html>

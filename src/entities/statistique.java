@@ -1,6 +1,10 @@
 package entities;
 
-abstract class statistique {
+import java.sql.Date;
+
+
+public class statistique {
+
 private int id_stat;
 private int nbr_doc_traité;
 private int nbr_doc_nontraité;
@@ -9,23 +13,25 @@ private int nbr_client;
 private int depense;
 private int cout_facturation;
 private int gain;
-
+private Date date;
 public statistique(){
 	
 }
-public statistique(int id_stat, int nbr_doc_traité, int nbr_doc_nontraité,
-		int nbr_utilisateur, int nbr_client, int depense, int cout_facturation,
-		int gain) {
-	
-	this.id_stat = id_stat;
-	this.nbr_doc_traité = nbr_doc_traité;
-	this.nbr_doc_nontraité = nbr_doc_nontraité;
-	this.nbr_utilisateur = nbr_utilisateur;
-	this.nbr_client = nbr_client;
-	this.depense = depense;
-	this.cout_facturation = cout_facturation;
-	this.gain = gain;
+
+
+
+public Date getDate() {
+	return date;
 }
+
+
+
+public void setDate(Date date) {
+	this.date = date;
+}
+
+
+
 public int getId_stat() {
 	return id_stat;
 }

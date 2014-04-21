@@ -198,7 +198,7 @@ if (!dir.exists()) {
                 			
                 		}
                         x.setTaille_doc(item.getSize());
-                        x.setEtat_doc("Ready");
+                        x.setEtat_doc("Not Ready");
                         System.out.println(authentification.c);
                         if (authentification.c.equals("responsable")){
                         	x.setEmail_client(authentification.email);

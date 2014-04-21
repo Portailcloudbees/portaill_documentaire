@@ -44,7 +44,7 @@ public class connecter extends HttpServlet {
 		if (login.equals("super") && pass.equals("super")){
 			authentification.c="super";
 			authentification.email="super";
-			authentification.nomprenom="responsable IMEX";
+			authentification.nomprenom="Responsable IMEX";
 			this.getServletContext().getRequestDispatcher("/WEB-INF/index_super_admin.jsp").forward(request, response);
 		}else{
 			if (auth.connecter(login,pass)=="admin"){

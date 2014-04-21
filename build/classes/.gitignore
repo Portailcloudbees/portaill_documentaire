@@ -1,3 +1,9 @@
 /AdminServlet
 /adminDAO
+/connexion
+/entities
+/historiqueDAO
 /historiqueServlet
+/profile
+/responsableDAO
+/responsableServlet

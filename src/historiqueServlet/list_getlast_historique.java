@@ -44,7 +44,13 @@ public class list_getlast_historique extends HttpServlet {
 		request.setAttribute("list_de_client", client);
 		request.setAttribute("list_de_administrateur", admin);
 		System.out.println(admin.size()+"--"+client.size());
-		this.getServletContext().getRequestDispatcher("/WEB-INF/super_historique.jsp").forward(request, response);
+		if(authentification.c.equals("admin")){
+			this.getServletContext().getRequestDispatcher("/WEB-INF/admin_historique.jsp").forward(request, response);
+			
+		}else{
+			this.getServletContext().getRequestDispatcher("/WEB-INF/super_historique.jsp").forward(request, response);
+			
+		}
 	
 	}
 

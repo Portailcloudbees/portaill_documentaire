@@ -24,14 +24,14 @@ public class gererHistorique {
 		String emailuser="";
 		String valeur[];
 		
-		historique h = new historique();
+		historique h = new historique(); //entities
 		gerer_xml gx = new gerer_xml();
-		if (type.equals("utilisateur")){
-			emailuser=gx.getEmail_client(email);
+		if (type.equals("utilisateur")){// si utilisateur alors on recupere lemail de son responsable
+			emailuser=gx.getEmail_client(email);//emailuser c est lemail du responsable de l'utilisateur
 			System.out.println("iciii");
 			
 		}
-		if (emailuser.length()>2){
+		if (emailuser.length()>2){// si emailuser nest pas vide alors le type de lutilisateur est user
 			
 			valeur = getNomPrenomUt(email);
 			h.setType("utilisateur");
@@ -162,7 +162,7 @@ public class gererHistorique {
 public List<historique> Listhistorique(String type,String email){
 		String req=null;
 		List<historique> Listhistorique = new ArrayList<historique>();
-		if (email.length()>2){
+		if (email!=null){
 			req="Select * from historique where type='"+type+"' and email_resp='"+email+"'";
 		}else{
 			req="Select * from historique where type='"+type+"'";
@@ -194,31 +194,30 @@ public List<historique> Listhistorique(String type,String email){
 		
 	} 
 	
-public historique getLast(String type){
+public int getLast(String type){
 	
-	
-
-	String req="Select * from historique where type='"+type+"' and id=(select max(id) from historique)";
+   int c = 0;
+	String req="";
+	if (type==null){
+		req="Select count(*) from historique WHERE DATE(`date`) = CURDATE( ) ";
+	}else if (type.equals("administrateur")){
+		req="Select count(*) from historique WHERE DATE(`date`) = CURDATE( ) and type !='administrateur'";
+	}else{
+		req="select count(*) from historique where Date(date) = curdate() and type='utilisateur' and email_resp='"+type+"'";
+	}
     try {
        Statement statement = ConnectionBD.getInstance()
                .createStatement();
         ResultSet resultat = statement.executeQuery(req);
-
+        while(resultat.next()){
      
-        	historique h = new historique();
-        	h.setNom(resultat.getString(2));
-        	h.setPrenom(resultat.getString(3));
-        	h.setTache(resultat.getString(6));
-        	h.setIpAdresse(resultat.getString(4));
-        	h.setEmail(resultat.getString(7));
-        	h.setType(resultat.getString(8));
-        	h.setDate(resultat.getDate(5));
-        
-        return  h;
+        	c= resultat.getInt(1);
+        }
+        return c;
     } catch (SQLException ex) {
        
-        System.out.println("erreur recperation last historique "+ex.getMessage());
-        return null;
+        System.out.println("erreur recperation nombre notif histo "+ex.getMessage());
+        return 0;
     }
 	
 } 
@@ -235,5 +234,6 @@ public void deleteHistorique(int id){
     }
 }
 	
+
 	
 }

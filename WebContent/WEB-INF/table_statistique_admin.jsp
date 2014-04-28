@@ -68,14 +68,14 @@
             function generateChartData() {
             var firstDate = new Date(); 
             
-            <% int tot = 0;
+            <% 
                         int i;
                         gererstatistique gs = new gererstatistique();
-                        List c = gs.test();
+                        List c = gs.Doc_Traite();
                         ArrayList<statistique> liste = (ArrayList<statistique>) c ;
                         for ( i=0; i<liste.size(); i++) { 
-                          Date dat = liste.get(i).getDate();  
-                          System.out.println(dat.getYear());
+                          Date dat = liste.get(i).getDate_doc();  
+                          
                         %>
                    
                var d = <%=dat.getDate()%>;
@@ -85,14 +85,9 @@
                var finall = new Date(y,m,d);
                
                finall.setHours(0, 0, 0, 0);
-              <% 
-              	 if (i==0){
-              		 tot = liste.get(i).getNbr_client();
-              	 }else{
-              		 tot += liste.get(i).getNbr_client();
-              	 } %>
-               var a1 = <%= tot %> ;
-               var b1 = <%= tot %>;
+             
+               var a1 = <%= liste.get(i).getNbr_doc_traité()%> ;
+               var b1 = <%= liste.get(i).getNbr_doc_traité() %>;
          
                chartData1.push({
                   date: finall,
@@ -101,64 +96,101 @@
                });
              
             <% } %>
+            
+            
+            <%
+	            int j;
+	           
+	            List n = gs.notif_traite();
+	            ArrayList<statistique> list_notif = (ArrayList<statistique>) n ;
+	            for ( j=0; j<list_notif.size(); j++) { 
+	              Date date1 = list_notif.get(j).getDate_notif();  %>
+	              
+	              var d = <%=date1.getDate()%>;
+	               var m = <%=date1.getMonth()%>;
+	               var y = <%=date1.getYear()%>+1900;
+	               
+	               var finall = new Date(y,m,d);
+	               
+	               finall.setHours(0, 0, 0, 0);
+	             
+	               var a1 = <%= list_notif.get(j).getNbr_notif_traite()%> ;
+	               var b1 = <%= list_notif.get(j).getNbr_notif_traite() %>;
+	         
+	               chartData2.push({
+	                  date: finall,
+	                  value: a1,
+	                  volume: b1
+	               });
+	             
+	            <% } %>
+	            
+	            
+	            <%
+	            int k;
+	           
+	            List s = gs.doc_size();
+	            ArrayList<statistique> list_size = (ArrayList<statistique>) s ;
+	            for ( k=0; k<list_size.size(); k++) { 
+	              Date date2 = list_size.get(k).getDate_size();  %>
+	              
+	              var d = <%=date2.getDate()%>;
+	               var m = <%=date2.getMonth()%>;
+	               var y = <%=date2.getYear()%>+1900;
+	               
+	               var finall = new Date(y,m);
+	               
+	               finall.setHours(0, 0, 0, 0);
+	             
+	               var a1 = <%= list_size.get(k).getSize_doc()%> ;
+	               var b1 = <%= list_size.get(k).getSize_doc() %>;
+	         
+	               chartData3.push({
+	                  date: finall,
+	                  value: a1,
+	                  volume: b1
+	               });
+	             
+	            <% } %>
+            
+	            
+	            <%
+	            int l;
+	           
+	            List p = gs.docs_price();
+	            ArrayList<statistique> list_price = (ArrayList<statistique>) p ;
+	            for ( l=0; l<list_price.size(); l++) { 
+	              Date date3 = list_price.get(l).getDate_price();  %>
+	              
+	              var d = <%=date3.getDate()%>;
+	               var m = <%=date3.getMonth()%>;
+	               var y = <%=date3.getYear()%>+1900;
+	               
+	               var finall = new Date(y,m);
+	               
+	               finall.setHours(0, 0, 0, 0);
+	             
+	               var a1 = <%= list_price.get(l).getPrice_oct()%> ;
+	               var b1 = <%= list_price.get(l).getPrice_oct() %>;
+	         
+	               chartData4.push({
+	                  date: finall,
+	                  value: a1,
+	                  volume: b1
+	               });
+	             
+	            <% } %>
+            
          }
                    
 
 
-
-			function generateChartData1() {
-				var firstDate = new Date(); alert (firstDate.getDate());
-				firstDate.setDate(firstDate.getDate() - 500);
-				firstDate.setHours(0, 0, 0, 0);
-			   
-				for (var i = 0; i < 500; i++) {
-					var newDate = new Date(firstDate);
-					newDate.setDate(newDate.getDate() + i);
-			
-					var a1 = Math.round(Math.random() * (40 + i)) + 100 + i;
-					var b1 = Math.round(Math.random() * (1000 + i)) + 500 + i * 2;
-			
-					var a2 = Math.round(Math.random() * (100 + i)) + 200 + i;
-					var b2 = Math.round(Math.random() * (1000 + i)) + 600 + i * 2;
-			
-					var a3 = Math.round(Math.random() * (100 + i)) + 200;
-					var b3 = Math.round(Math.random() * (1000 + i)) + 600 + i * 2;
-			
-					var a4 = Math.round(Math.random() * (100 + i)) + 200 + i;
-					var b4 = Math.round(Math.random() * (100 + i)) + 600 + i;
-			
-					chartData1.push({
-						date: newDate,
-						value: a1,
-						volume: b1
-					});
-					chartData2.push({
-						date: newDate,
-						value: a2,
-						volume: b2
-					});
-					chartData3.push({
-						date: newDate,
-						value: a3,
-						volume: b3
-					});
-					chartData4.push({
-						date: newDate,
-						value: a4,
-						volume: b4
-					});
-				}
-				
-				
-				
-			}
-			
 			AmCharts.makeChart("chartdiv", {
 				type: "stock",
 				pathToImages: "assets/amcharts/images/",
 			
 				dataSets: [{
-					title: "first data set",
+					title: "Generated docs per date",
 					fieldMappings: [{
 						fromField: "value",
 						toField: "value"
@@ -171,7 +203,7 @@
 				},
 			
 				{
-					title: "second data set",
+					title: "Answred notifications per date",
 					fieldMappings: [{
 						fromField: "value",
 						toField: "value"
@@ -184,7 +216,7 @@
 				},
 			
 				{
-					title: "third data set",
+					title: "Generated docs size per date",
 					fieldMappings: [{
 						fromField: "value",
 						toField: "value"
@@ -197,7 +229,7 @@
 				},
 			
 				{
-					title: "fourth data set",
+					title: "Expenditure per month",
 					fieldMappings: [{
 						fromField: "value",
 						toField: "value"
@@ -344,7 +376,7 @@
                <% gererHistorique gh = new gererHistorique();
                   gerer_reclamation gr = new gerer_reclamation();
                    int coun = gr.getRec(null);
-                   int count = gh.getLast();
+                   int count = gh.getLast(null);
                %>
                <span class="badge"><%=count %></span>
                </a>

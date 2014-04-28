@@ -1,10 +1,24 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.sql.Date" %>
+<%@ page import="statistiqueDAO.*" %>
+<%@ page import="entities.statistique" %>
+<%@ page import="java.util.List" %>
+<%@ page import="connexion.*" %>
+<%@ page import="historiqueDAO.gererHistorique" %>
+<%@ page import="adminDAO.gerer_reclamation" %>
+<%@ page import="profile.gererprofile" %>
+  <%@page import="entities.privilege_admin"%>
+  <%@page import="adminDAO.gerer_privilege_admin"%>
+
+
+
 <!DOCTYPE html>
 
 <!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <!-- BEGIN HEAD -->
 <head>
    <meta charset="utf-8" />
-   <title>Metronic | Data Tables - Responsive Tables</title>
+   <title>Imex | Data Tables - Editable Tables</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -15,6 +29,10 @@
    <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
    <link href="assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
    <!-- END GLOBAL MANDATORY STYLES -->
+   <!-- BEGIN PAGE LEVEL STYLES -->
+   <link rel="stylesheet" type="text/css" href="assets/plugins/select2/select2_metro.css" />
+   <link rel="stylesheet" href="assets/plugins/data-tables/DT_bootstrap.css" />
+   <!-- END PAGE LEVEL STYLES -->
    <!-- BEGIN THEME STYLES --> 
    <link href="assets/css/style-metronic.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
@@ -22,8 +40,319 @@
    <link href="assets/css/plugins.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
    <link href="assets/css/custom.css" rel="stylesheet" type="text/css"/>
+   <link rel="stylesheet" href="assets/amcharts/style.css"	type="text/css">
+   
+   
+ 
+        
+		<script src="assets/amcharts/amcharts.js" type="text/javascript"></script>
+		<script src="assets/amcharts/serial.js" type="text/javascript"></script>
+		<script src="assets/amcharts/amstock.js" type="text/javascript"></script>		
    <!-- END THEME STYLES -->
    <link rel="shortcut icon" href="favicon.ico" />
+   <script src="assets/amcharts/exporting/amexport.js" type="text/javascript"></script>
+        <script src="assets/amcharts/exporting/rgbcolor.js" type="text/javascript"></script>
+        <script src="assets/amcharts/exporting/canvg.js" type="text/javascript"></script>
+        <script src="assets/amcharts/exporting/jspdf.js" type="text/javascript"></script>
+        <script src="assets/amcharts/exporting/filesaver.js" type="text/javascript"></script>
+        <script src="assets/amcharts/exporting/jspdf.plugin.addimage.js" type="text/javascript"></script>
+       
+   		<script type="text/javascript">
+
+			var chartData1 = [];
+			var chartData2 = [];
+			var chartData3 = [];
+			var chartData4 = [];
+			
+			
+			generateChartData();
+			
+            function generateChartData() {
+            var firstDate = new Date(); 
+            
+            <% 
+                        int j;
+                        gererstatistique gs = new gererstatistique();
+                        List c = gs.Doc_Traite();
+                        ArrayList<statistique> liste = (ArrayList<statistique>) c ;
+                        for ( j=0; j<liste.size(); j++) { 
+                          Date dat = liste.get(j).getDate_doc();  
+                          
+                        %>
+                   
+               var d = <%=dat.getDate()%>;
+               var m = <%=dat.getMonth()%>;
+               var y = <%=dat.getYear()%>+1900;
+               
+               var finall = new Date(y,m,d);
+               
+               finall.setHours(0, 0, 0, 0);
+             
+               var a1 = <%= liste.get(j).getNbr_doc_traité()%> ;
+               var b1 = <%= liste.get(j).getNbr_doc_traité() %>;
+         
+               chartData1.push({
+                  date: finall,
+                  value: a1,
+                  volume: b1
+               });
+             
+            <% } %>
+            
+            
+            <%
+	            int o;
+	           
+	            List n = gs.notif_traite();
+	            ArrayList<statistique> list_notif = (ArrayList<statistique>) n ;
+	            for ( o=0; o<list_notif.size(); o++) { 
+	              Date date1 = list_notif.get(o).getDate_notif();  %>
+	              
+	              var d = <%=date1.getDate()%>;
+	               var m = <%=date1.getMonth()%>;
+	               var y = <%=date1.getYear()%>+1900;
+	               
+	               var finall = new Date(y,m,d);
+	               
+	               finall.setHours(0, 0, 0, 0);
+	             
+	               var a1 = <%= list_notif.get(o).getNbr_notif_traite()%> ;
+	               var b1 = <%= list_notif.get(o).getNbr_notif_traite() %>;
+	         
+	               chartData2.push({
+	                  date: finall,
+	                  value: a1,
+	                  volume: b1
+	               });
+	             
+	            <% } %>
+	            
+	            
+	            <%
+	            int k;
+	           
+	            List s = gs.doc_size();
+	            ArrayList<statistique> list_size = (ArrayList<statistique>) s ;
+	            for ( k=0; k<list_size.size(); k++) { 
+	              Date date2 = list_size.get(k).getDate_size();  %>
+	              
+	              var d = <%=date2.getDate()%>;
+	               var m = <%=date2.getMonth()%>;
+	               var y = <%=date2.getYear()%>+1900;
+	               
+	               var finall = new Date(y,m);
+	               
+	               finall.setHours(0, 0, 0, 0);
+	             
+	               var a1 = <%= list_size.get(k).getSize_doc()%> ;
+	               var b1 = <%= list_size.get(k).getSize_doc() %>;
+	         
+	               chartData3.push({
+	                  date: finall,
+	                  value: a1,
+	                  volume: b1
+	               });
+	             
+	            <% } %>
+            
+	            
+	            <%
+	            int l;
+	           
+	            List p = gs.docs_price();
+	            ArrayList<statistique> list_price = (ArrayList<statistique>) p ;
+	            for ( l=0; l<list_price.size(); l++) { 
+	              Date date3 = list_price.get(l).getDate_price();  %>
+	              
+	              var d = <%=date3.getDate()%>;
+	               var m = <%=date3.getMonth()%>;
+	               var y = <%=date3.getYear()%>+1900;
+	               
+	               var finall = new Date(y,m);
+	               
+	               finall.setHours(0, 0, 0, 0);
+	             
+	               var a1 = <%= list_price.get(l).getPrice_oct()%> ;
+	               var b1 = <%= list_price.get(l).getPrice_oct() %>;
+	         
+	               chartData4.push({
+	                  date: finall,
+	                  value: a1,
+	                  volume: b1
+	               });
+	             
+	            <% } %>
+            
+         }
+                   
+
+
+			AmCharts.makeChart("chartdiv", {
+				type: "stock",
+				pathToImages: "assets/amcharts/images/",
+			
+				dataSets: [{
+					title: "Generated docs per date",
+					fieldMappings: [{
+						fromField: "value",
+						toField: "value"
+					}, {
+						fromField: "volume",
+						toField: "volume"
+					}],
+					dataProvider: chartData1,
+					categoryField: "date"
+				},
+			
+				{
+					title: "Answred notifications per date",
+					fieldMappings: [{
+						fromField: "value",
+						toField: "value"
+					}, {
+						fromField: "volume",
+						toField: "volume"
+					}],
+					dataProvider: chartData2,
+					categoryField: "date"
+				},
+			
+				{
+					title: "Generated docs size per date",
+					fieldMappings: [{
+						fromField: "value",
+						toField: "value"
+					}, {
+						fromField: "volume",
+						toField: "volume"
+					}],
+					dataProvider: chartData3,
+					categoryField: "date"
+				},
+			
+				{
+					title: "Expenditure per month",
+					fieldMappings: [{
+						fromField: "value",
+						toField: "value"
+					}, {
+						fromField: "volume",
+						toField: "volume"
+					}],
+					dataProvider: chartData4,
+					categoryField: "date"
+				}],
+			
+				panels: [{
+			
+					showCategoryAxis: false,
+					title: "Value",
+					percentHeight: 80,
+			
+					stockGraphs: [{
+						id: "g1",
+			
+						valueField: "value",
+						comparable: true,
+						compareField: "value",
+						bullet: "round",
+						bulletBorderColor: "#FFFFFF",
+						bulletBorderAlpha: 1,
+						balloonText: "[[title]]:<b>[[value]]</b>",
+						compareGraphBalloonText: "[[title]]:<b>[[value]]</b>",
+						compareGraphBullet: "round",
+						compareGraphBulletBorderColor: "#FFFFFF",
+						compareGraphBulletBorderAlpha: 1
+					}],
+			
+					stockLegend: {
+						periodValueTextComparing: "[[percents.value.close]]%",
+						periodValueTextRegular: "[[value.close]]"
+					}
+				},
+			
+				{
+					title: "Volume",
+					percentHeight: 30,
+					stockGraphs: [{
+						valueField: "volume",
+						type: "column",
+						showBalloon: false,
+						fillAlphas: 1
+					}],
+			
+			
+					stockLegend: {
+						periodValueTextRegular: "[[value.close]]"
+					}
+				}],
+			
+				chartScrollbarSettings: {
+					graph: "g1"
+				},
+			
+				chartCursorSettings: {
+					valueBalloonsEnabled: true
+				},
+			
+				periodSelector: {
+					position: "left",
+					periods: [{
+						period: "DD",
+						count: 10,
+						label: "10 days"
+					}, {
+						period: "MM",
+						selected: true,
+						count: 1,
+						label: "1 month"
+					}, {
+						period: "YYYY",
+						count: 1,
+						label: "1 year"
+					}, {
+						period: "YTD",
+						label: "YTD"
+					}, {
+						period: "MAX",
+						label: "MAX"
+					}]
+				},
+				exportConfig: {
+                    menuTop: "21px",
+                    menuBottom: "auto",
+                    menuRight: "21px",
+                    backgroundColor: "#efefef",
+
+                    menuItemStyle	: {
+                    backgroundColor			: '#EFEFEF',
+                    rollOverBackgroundColor	: '#DDDDDD'},
+
+                    menuItems: [{
+                        textAlign: 'center',
+                        icon: 'assets/amcharts/images/export.png',
+                        onclick:function(){},
+                        items: [{
+                            title: 'JPG',
+                            format: 'jpg'
+                        }, {
+                            title: 'PNG',
+                            format: 'png'
+                        }, {
+                            title: 'SVG',
+                            format: 'svg'
+                        }, {
+                            title: 'PDF',
+                            format: 'pdf'
+                        }]
+                    }]
+                },
+				
+				dataSetSelector: {
+					position: "left"
+				}
+			});
+		</script>
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -33,106 +362,73 @@
       <!-- BEGIN TOP NAVIGATION BAR -->
       <div class="header-inner">
          <!-- BEGIN LOGO -->  
-         <a class="navbar-brand" href="forward?lien=index.jsp">
-         <img src="assets/img/logo.png" alt="logo" class="img-responsive" />
+         <a class="navbar-brand" href="forward?lien=index_super_admin.jsp">
+             <img style="width:100px; height:25px " src="assets/img/logon.png" alt="logo" class="img-responsive" />
          </a>
          <!-- END LOGO -->
          <!-- BEGIN RESPONSIVE MENU TOGGLER --> 
-         <a href="javascript:;" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-         <img src="assets/img/menu-toggler.png" alt="" />
-         </a> 
          <!-- END RESPONSIVE MENU TOGGLER -->
          <!-- BEGIN TOP NAVIGATION MENU -->
          <ul class="nav navbar-nav pull-right">
             <!-- BEGIN NOTIFICATION DROPDOWN -->
+            
             <li class="dropdown" id="header_notification_bar">
-               <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
-                  data-close-others="true">
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                <i class="icon-warning-sign"></i>
-               <span class="badge">6</span>
+               <% gererHistorique gh = new gererHistorique();
+                  gerer_reclamation gr = new gerer_reclamation();
+                   int coun = gr.getRec(null);
+                   int count = gh.getLast(null);
+               %>
+               <span class="badge"><%=count %></span>
                </a>
                <ul class="dropdown-menu extended notification">
                   <li>
-                     <p>You have 14 new notifications</p>
+                     <p>You have <%=count %> new histories</p>
                   </li>
-                  <li>
-                     <ul class="dropdown-menu-list scroller" style="height: 250px;">
-                        <li>  
-                           <a href="#">
-                           <span class="label label-icon label-success"><i class="icon-plus"></i></span>
-                           New user registered. 
-                           <span class="time">Just now</span>
-                           </a>          
-                        </li>
-                 </ul>
-                  </li>
+                
                   <li class="external">   
-                     <a href="#">See all notifications <i class="m-icon-swapright"></i></a>
+                     <a href="list_getlast_historique">See all histories <i class="m-icon-swapright"></i></a>
                   </li>
                </ul>
             </li>
+            
             <!-- END NOTIFICATION DROPDOWN -->
+            
             <!-- BEGIN INBOX DROPDOWN -->
-           <li class="dropdown" id="header_inbox_bar">
+            <li class="dropdown" id="header_inbox_bar">
                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
                   data-close-others="true">
                <i class="icon-envelope"></i>
-               <span class="badge">5</span>
+               <span class="badge"><%=coun %></span>
                </a>
                <ul class="dropdown-menu extended inbox">
                   <li>
-                     <p>You have 12 new messages</p>
+                     <p>You have <%=coun %> new notifications</p>
                   </li>
-                  <li>
-                     <ul class="dropdown-menu-list scroller" style="height: 250px;">
-                        <li>  
-                           <a href="inbox.html?a=view">
-                           <span class="photo"><img src="./assets/img/avatar2.jpg" alt=""/></span>
-                           <span class="subject">
-                           <span class="from">Lisa Wong</span>
-                           <span class="time">Just Now</span>
-                           </span>
-                           <span class="message">
-                           Vivamus sed auctor nibh congue nibh. auctor nibh
-                           auctor nibh...
-                           </span>  
-                           </a>
-                        </li>
-                     </ul>
-                  </li>
+
                   <li class="external">   
-                     <a href="inbox.html">See all messages <i class="m-icon-swapright"></i></a>
+                     <a href="list_delete_reclamation">See all notifications <i class="m-icon-swapright"></i></a>
                   </li>
                </ul>
             </li>
             <!-- END INBOX DROPDOWN -->
-            <!-- BEGIN TODO DROPDOWN -->
-                      <li class="dropdown" id="header_task_bar">
-               <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-               <i class="icon-tasks"></i>
-               <span class="badge">5</span>
-               </a>
-               <ul class="dropdown-menu extended tasks">
-                  <li>
-                     <p>You have 12 pending tasks</p>
-                  </li>
-                 
-                  <li class="external">   
-                     <a href="#">See all tasks <i class="m-icon-swapright"></i></a>
-                  </li>
-               </ul>
-            </li>
-            <!-- END TODO DROPDOWN -->
+            
             <!-- BEGIN USER LOGIN DROPDOWN -->
             <li class="dropdown user">
                <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-               <span class="username">Bienvenue Bob Nilson</span>
+               <%
+                  gererprofile gpi = new gererprofile(); 
+                    String[] info = gpi.getInfo(authentification.email, authentification.c);  %>
+               <span class="username"><%=info[0]+" "+info[1] %></span>
                <i class="icon-angle-down"></i>
                </a>
                <ul class="dropdown-menu">
-                  <li><a href="extra_profile.html"><i class="icon-user"></i> My Profile</a>
+                  <li><a href="forward?lien=super-profile.jsp"><i class="icon-user"></i> My Profile</a>
                   </li>
+                 
                   <li class="divider"></li>
+                  
                   <li><a href="deconnexion"><i class="icon-key"></i> Log Out</a>
                   </li>
                </ul>
@@ -151,14 +447,14 @@
       <div class="page-sidebar navbar-collapse collapse">
          <!-- BEGIN SIDEBAR MENU -->        
          <ul class="page-sidebar-menu">
-            <li>
+           <li>
                <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
                <div class="sidebar-toggler hidden-phone"></div>
                <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
             </li>
             <li>
                <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
-               <form class="sidebar-search" action="extra_search.html" method="POST">
+               <form class="sidebar-search" action="" method="POST">
                   <div class="form-container">
                      <div class="input-box">
                         <a href="javascript:;" class="remove"></a>
@@ -168,42 +464,124 @@
                   </div>
                </form>
                <!-- END RESPONSIVE QUICK SEARCH FORM -->
-           <li class="start active ">
-               <a href="forward?lien=index.jsp">
+ </li>
+            <li class="start active ">
+               <a href="forward?lien=index_admin.jsp">
                <i class="icon-home"></i> 
                <span class="title">Dashboard</span>
                <span class="selected"></span>
                </a>
             </li>
-            
+            <%  boolean addClient = false;
+            	boolean viewClient = false;
+            	boolean deleteClient = false;
+            	boolean updateClient = false;
+            	boolean viewNotif = false;
+            	boolean answerNotif = false;
+            	boolean export = false;
+            	boolean stat = false;
+            	boolean historic = false;
+            	String email = authentification.email;
+            	gerer_privilege_admin gp = new gerer_privilege_admin();
+            	List<privilege_admin> priv = gp.ListPrivilege(email);
+                for (int i=0; i<priv.size(); i++) {
+                	 addClient=priv.get(i).isAddClient();
+                	 viewClient=priv.get(i).isViewClient();
+                	 deleteClient=priv.get(i).isDeleteClient();
+                	 updateClient=priv.get(i).isUpdateClient();
+                	 viewNotif=priv.get(i).isViewNotif();
+                	 answerNotif=priv.get(i).isAnswerNotif();
+                	 export=priv.get(i).isExport();
+                	 stat=priv.get(i).isViewStat();
+                	 historic=priv.get(i).isViewHistoric();
+                }
+            %>
             <li class="">
-               <a href="table_responsive.html">
-               <i class="icon-user"></i> 
-               <span class="title">Users</span>
+               <a href="javascript:;">
+               <i class="icon-file-text"></i> 
+               <span class="title">Clients</span>
                <span class="arrow "></span>
                </a>
-			                  <ul class="sub-menu">
-                  <li class="active">
-                     <a href="forward?lien=table_users.jsp">
-                     View User
-                     <span class="arrow"></span>
-                     </a>                  
-                  </li>
+			    <ul class="sub-menu">
+                  <% if (viewClient){
+                	 out.println("<li class='active'>"+
+                          	        "<a href='listclients?type=admin'>"+
+                  	                    "View Clients"+
+                                 "<span class='arrow'></span>"+
+                  					"</a></li>");
+                	 }else{
+                	 out.println("pas de priv");
+                	}%>
                </ul>
             </li>
             <li class="">
                <a href="javascript:;">
                <i class="icon-file-text"></i> 
-               <span class="title">Statistiques</span>
+               <span class="title">Notifications</span>
                <span class="arrow "></span>
                </a>
 			    <ul class="sub-menu">
-                  <li class="active">
-                     <a href="forward?lien=table_statistique.jsp">
-                     View Statistique
-                     <span class="arrow"></span>
-                     </a>                  
+			    <%
+			    	if (viewNotif){
+			    		out.println("<li class='active'>"+
+			                    		 "<a href='list_delete_reclamation'>"+
+	                    					 "View Notifications"+
+	                    				 "<span class='arrow'></span>"+
+	                    				 "</a>"+                  
+	                  				"</li>");
+			    	}else{
+			    		out.println("pas de priv");
+			    	}
+			    
+			    %>
+                  
+                  	</ul>
+				  </li>
+                  <li class="">
+               <a href="javascript:;">
+               <i class="icon-file-text"></i> 
+               <span class="title">Historic</span>
+               <span class="arrow "></span>
+               </a>
+			    <ul class="sub-menu">
+                  <%
+                  		if (historic){
+                  			out.println("<li class='active'>"+					 
+                                    "<a href='list_getlast_historique'>"+
+                            "historic of Clients"+
+                            "<span class='arrow'></span>"+
+                            "</a>"+
+       					 "</li>");
+                  		}else{
+                  			out.println("pas de priv");
+                  		}
+                  %>
+                    
+                   </ul>					 
                   </li>
+                          <li class="">
+               <a href="javascript:;">
+               <i class="icon-file-text"></i> 
+               <span class="title">Statistics</span>
+               <span class="arrow "></span>
+               </a>
+			    <ul class="sub-menu">
+                  <% if (stat){
+                	  out.println("<li class='active'>"+
+                              "<a href='forward?lien=table_statistique_admin.jsp'>"+
+                      "View Statistics"+
+                      "<span class='arrow'></span>"+
+                      "</a>"+                  
+                   "</li>");
+                  }else{
+                	out.println("pas de priv");  
+                  }
+                  %>
+                  </ul>
+				  </li>
+                   
+               </ul>
+            </li>
                </ul>
             </li>
          </ul>
@@ -286,7 +664,7 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  Statistiques <small>View All</small>
+                  Statistics<small>admins</small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li class="btn-group">
@@ -303,74 +681,33 @@
                   </li>
                   <li>
                      <i class="icon-home"></i>
-                     <a href="forward?lien=index.jsp">Home</a> 
+                     <a href="forward?lien=index_super_admin.jsp">Home</a> 
                      <i class="icon-angle-right"></i>
                   </li>
                   <li>
-                     <a href="#">Statistiques</a>
+                     <a href="#">Statistics</a>
                      <i class="icon-angle-right"></i>
                   </li>
-                  <li><a href="#">View Statistique</a></li>
+                  <li><a href="#">View Statistics</a></li>
                </ul>
                <!-- END PAGE TITLE & BREADCRUMB-->
             </div>
          </div>
          <!-- END PAGE HEADER-->
-         <!-- BEGIN PAGE CONTENT-->                      
+         <!-- BEGIN PAGE CONTENT-->
+         <div class="row">
+            <div class="col-md-12">
+             <!-- BEGIN EXAMPLE TABLE users-->
+             
+<div id="chartdiv" style="width:100%; height:550px;"></div>             
 
-               <!-- BEGIN SAMPLE TABLE PORTLET-->
-               <div class="portlet box blue">
-                  <div class="portlet-title">
-                     <div class="caption"><i class="icon-cogs"></i>Statistical table</div>
-                     <div class="tools">
-                        <a href="javascript:;" class="collapse"></a>
-                        <a href="#portlet-config" data-toggle="modal" class="config"></a>
-                        <a href="javascript:;" class="reload"></a>
-                        <a href="javascript:;" class="remove"></a>
-                     </div>
-                  </div>
-                  <div class="portlet-body">
-                     <div class="table-responsive">
-                        <table class="table table-bordered">
-                           <thead>
-                              <tr>
-                                 <th>#</th>
-                                 <th>Users</th>
-                                 <th>Company</th>
-                                 <th>Date</th>
-                                 <th>Number of documents generated</th>
-                                 <th>Number of consultation</th>
-                                 <th></th>
-                              </tr>
-                           </thead>
-                           <tbody>
-                              <tr>
-                                 <td>1</td>
-                                 <td>Table cell</td>
-                                 <td>Table cell</td>
-                                 <td>Table cell</td>
-                                 <td>Table cell</td>
-                                 <td>Table cell</td>
-                                 <td>Table cell</td>
-                              </tr>
 
-                           </tbody>
-                        </table>
-                     </div>
-                  </div>
-               </div>
-               <!-- END SAMPLE TABLE PORTLET-->
+                 <!-- END EXAMPLE TABLE PORTLET-->
                
-               <!-- BEGIN SAMPLE TABLE PORTLET-->
-
-               <!-- END SAMPLE TABLE PORTLET-->
-
-               <!-- BEGIN SAMPLE TABLE PORTLET-->
-              
-               <!-- END SAMPLE TABLE PORTLET-->
+             
             </div>
          </div>
-         <!-- END PAGE CONTENT-->
+         <!-- END PAGE CONTENT -->
       </div>
       <!-- END PAGE -->
    </div>
@@ -402,11 +739,20 @@
    <script src="assets/plugins/jquery.cookie.min.js" type="text/javascript"></script>
    <script src="assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
    <!-- END CORE PLUGINS -->
-   <script src="assets/scripts/app.js"></script>      
+   <!-- BEGIN PAGE LEVEL PLUGINS -->
+   <script type="text/javascript" src="assets/plugins/select2/select2.min.js"></script>
+   <script type="text/javascript" src="assets/plugins/data-tables/jquery.dataTables.js"></script>
+   <script type="text/javascript" src="assets/plugins/data-tables/DT_bootstrap.js"></script>
+   <!-- END PAGE LEVEL PLUGINS -->
+   <!-- BEGIN PAGE LEVEL SCRIPTS -->
+   <script src="assets/scripts/app.js"></script>
+   <script src="assets/scripts/table-editable-client.js"></script> 
+   <script src="assets/scripts/table-editable-company.js"></script>    
    <script>
       jQuery(document).ready(function() {       
-         // initiate layout and plugins
          App.init();
+         TableEditable.init();
+         TableEditableCompany.init();
       });
    </script>
 </body>

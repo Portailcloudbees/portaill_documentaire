@@ -1,22 +1,24 @@
+<%@ page import="java.util.ArrayList" %>
 
+<%@ page import="entities.statistique" %>
+<%@ page import="java.util.List" %>
+<%@ page import="statistiqueDAO.*" %>
+<%@ page import="java.sql.Date" %>
+ <%@page import="responsableDAO.*"%>
 
- <%@ page import="statistiqueDAO.gererstatistique" %>
- <%@ page import="entities.statistique" %>
-
- <%@ page import="java.util.ArrayList" %>
-  <%@ page import="java.util.List" %>
  <%@page import="connexion.authentification"%>
-  <%@page import="entities.privilege_admin"%>
-  <%@page import="adminDAO.gerer_privilege_admin"%>
-  
+  <%@page import="entities.privilege_utilisateur"%>
+    <%@ page import="connexion.*" %>
 <%@ page import="historiqueDAO.gererHistorique" %>
 <%@ page import="adminDAO.gerer_reclamation" %>
 <%@ page import="profile.gererprofile" %>
-<html lang="en" class="no-js"> 
+<!DOCTYPE html>
+
+<!--[if !IE]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <!-- BEGIN HEAD -->
 <head>
    <meta charset="utf-8" />
-   <title>IMEX | Acceuil</title>
+   <title>IMEX | Acceuil-User</title>
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
    <meta content="" name="description" />
@@ -42,83 +44,83 @@
    <link href="assets/css/pages/tasks.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
    <link href="assets/css/custom.css" rel="stylesheet" type="text/css"/>
-    <script src="assets/clock/amcharts.js" type="text/javascript"></script>
-        <script src="assets/clock/gauge.js" type="text/javascript"></script>
-        <script src="assets/clock/clock.js" type="text/javascript"></script>
-       
-        <link href="assets/clock/style.css" rel="stylesheet" type="text/css"/>
-         <% 
-                        int j;
-         				int count_admin=0,count_client=0,count_user=0;
-         				 
-         				gererstatistique gs = new gererstatistique();
-         				List n = gs.users_count();
-        	            ArrayList<statistique> list_count= (ArrayList<statistique>) n ;
-        	            for ( j=0; j<list_count.size(); j++) { 
-        	            	count_admin=list_count.get(j).getNbr_admin();
-        	            	count_client=list_count.get(j).getNbr_client();
-        	            	count_user=list_count.get(j).getNbr_utilisateur();
-        	            	System.out.println(count_admin+"-"+count_client+"-"+count_user);
-        	            }
-                                     
-            %>
-            
-        
-         
-          <script type="text/javascript">
+      <link rel="stylesheet" href="assets/amcharts/style.css" type="text/css">
+        <script src="assets/amcharts/amcharts.js" type="text/javascript"></script>
+        <script src="assets/amcharts/serial.js" type="text/javascript"></script>
+   
+   <!-- END THEME STYLES -->
+       <script type="text/javascript">
             var chart;
-            var legend;
-            var admin = <%=count_admin %>;
-            var client = <%=count_client %>;
-            var users = <%= count_user%>;
+            
+            
             var chartData = [
+			<% 
+			int j;
+			gerer_xml gx = new gerer_xml();
+			String email_user = gx.getEmail_client(authentification.email);
+			gererstatistique gs = new gererstatistique();
+			List c = gs.client_stat(email_user);
+			ArrayList<statistique> liste = (ArrayList<statistique>) c ;
+			for ( j=0; j<liste.size(); j++) { 
+			  Date dat = liste.get(j).getDate_doc_client();  
+			  String type=liste.get(j).getType_doc();
+			  int count=liste.get(j).getNbr_doc_traite_client();
+			  
+			%>
                 {
-                    "type": "administrators",
-                    "count": admin
+                	
+                    "country": "<%=type%>"+" "+"<%=dat%>",
+                    "visits": <%=count%>,
+                    "color": "#" + Math.floor(Math.random() * 16777215).toString(16)
                 },
-                {
-                    "type": "clients",
-                    "count": client
-                },
-                {
-                    "type": "users",
-                    "count": users
-                }            ];
+              <% }%> 
+            ];
 
+  
             AmCharts.ready(function () {
-                // PIE CHART
-                chart = new AmCharts.AmPieChart();
+                // SERIAL CHART
+                chart = new AmCharts.AmSerialChart();
                 chart.dataProvider = chartData;
-                chart.titleField = "type";
-                chart.valueField = "count";
-                chart.depth3D = 10;
-                chart.angle = 10;
-                // LEGEND
-                legend = new AmCharts.AmLegend();
-                legend.align = "center";
-                legend.markerType = "circle";
-                chart.balloonText = "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>";
-                chart.addLegend(legend);
+                chart.categoryField = "country";
+                // the following two lines makes chart 3D
+                chart.depth3D = 20;
+                chart.angle = 30;
+
+                // AXES
+                // category
+                var categoryAxis = chart.categoryAxis;
+                categoryAxis.labelRotation = 90;
+                categoryAxis.dashLength = 5;
+                categoryAxis.gridPosition = "start";
+
+                // value
+                var valueAxis = new AmCharts.ValueAxis();
+                valueAxis.title = "Count";
+                valueAxis.dashLength = 5;
+                chart.addValueAxis(valueAxis);
+
+                // GRAPH
+                var graph = new AmCharts.AmGraph();
+                graph.valueField = "visits";
+                graph.colorField = "color";
+                graph.balloonText = "<span style='font-size:14px'>[[category]]: <b>[[value]]</b></span>";
+                graph.type = "column";
+                graph.lineAlpha = 0;
+                graph.fillAlphas = 1;
+                chart.addGraph(graph);
+
+                // CURSOR
+                var chartCursor = new AmCharts.ChartCursor();
+                chartCursor.cursorAlpha = 0;
+                chartCursor.zoomable = false;
+                chartCursor.categoryBalloonEnabled = false;
+                chart.addChartCursor(chartCursor);
+
+                chart.creditsPosition = "top-right";
 
                 // WRITE
-                chart.write("pie");
+                chart.write("chartdiv");
             });
-
-            // changes label position (labelRadius)
-            function setLabelPosition() {
-                if (document.getElementById("rb1").checked) {
-                    chart.labelRadius = 30;
-                    chart.labelText = "[[title]]: [[value]]";
-                } else {
-                    chart.labelRadius = -30;
-                    chart.labelText = "[[percents]]%";
-                }
-                chart.validateNow();
-            }
-
-
-
-          
         </script>
    <!-- END THEME STYLES -->
    <link rel="shortcut icon" href="favicon.ico" />
@@ -141,26 +143,14 @@
          <ul class="nav navbar-nav pull-right">
             <!-- BEGIN NOTIFICATION DROPDOWN -->
             
-            <li class="dropdown" id="header_notification_bar">
-               <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-               <i class="icon-warning-sign"></i>
-               <% gererHistorique gh = new gererHistorique();
+         
+               <% 
                   gerer_reclamation gr = new gerer_reclamation();
-                   int coun = gr.getRec(null);
-               	   int count = gh.getLast("administrateur");
+                   int coun = gr.getRec(gr.getCompany("select mat_soc from client_soc where email_resp=(select email_resp from utilisateur where email_ut='"+authentification.email+"')"));
+               	   
                %>
-               <span class="badge"><%=count %></span>
-               </a>
-               <ul class="dropdown-menu extended notification">
-                  <li>
-                     <p>You have <%=count %> new histories</p>
-                  </li>
-                
-                  <li class="external">   
-                     <a href="list_getlast_historique">See all histories <i class="m-icon-swapright"></i></a>
-                  </li>
-               </ul>
-            </li>
+               
+         
             
             <!-- END NOTIFICATION DROPDOWN -->
             
@@ -177,7 +167,7 @@
                   </li>
 
                   <li class="external">   
-                     <a href="list_delete_reclamation">See all notifications <i class="m-icon-swapright"></i></a>
+                     <a href="client_user_list_notif_rep">See all notifications <i class="m-icon-swapright"></i></a>
                   </li>
                </ul>
             </li>
@@ -193,7 +183,7 @@
                <i class="icon-angle-down"></i>
                </a>
                <ul class="dropdown-menu">
-                  <li><a href="forward?lien=admin-profile.jsp"><i class="icon-user"></i> My Profile</a>
+                  <li><a href="forward?lien=user-profile.jsp"><i class="icon-user"></i> My Profile</a>
                   </li>
                  
                   <li class="divider"></li>
@@ -235,125 +225,146 @@
                <!-- END RESPONSIVE QUICK SEARCH FORM -->
             </li>
             <li class="start active ">
-               <a href="forward?lien=index_admin.jsp">
+               <a href="forward?lien=index_user.jsp">
                <i class="icon-home"></i> 
                <span class="title">Dashboard</span>
                <span class="selected"></span>
                </a>
             </li>
-            <%  boolean addClient = false;
-            	boolean viewClient = false;
-            	boolean deleteClient = false;
-            	boolean updateClient = false;
-            	boolean viewNotif = false;
-            	boolean answerNotif = false;
-            	boolean export = false;
-            	boolean stat = false;
-            	boolean historic = false;
-            	String email = authentification.email;
-            	gerer_privilege_admin gp = new gerer_privilege_admin();
-            	List<privilege_admin> priv = gp.ListPrivilege(email);
+              <% 
+               boolean uploadFile = false;
+          	 boolean deleteFile = false;
+          	 boolean sendFile = false;
+          	 boolean downloadFile = false;
+          	 boolean sendSms = false;
+          	 boolean sendEmail = false;
+          	 boolean viewStat = false;
+          	 boolean answerNotif = false;
+          	 boolean export = false;
+             boolean viewUpload=false;
+             boolean viewHistorique =false;
+             boolean sendNotif=false;
+             boolean listNotif=false;
+             
+               String email = authentification.email;
+               gerer_privilege_ut gu = new gerer_privilege_ut();
+               List<privilege_utilisateur> priv = gu.ListPrivilege(email);
                 for (int i=0; i<priv.size(); i++) {
-                	 addClient=priv.get(i).isAddClient();
-                	 viewClient=priv.get(i).isViewClient();
-                	 deleteClient=priv.get(i).isDeleteClient();
-                	 updateClient=priv.get(i).isUpdateClient();
-                	 viewNotif=priv.get(i).isViewNotif();
-                	 answerNotif=priv.get(i).isAnswerNotif();
-                	 export=priv.get(i).isExport();
-                	 stat=priv.get(i).isViewStat();
-                	 historic=priv.get(i).isViewHistoric();
+                   uploadFile=priv.get(i).isUploadFile();
+                   deleteFile=priv.get(i).isDeleteFile();
+                   
+                   sendFile=priv.get(i).isSendFile();
+                   downloadFile=priv.get(i).isDownloadFile();
+                   sendSms=priv.get(i).isSendSms();
+                   sendEmail=priv.get(i).isSendEmail();
+                   viewStat=priv.get(i).isViewStat();
+                   answerNotif=priv.get(i).isAnswerNotif();
+                   export=priv.get(i).isExport();
+                   viewUpload=priv.get(i).isViewUpload();
+                   viewHistorique=priv.get(i).isViewHistorique();
+                   sendNotif=priv.get(i).isSendNotif();
+                   listNotif=priv.get(i).isListNotif();
                 }
             %>
-            <li class="">
-               <a href="javascript:;">
-               <i class="icon-file-text"></i> 
-               <span class="title">Clients</span>
+      
+         <li>
+               <a class="active" href="javascript:;">
+               <i class="icon-folder-open"></i> 
+               <span class="title">Files</span>
                <span class="arrow "></span>
                </a>
-			    <ul class="sub-menu">
-                  <% if (viewClient){
-                	 out.println("<li class='active'>"+
-                          	        "<a href='listclients?type=admin'>"+
-                  	                    "View Clients"+
-                                 "<span class='arrow'></span>"+
-                  					"</a></li>");
-                	 }else{
-                	 out.println("pas de priv");
-                	}%>
-               </ul>
-            </li>
-            <li class="">
-               <a href="javascript:;">
-               <i class="icon-file-text"></i> 
-               <span class="title">Notifications</span>
-               <span class="arrow "></span>
-               </a>
-			    <ul class="sub-menu">
-			    <%
-			    	if (viewNotif){
-			    		out.println("<li class='active'>"+
-			                    		 "<a href='list_delete_reclamation'>"+
-	                    					 "View Notifications"+
-	                    				 "<span class='arrow'></span>"+
-	                    				 "</a>"+                  
-	                  				"</li>");
-			    	}else{
-			    		out.println("pas de priv");
-			    	}
-			    
-			    %>
-                  
-                  	</ul>
-				  </li>
-                  <li class="">
-               <a href="javascript:;">
-               <i class="icon-file-text"></i> 
-               <span class="title">Historic</span>
-               <span class="arrow "></span>
-               </a>
-			    <ul class="sub-menu">
-                  <%
-                  		if (historic){
-                  			out.println("<li class='active'>"+					 
-                                    "<a href='list_getlast_historique'>"+
-                            "historic of Clients"+
-                            "<span class='arrow'></span>"+
-                            "</a>"+
-       					 "</li>");
-                  		}else{
-                  			out.println("pas de priv");
-                  		}
-                  %>
-                    
-                   </ul>					 
+               <ul class="sub-menu">
+                  <li>
+                  <% if (uploadFile){
+                   out.println("<a href='forward?lien=user_upload_file.jsp'>"+
+                           "File Upload"+ 
+                          " <span class='arrow'></span>"+
+                          " </a>");
+                   }else{
+                   out.println("pas de priv");
+                  }%>
+                     
                   </li>
-                          <li class="">
+                 <li>
+                    <% if (viewUpload){
+                   out.println("<a href='list_xml_up'>"+
+                           "View Uploaded Files"+
+                           "<span class='arrow'></span>"+
+                           "</a>");
+                   }else{
+                   out.println("pas de priv");
+                  }%>
+                     
+                  </li>
+                 
+                 <li>
+                      <% if (downloadFile){
+                   out.println("<a href='list_download_xml'>"+
+                           "Download File"+
+                           "<span class='arrow'></span>"+
+                           "</a>");
+                   }else{
+                   out.println("pas de priv");
+                  }%>
+                     
+                  </li>
+               </ul>
+            </li>
+            <li class="">
                <a href="javascript:;">
                <i class="icon-file-text"></i> 
-               <span class="title">Statistics</span>
+               <span class="title">Notification</span>
                <span class="arrow "></span>
                </a>
-			    <ul class="sub-menu">
-                  <% if (stat){
-                	  out.println("<li class='active'>"+
-                              "<a href='forward?lien=table_statistique.jsp'>"+
-                      "View Statistics"+
-                      "<span class='arrow'></span>"+
-                      "</a>"+                  
-                   "</li>");
-                  }else{
-                	out.println("pas de priv");  
-                  }
-                  %>
-                  </ul>
-				  </li>
-                   
-               </ul>
+            <ul class="sub-menu">
+                  <li>
+                      <% if (sendNotif){
+                   out.println("<a href='notif_send_page'>"+
+                           "Send  Notification"+
+                           "<span class='arrow'></span>"+
+                           "</a>");
+                   }else{
+                   out.println("pas de priv");
+                  }%>
+                     
+                  </li>
+                   <li>
+                      <% if (listNotif){
+                   out.println("<a href='client_user_list_notif_rep'>"+
+                           "List of notifications"+
+                           "<span class='arrow'></span>"+
+                           "</a>");
+                   }else{
+                   out.println("pas de priv");
+                  }%>
+                     
+                  </li>
+              </ul>
             </li>
-               </ul>
+             
+         <li class="last">
+               <a href="javascript:;">
+               <i class="icon-bar-chart"></i> 
+               <span class="title">Statistique</span>
+               <span class="arrow "></span>
+               </a>
+            <ul class="sub-menu">
+                  <li>
+                        <% if (viewStat){
+                   out.println("<a href='user_statistique.jsp'>"+
+                           "View  Statistique"+ 
+                           "<span class='arrow'></span>"+
+                           "</a>");
+                   }else{
+                   out.println("pas de privilège");
+                  }%>
+                     
+                  </li>
+              </ul>
             </li>
+         
          </ul>
+		 
          <!-- END SIDEBAR MENU -->
       </div>
       <!-- END SIDEBAR -->
@@ -371,9 +382,7 @@
                   <span>THEME COLOR</span>
                   <ul>
                      <li class="color-black current color-default" data-style="default"></li>
-                     <li class="color-blue" data-style="blue"></li>
-                     <li class="color-brown" data-style="brown"></li>
-                     <li class="color-purple" data-style="purple"></li>
+                     <li class="color-blue"></li>
                      <li class="color-grey" data-style="grey"></li>
                      <li class="color-white color-light" data-style="light"></li>
                   </ul>
@@ -414,12 +423,12 @@
             <div class="col-md-12">
                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
                <h3 class="page-title">
-                  Dashboard <small>Documentary portal</small>
+                  Portail documentaire <small></small>
                </h3>
                <ul class="page-breadcrumb breadcrumb">
                   <li>
                      <i class="icon-home"></i>
-                     <a href="forward?lien=index.jsp">Home</a> 
+                     <a href="forward?lien=index_user.jsp">Home</a> 
                      <i class="icon-angle-right"></i>
                   </li>
                   <li><a href="#">Dashboard</a></li>
@@ -435,25 +444,10 @@
             </div>
          </div>
          <!-- END PAGE HEADER-->
-          <div id="chartdiv" style=" width:300px; height:300px;">
-         </div>
-         
-          <div id="pie" style="width: 100%; height: 400px; margin-top: -300px"></div>
-         <table align="center" cellspacing="20">
-            <tr>
-                <td>
-                    <input type="radio" checked="true" name="group" id="rb1" onclick="setLabelPosition()">labels outside
-                    
-                <td>
-                    <input type="radio" checked="true" name="group2" id="rb3" onclick="set3D()">3D
-                    </td>
-                
-            </tr>
-        </table>
+         	 <div id="chartdiv" style="width: 100%; height: 400px;"></div>
         </div>
            </div>
-              </div>
-        </div>
+       
    <div class="footer">
       <div class="footer-inner">
          2014 &copy; IMEX.
@@ -483,28 +477,26 @@
    <script src="assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
    <!-- END CORE PLUGINS -->
    <!-- BEGIN PAGE LEVEL PLUGINS -->
-   
+
    <script src="assets/plugins/flot/jquery.flot.js" type="text/javascript"></script>
    <script src="assets/plugins/flot/jquery.flot.resize.js" type="text/javascript"></script>
    <script src="assets/plugins/jquery.pulsate.min.js" type="text/javascript"></script>
    <script src="assets/plugins/bootstrap-daterangepicker/moment.min.js" type="text/javascript"></script>
    <script src="assets/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script>     
-   <script src="assets/plugins/gritter/js/jquery.gritter.js" type="text/javascript"></script>
 
+   <!-- IMPORTANT! fullcalendar depends on jquery-ui-1.10.3.custom.min.js for drag & drop support -->
+
+   <script src="assets/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.js" type="text/javascript"></script>
+   <script src="assets/plugins/jquery.sparkline.min.js" type="text/javascript"></script>  
    <!-- END PAGE LEVEL PLUGINS -->
    <!-- BEGIN PAGE LEVEL SCRIPTS -->
-    <script src="assets/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.js" type="text/javascript"></script>
-   <script src="assets/plugins/jquery.sparkline.min.js" type="text/javascript"></script>  
-      <link rel="stylesheet" href="assets/amcharts/style.css" type="text/css">
-        <script src="assets/amcharts/amcharts.js" type="text/javascript"></script>
-        <script src="assets/amcharts/pie.js" type="text/javascript"></script>     
    <script src="assets/scripts/app.js" type="text/javascript"></script>
-     
+  
    <!-- END PAGE LEVEL SCRIPTS -->  
    <script>
       jQuery(document).ready(function() {    
          App.init(); // initlayout and core plugins
-      
+        
       });
    </script>
    <!-- END JAVASCRIPTS -->

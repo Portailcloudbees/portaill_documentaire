@@ -425,6 +425,10 @@
                     <span>Start</span>
                 </button>
                 {% } %}</td>
+          <td><button class="start">
+                    <i class="icon-upload icon-white"></i>
+                    <span>Generer</span>
+                </button></td>
             {% } else { %}
             <td colspan="2"></td>
             {% } %}
@@ -434,6 +438,7 @@
                     <span>Cancel</span>
                 </button>
                 {% } %}</td>
+				
         </tr>
         {% } %}
     </script>

@@ -244,7 +244,7 @@
                </a>
 			   <ul class="sub-menu">
                   <li>
-                     <a href="client_table_stat.jsp">
+                     <a href="forward?lien=client_statistique.jsp">
                      View  Statistique 
                      <span class="arrow"></span>
                      </a>

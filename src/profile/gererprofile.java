@@ -112,5 +112,25 @@ public class gererprofile {
 		
 	}
 	
+	
+	
+	public String updatePrice(double price){
+		
+			String req="update statistique set price='"+price+"'";
+		
+			try {
+            PreparedStatement ps = ConnectionBD.getInstance().prepareStatement(req);
+           
+             ps.executeUpdate();
+            
+            	return("Update completed successfully");
+            
+            
+        } catch (SQLException ex) {
+           System.out.println("erreur lors de la mise à jour price "+ex.getMessage());
+           return null;
+        }
+	}
+	
 
 }

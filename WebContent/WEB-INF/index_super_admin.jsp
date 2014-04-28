@@ -1,9 +1,12 @@
-
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
  <%@page import="adminDAO.gerer_reclamation"%>
 <%@page import="historiqueDAO.gererHistorique"%>
 <%@page import="profile.gererprofile"%>
 
  <%@ page import="connexion.*" %>
+ <%@ page import="statistiqueDAO.gererstatistique" %>
+ <%@ page import="entities.statistique" %>
 <%@ page import="historiqueDAO.gererHistorique" %>
 <%@ page import="adminDAO.gerer_reclamation" %>
 <%@ page import="profile.gererprofile" %>
@@ -39,6 +42,80 @@
         <script src="assets/clock/clock.js" type="text/javascript"></script>
        
         <link href="assets/clock/style.css" rel="stylesheet" type="text/css"/>
+         <% 
+                        int i;
+         				int count_admin=0,count_client=0,count_user=0;
+         				 
+         				gererstatistique gs = new gererstatistique();
+         				List n = gs.users_count();
+        	            ArrayList<statistique> list_count= (ArrayList<statistique>) n ;
+        	            for ( i=0; i<list_count.size(); i++) { 
+        	            	count_admin=list_count.get(i).getNbr_admin();
+        	            	count_client=list_count.get(i).getNbr_client();
+        	            	count_user=list_count.get(i).getNbr_utilisateur();
+        	            	System.out.println(count_admin+"-"+count_client+"-"+count_user);
+        	            }
+                                     
+            %>
+            
+        
+         
+          <script type="text/javascript">
+            var chart;
+            var legend;
+            var admin = <%=count_admin %>;
+            var client = <%=count_client %>;
+            var users = <%= count_user%>;
+            var chartData = [
+                {
+                    "type": "administrators",
+                    "count": admin
+                },
+                {
+                    "type": "clients",
+                    "count": client
+                },
+                {
+                    "type": "users",
+                    "count": users
+                }            ];
+
+            AmCharts.ready(function () {
+                // PIE CHART
+                chart = new AmCharts.AmPieChart();
+                chart.dataProvider = chartData;
+                chart.titleField = "type";
+                chart.valueField = "count";
+                chart.depth3D = 10;
+                chart.angle = 10;
+                // LEGEND
+                legend = new AmCharts.AmLegend();
+                legend.align = "center";
+                legend.markerType = "circle";
+                chart.balloonText = "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>";
+                chart.addLegend(legend);
+
+                // WRITE
+                chart.write("pie");
+            });
+
+            // changes label position (labelRadius)
+            function setLabelPosition() {
+                if (document.getElementById("rb1").checked) {
+                    chart.labelRadius = 30;
+                    chart.labelText = "[[title]]: [[value]]";
+                } else {
+                    chart.labelRadius = -30;
+                    chart.labelText = "[[percents]]%";
+                }
+                chart.validateNow();
+            }
+
+
+
+          
+        </script>
+        
         
    <!-- END THEME STYLES -->
    <link rel="shortcut icon" href="favicon.ico" />
@@ -349,18 +426,22 @@
          <div id="chartdiv" style=" width:300px; height:300px;">
          </div>
          
-          <div class="note note-success" >
-                        <h4 class="block">Welcome !! </h4>
-                        <p>
-                        	
-                        </p>
-            </div>
-         
+          <div id="pie" style="width: 100%; height: 400px; margin-top: -300px"></div>
+         <table align="center" cellspacing="20">
+            <tr>
+                <td>
+                    <input type="radio" checked="true" name="group" id="rb1" onclick="setLabelPosition()">labels outside
+                    
+                <td>
+                    <input type="radio" checked="true" name="group2" id="rb3" onclick="set3D()">3D
+                    </td>
+                
+            </tr>
+        </table>
             
         </div>
            </div>
-              </div>
-        </div>
+          
    <div class="footer">
       <div class="footer-inner">
          2014 &copy; IMEX.
@@ -392,21 +473,17 @@
    <!-- END CORE PLUGINS -->
    <!-- BEGIN PAGE LEVEL PLUGINS -->
   
-   <script src="assets/plugins/flot/jquery.flot.js" type="text/javascript"></script>
-   <script src="assets/plugins/flot/jquery.flot.resize.js" type="text/javascript"></script>
-   <script src="assets/plugins/jquery.pulsate.min.js" type="text/javascript"></script>
-   <script src="assets/plugins/bootstrap-daterangepicker/moment.min.js" type="text/javascript"></script>
-   <script src="assets/plugins/bootstrap-daterangepicker/daterangepicker.js" type="text/javascript"></script>     
-   <script src="assets/plugins/gritter/js/jquery.gritter.js" type="text/javascript"></script>
-   <!-- IMPORTANT! fullcalendar depends on jquery-ui-1.10.3.custom.min.js for drag & drop support -->
-   <script src="assets/plugins/fullcalendar/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
+   
    <script src="assets/plugins/jquery-easy-pie-chart/jquery.easy-pie-chart.js" type="text/javascript"></script>
    <script src="assets/plugins/jquery.sparkline.min.js" type="text/javascript"></script>  
    <!-- END PAGE LEVEL PLUGINS -->
    <!-- BEGIN PAGE LEVEL SCRIPTS -->
    <script src="assets/scripts/app.js" type="text/javascript"></script>
    <script src="assets/scripts/index.js" type="text/javascript"></script>
-   <script src="assets/scripts/tasks.js" type="text/javascript"></script>        
+   <script src="assets/scripts/tasks.js" type="text/javascript"></script>  
+    <link rel="stylesheet" href="assets/amcharts/style.css" type="text/css">
+        <script src="assets/amcharts/amcharts.js" type="text/javascript"></script>
+        <script src="assets/amcharts/pie.js" type="text/javascript"></script>      
    <!-- END PAGE LEVEL SCRIPTS -->  
    <script>
       jQuery(document).ready(function() {    

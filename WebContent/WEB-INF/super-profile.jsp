@@ -359,6 +359,7 @@
                                  </li>
                          
                                  <li ><a data-toggle="tab" href="#tab_3-3"><i class="icon-lock"></i> Change Password</a></li>
+                                  <li ><a data-toggle="tab" href="#tab_3-4"><i class="icon-lock"></i> Change Price/octet</a></li>
                                 
                               </ul>
                            </div>
@@ -415,6 +416,24 @@
                                           <a href="#" class="btn default">Cancel</a>
                                        </div>
                                        <div id="resultat1" style="color:red; margin-left:250px"></div>
+                                    </form>
+                                    
+                                 </div>
+                                 <div id="tab_3-4" class="tab-pane">
+                                    <form name="f3" >
+                                       <div class="form-group">
+                                          <label class="control-label">Price</label>
+                                          <input type="text" name="price" class="form-control" placeholder="DT" /> 
+                                          <p style="color:red">Example : if per 1Mo it will be paid with 0.500 then
+                                          			the price of 1oc = (0.500/1024)/1024</p>
+                                       </div>
+                                       
+                                       <div class="margin-top-10">
+                                          
+                                           <a href="#" onclick="updatePrice()" class="btn green">Change Price</a>
+                                          <a href="#" class="btn default">Cancel</a>
+                                       </div>
+                                       <div id="resultat2" style="color:red; margin-left:250px"></div>
                                     </form>
                                     
                                  </div>
@@ -533,6 +552,33 @@
       
           }
         
+          
+          function updatePrice(){
+        	  if (document.f3.price.value==""){
+        		  document.getElementById('resultat2').innerHTML="Please fill in the field";
+        	  }else{
+        		  var table = [];
+                  table.push( { 
+                  		    "price": document.f3.price.value   }
+                  );
+                 
+                  $.ajax({
+                  	type:"POST",
+                  	url: "./priceServlet",
+                  	contentType: "application/x-www-form-urlencoded",
+                  	dataType: "JSON",
+                  	data: {ligne:JSON.stringify(table)},
+                  	success: function(dat) {
+                  		
+                  		 document.getElementById('resultat2').innerHTML=dat.responseText;
+                  		},
+                  	error: function (err){
+                  		document.getElementById('resultat2').innerHTML=err.responseText;
+                  	}
+                  		});
+        	  }
+      
+          }
         
         </script>
    

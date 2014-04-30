@@ -19,7 +19,7 @@ public class gerer_admin {
 	
 	
 	public boolean ajouterAdmin(administrateur ad){
-		String req ="insert into admin values (?,?,?,?)";
+		String req ="insert into admin values (?,?,?,?,null)";
 		 gerer_privilege_admin ga = new gerer_privilege_admin();
         try { 
          PreparedStatement ps = ConnectionBD.getInstance().prepareStatement(req);

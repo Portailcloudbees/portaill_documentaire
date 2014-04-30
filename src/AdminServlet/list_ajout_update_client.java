@@ -107,7 +107,18 @@ public class list_ajout_update_client extends HttpServlet {
 				cl.setPrenom_resp(" ");
             }
 			
-            cl.setMatricule_soc((String) ligne.getString("company"));
+            String mat = (String) ligne.getString("company");
+            
+            if (mat.length()==0){
+            	
+            	cl.setMatricule_soc(null);
+            	cl.setNumtel((String) ligne.getString("tel"));
+            }else{
+            	cl.setMatricule_soc((String) ligne.getString("company"));
+            	cl.setNumtel((String) ligne.getString("tel"));
+            }
+            
+            
 			cl.setEmail_resp((String) ligne.getString("login"));
 			cl.setMot_de_pass_resp((String) ligne.getString("motdepasse"));
 			Date d = formatdate(ligne.getString("dateadded"));

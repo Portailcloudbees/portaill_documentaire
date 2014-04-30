@@ -33,9 +33,12 @@ public class download_xml extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String fileName = request.getParameter("fileName");
+		
+		String uploadFolder = getServletContext().getRealPath("")+ File.separator + "data";
+		 
 		String path = request.getParameter("path");
 		System.out.println(fileName+"----"+path);
-		File file = new File(path);
+		File file = new File(uploadFolder+"\\"+path);
 		System.out.println("File location on server::"+file.getAbsolutePath());
 		ServletContext ctx = getServletContext();
 		InputStream fis = new FileInputStream(file);

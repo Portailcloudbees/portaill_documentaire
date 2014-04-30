@@ -33,6 +33,12 @@
    <link href="assets/css/pages/tasks.css" rel="stylesheet" type="text/css"/>
    <link href="assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
    <link href="assets/css/custom.css" rel="stylesheet" type="text/css"/>
+   
+       <script src="assets/clock/amcharts.js" type="text/javascript"></script>
+        <script src="assets/clock/gauge.js" type="text/javascript"></script>
+        <script src="assets/clock/clock.js" type="text/javascript"></script>
+       
+        <link href="assets/clock/style.css" rel="stylesheet" type="text/css"/>
    <!-- END THEME STYLES -->
    <link rel="shortcut icon" href="favicon.ico" />
 </head>
@@ -221,6 +227,22 @@
                   </li>
 				  </ul>
             </li>
+            <li class="">
+               <a href="javascript:;">
+               <i class="icon-file-text"></i> 
+               <span class="title">invoice management</span>
+               <span class="arrow "></span>
+               </a>
+             <ul class="sub-menu">
+                  <li class="active">
+                     <a href="factureServlet">
+                     View list of invoices
+                     <span class="arrow"></span>
+                     </a>                  
+                  </li>
+                  
+              </ul>
+              </li>
              <li class="">
                <a href="javascript:;">
                <i class="icon-file-text"></i> 
@@ -333,11 +355,28 @@
             </div>
          </div>
          <!-- END PAGE HEADER-->
+         <div id="chartdiv" style=" width:300px; height:300px;">
+         </div>
+         <div class="alert alert-info" style="margin-top:-300px; margin-left:300px">
+                       <center> <strong>Welcome</strong> to Imex Dashboard </center>
+          </div>
+           <% gererprofile gp = new gererprofile();
+          	  
+          %>
+          <div class="alert alert-info" style=" margin-left:300px">
+                        <strong>Info!</strong> You have <%=gp.getCountUsers(authentification.email) %> Users.
+          </div>
+          <div class="alert alert-info" style=" margin-left:300px">
+                        <strong></strong> <%=coun %> Notifications.
+          </div>
          
+          <div class="alert alert-info" style=" margin-left:300px">
+                        <strong></strong>  <%=gp.getCountDocs(authentification.email) %>  Ready Documents.
+          </div>
+
         </div>
            </div>
-              </div>
-        </div>
+       
    <div class="footer">
       <div class="footer-inner">
          2014 &copy; IMEX.
@@ -367,13 +406,7 @@
    <script src="assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript" ></script>
    <!-- END CORE PLUGINS -->
    <!-- BEGIN PAGE LEVEL PLUGINS -->
-   <script src="assets/plugins/jqvmap/jqvmap/jquery.vmap.js" type="text/javascript"></script>   
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js" type="text/javascript"></script>
-   <script src="assets/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js" type="text/javascript"></script>  
+
    <script src="assets/plugins/flot/jquery.flot.js" type="text/javascript"></script>
    <script src="assets/plugins/flot/jquery.flot.resize.js" type="text/javascript"></script>
    <script src="assets/plugins/jquery.pulsate.min.js" type="text/javascript"></script>
@@ -387,21 +420,12 @@
    <!-- END PAGE LEVEL PLUGINS -->
    <!-- BEGIN PAGE LEVEL SCRIPTS -->
    <script src="assets/scripts/app.js" type="text/javascript"></script>
-   <script src="assets/scripts/index.js" type="text/javascript"></script>
-   <script src="assets/scripts/tasks.js" type="text/javascript"></script>        
+      
    <!-- END PAGE LEVEL SCRIPTS -->  
    <script>
       jQuery(document).ready(function() {    
          App.init(); // initlayout and core plugins
-         Index.init();
-         Index.initJQVMAP(); // init index page's custom scripts
-         Index.initCalendar(); // init index page's custom scripts
-         Index.initCharts(); // init index page's custom scripts
-         Index.initChat();
-         Index.initMiniCharts();
-         Index.initDashboardDaterange();
-         Index.initIntro();
-         Tasks.initDashboardWidget();
+        
       });
    </script>
    <!-- END JAVASCRIPTS -->

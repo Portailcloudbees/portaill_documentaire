@@ -41,9 +41,10 @@ public class client_user_list_notif_rep extends HttpServlet {
 			mat=gr.getCompany("select * from client_soc where email_resp='"+authentification.email+"'");
 		}else{
 			mat=gr.getCompany("Select c.mat_soc from utilisateur u,client_soc c where u.email_ut='"+authentification.email+"' AND u.`email_resp` = c.`email_resp` ");
-			System.out.println("-"+mat);
+			
 		}
-		
+	
+
 		List l = new ArrayList<reclamation>();
 		List l1 = new ArrayList<reclamation_rep>();
 		l1=gr.ListRep();

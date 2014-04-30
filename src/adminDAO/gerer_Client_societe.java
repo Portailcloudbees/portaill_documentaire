@@ -19,7 +19,7 @@ public class gerer_Client_societe {
 	}
 	
 	public boolean ajouterClient(client cl){
-		String req ="insert into client_soc values (?,?,?,?,?,?)";
+		String req ="insert into client_soc values (?,?,?,?,?,?,?)";
         try { 
          PreparedStatement ps = ConnectionBD.getInstance().prepareStatement(req);
          ps.setString(1,cl.getEmail_resp());
@@ -28,6 +28,7 @@ public class gerer_Client_societe {
          ps.setDate(4,cl.getDate_ajout_resp());
          ps.setString(5,cl.getMot_de_pass_resp());
          ps.setString(6,cl.getMatricule_soc());
+         ps.setString(7,cl.getNumtel());
          ps.executeUpdate();
          System.out.println("Ajout utilisateur effectuée avec succès");
          return true;
@@ -59,7 +60,7 @@ public class gerer_Client_societe {
 	
 	public void updateClient(client cl){
 		String mail =cl.getEmail_resp();
-		String requete = "update client_soc set nom_resp=?,prenom_resp=?, date_ajout_resp=?, pass_resp=?, mat_soc=? where email_resp='"+mail+"'";
+		String requete = "update client_soc set nom_resp=?,prenom_resp=?, date_ajout_resp=?, pass_resp=?, mat_soc=?, num_tel=? where email_resp='"+mail+"'";
         try {
             PreparedStatement ps = ConnectionBD.getInstance().prepareStatement(requete);
             ps.setString(1, cl.getNom_resp());
@@ -68,6 +69,7 @@ public class gerer_Client_societe {
             ps.setDate(3, cl.getDate_ajout_resp());
             ps.setString(4, cl.getMot_de_pass_resp());
             ps.setString(5, cl.getMatricule_soc());
+            ps.setString(6, cl.getNumtel());
             ps.executeUpdate();
             System.out.println("Mise à jour client effectuée avec succès");
         } catch (SQLException ex) {
@@ -138,7 +140,7 @@ public void deleteSoc(String mat){
                 cl.setNom_resp(resultat.getString(2));
                 cl.setPrenom_resp(resultat.getString(3));
                 cl.setMatricule_soc(resultat.getString(6));
-                
+                cl.setNumtel(resultat.getString(7));
                 listeclient.add(cl);
             }
             return  listeclient;

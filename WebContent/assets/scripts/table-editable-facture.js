@@ -1,4 +1,4 @@
-var TableEditable = function () {
+var facture = function () {
 
     return {
 
@@ -18,31 +18,19 @@ var TableEditable = function () {
             function addRow(oTable, nRow) {
                 var aData = oTable.fnGetData(nRow);
                 var jqTds = $('>td', nRow);
-                jqTds[0].innerHTML = '<input type="text" class="form-control input-small" value="' + aData[0] + '">';
-                jqTds[1].innerHTML = '<input type="text" class="form-control input-small" value="' + aData[1] + '">';
-                jqTds[2].innerHTML = '<input type="text" class="form-control input-small" value="' + aData[2] + '">';
+                jqTds[0].innerHTML = '<input type="date" class="form-control input-large" value="' + aData[0] + '">';
+                jqTds[1].innerHTML = '<input type="date" class="form-control input-large" value="' + aData[1] + '">';
+                jqTds[2].innerHTML = '<input type="date" class="form-control input-large" value="' + aData[2] + '">';
                 jqTds[3].innerHTML = '<input type="text" class="form-control input-small" value="' + aData[3] + '">';
                 jqTds[4].innerHTML = '<input type="text" class="form-control input-small" value="' + aData[4] + '">';
-                jqTds[5].innerHTML = '<input type="date" class="form-control input-large" value="' + aData[5] + '">';
-                jqTds[6].innerHTML = '<a class="edit" href="">Save</a>';
-                jqTds[7].innerHTML = '<a class="cancel" href="">Cancel</a>';
-                //ici update with ajax
+               
+                jqTds[5].innerHTML = '<a class="edit" href="">Save</a>';
+               
+               
             }
             
 
-            function editRow(oTable, nRow) {
-                var aData = oTable.fnGetData(nRow);
-                var jqTds = $('>td', nRow);
-                jqTds[0].innerHTML = '<input type="text" class="form-control input-small" value="' + aData[0] + '" >';
-                jqTds[1].innerHTML = '<input type="text" class="form-control input-small" value="' + aData[1] + '" disabled>';
-                jqTds[2].innerHTML = '<input type="text" class="form-control input-small" value="' + aData[2] + '" >';
-                jqTds[3].innerHTML = '<input type="text" class="form-control input-small" value="' + aData[3] + '">';
-                jqTds[4].innerHTML = '<input type="text" class="form-control input-small" value="' + aData[4] + '">';
-                jqTds[5].innerHTML = '<input type="date" class="form-control input-large" value="' + aData[5] + '">';
-                jqTds[6].innerHTML = '<a class="edit" href="">Save</a>';
-                jqTds[7].innerHTML = '<a class="cancel" href="">Cancel</a>';
-                //ici update with ajax
-            }
+           
 
             function saveRow(oTable, nRow) {
                 var jqInputs = $('input', nRow);
@@ -51,21 +39,19 @@ var TableEditable = function () {
                 oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
                 oTable.fnUpdate(jqInputs[3].value, nRow, 3, false);
                 oTable.fnUpdate(jqInputs[4].value, nRow, 4, false);
-                oTable.fnUpdate(jqInputs[5].value, nRow, 5, false);
-                //ici ajout avec ajax
+              
               
                 var table = [];
-                table.push( { "fullname" : jqInputs[0].value ,
-                		    "company": jqInputs[1].value ,
-                		    "tel": jqInputs[2].value ,
-                		    "login":jqInputs[3].value ,
-                		    "motdepasse":jqInputs[4].value,
-                		   "dateadded":jqInputs[5].value }
+                table.push( { "date" : jqInputs[0].value ,
+                		    "from": jqInputs[1].value ,
+                		    "to":jqInputs[2].value ,
+                		    "soc":jqInputs[3].value,
+                		    "email":jqInputs[4].value}
                 );
                
                 $.ajax({
                 	type:"POST",
-                	url: "./listclients",
+                	url: "./factureServlet",
                 	contentType: "application/x-www-form-urlencoded",
                 	dataType: "JSON",
                 	data: {ligne:JSON.stringify(table)},//table,
@@ -73,9 +59,9 @@ var TableEditable = function () {
                 		alert("Success");
                 		}
                 		})
-                
-                oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 6, false);
-                oTable.fnUpdate('<a class="delete" href="">Delete</a>', nRow, 7, false);
+                 
+               
+                oTable.fnUpdate('<a class="" href="">view</a>', nRow, 7, false);
                 oTable.fnDraw();
                
             }
@@ -87,12 +73,11 @@ var TableEditable = function () {
                 oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
                 oTable.fnUpdate(jqInputs[3].value, nRow, 3, false);
                 oTable.fnUpdate(jqInputs[4].value, nRow, 4, false);
-                oTable.fnUpdate(jqInputs[5].value, nRow, 5, false);
-                oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 6, false);
+                oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 5, false);
                 oTable.fnDraw();
             }
 
-            var oTable = $('#sample_editable_1').dataTable({
+            var oTable = $('#sample_editable_facture').dataTable({
                 "aLengthMenu": [
                     [5, 15, 20, -1],
                     [5, 15, 20, "All"] // change per page values here
@@ -123,17 +108,17 @@ var TableEditable = function () {
 
             var nEditing = null;
 
-            $('#sample_editable_1_new').click(function (e) {
+            $('#sample_editable_facture_new').click(function (e) {
                 e.preventDefault();
-                var aiNew = oTable.fnAddData(['', '', '', '', '', '',
-                        '<a class="edit" href="">Edit</a>', '<a class="cancel" data-mode="new" href="">Cancel</a>'
+                var aiNew = oTable.fnAddData(['', '', '', '', '', 
+                        '<a class="" href="">view</a>'
                 ]);
                 var nRow = oTable.fnGetNodes(aiNew[0]);
                 addRow(oTable, nRow);
                 nEditing = nRow;
             });
 
-            $('#sample_editable_1 a.delete').live('click', function (e) {
+            $('#sample_editable_facture a.delete').live('click', function (e) {
                 e.preventDefault();
 
                 if (confirm("Are you sure to delete this row ?") == false) {
@@ -147,10 +132,10 @@ var TableEditable = function () {
                
                 $.ajax({
                 	type:"POST",
-                	url: "./modif_delete_soc",
+                	url: "./delete",
                 	contentType: "application/x-www-form-urlencoded",
                 	dataType: "JSON",
-                	data: {mail:d[3]},
+                	data: {mail:d[0]},
                 	success: function(data) {
                 		//alert("Success");
                 		}
@@ -159,7 +144,7 @@ var TableEditable = function () {
                
             });
 
-            $('#sample_editable_1 a.cancel').live('click', function (e) {
+            $('#sample_editable_facture a.cancel').live('click', function (e) {
                 e.preventDefault();
                 if ($(this).attr("data-mode") == "new") {
                     var nRow = $(this).parents('tr')[0];
@@ -170,7 +155,7 @@ var TableEditable = function () {
                 }
             });
 
-            $('#sample_editable_1 a.edit').live('click', function (e) {
+            $('#sample_editable_facture a.edit').live('click', function (e) {
                 e.preventDefault();
 
                 /* Get the row as a parent of the link that was clicked on */
@@ -187,10 +172,6 @@ var TableEditable = function () {
                     alert("Saving Data...");
                     nEditing = null;
                     
-                } else {
-                    /* No edit in progress - let's start one */
-                    editRow(oTable, nRow);
-                    nEditing = nRow;
                 }
             });
             

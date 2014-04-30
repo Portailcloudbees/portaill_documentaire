@@ -45,8 +45,9 @@ public class delet_soc_client extends HttpServlet {
 				gerer_Client_societe gc = new gerer_Client_societe();
 				if (mat==null){
 					gc.deleteClient(mail);
+					System.out.println("1");
 				}else{
-					
+					System.out.println("2");
 					gc.deleteSoc(mat);
 				}
 				

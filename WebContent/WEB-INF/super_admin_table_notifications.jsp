@@ -202,7 +202,22 @@
                   
               </ul>
 				  </li>
-				  
+				   <li class="">
+               <a href="javascript:;">
+               <i class="icon-file-text"></i> 
+               <span class="title">invoice management</span>
+               <span class="arrow "></span>
+               </a>
+             <ul class="sub-menu">
+                  <li class="active">
+                     <a href="factureServlet">
+                     View list of invoices
+                     <span class="arrow"></span>
+                     </a>                  
+                  </li>
+                  
+              </ul>
+              </li>
 				  
 				  <li class="">
                <a href="javascript:;">

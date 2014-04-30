@@ -56,17 +56,17 @@ public class UploadServlet extends HttpServlet {
       
       }else{
       	email_client=gx.getEmail_client(authentification.email);
-      }    
-	 File dir = new File("c:/Upload/"+email_client+"/");
+      }   
+	 String uploadFolder = getServletContext().getRealPath("")+ File.separator + "data";
+	 File dir = new File(uploadFolder+"\\"+email_client+"\\");
 	 if (!dir.exists()) {
 		   boolean result = dir.mkdir(); 
 	 }
     	System.out.println("get");
         if (request.getParameter("getfile") != null && !request.getParameter("getfile").isEmpty()) {
-            
-        	File file = new File("c:/Upload/"+email_client+"/"+request.getParameter("getfile"));
-           
-            if (file.exists()) {
+        	
+        	File file = new File(uploadFolder+"\\"+email_client+"\\"+request.getParameter("getfile"));
+        	if (file.exists()) {
                 int bytes = 0;
                 ServletOutputStream op = response.getOutputStream();
 
@@ -86,14 +86,15 @@ public class UploadServlet extends HttpServlet {
                 op.close();
             }
         } else if (request.getParameter("delfile") != null && !request.getParameter("delfile").isEmpty()) {
-            File file = new File("c:/Upload/"+email_client+"/"+ request.getParameter("delfile"));
+            File file = new File(uploadFolder+"\\"+email_client+"\\"+ request.getParameter("delfile"));
             if (file.exists()) {
                 file.delete(); // TODO:check and report success
-                String path="c:/Upload/"+email_client+"/"+ request.getParameter("delfile");
+                String path=email_client+"/"+ request.getParameter("delfile");
+                
                 gx.deletefile(path);
             } 
         } else if (request.getParameter("getthumb") != null && !request.getParameter("getthumb").isEmpty()) {
-            File file = new File("c:/Upload/"+email_client+"/"+request.getParameter("getthumb"));
+            File file = new File(uploadFolder+"\\"+email_client+"\\"+request.getParameter("getthumb"));
                 if (file.exists()) {
                     System.out.println(file.getAbsolutePath());
                     String mimetype = getMimeType(file);
@@ -147,7 +148,9 @@ public class UploadServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 System.out.println("post");
-File dir = new File("c:/Upload/"+email_client+"/");
+String uploadFolder = getServletContext().getRealPath("")+ File.separator + "data";
+File dir = new File(uploadFolder+"\\"+email_client+"\\");
+System.out.println(uploadFolder);
 if (!dir.exists()) {
 	   boolean result = dir.mkdir(); 
 }
@@ -175,7 +178,7 @@ if (!dir.exists()) {
                      	email_client=gx.getEmail_client(authentification.email);
                      	x.setEmail_user(authentification.email);
                      }    
-                	File file = new File("c:/Upload/"+email_client+"/", item.getName());
+                	File file = new File(uploadFolder+"\\"+email_client+"\\", item.getName());
                         item.write(file);
                         JSONObject jsono = new JSONObject();
                         jsono.put("name", item.getName());
@@ -186,7 +189,7 @@ if (!dir.exists()) {
                         jsono.put("delete_type", "GET");
                       
                         x.setNom_doc(item.getName());
-                        x.setPath_doc("c:/Upload/"+email_client+"/"+item.getName());
+                        x.setPath_doc(email_client+"/"+item.getName());
                         x.setType_doc(getSuffix(item.getName()));
                         if (authentification.c.equals("responsable")){
                 			gererHistorique gh = new gererHistorique();

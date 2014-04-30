@@ -265,7 +265,7 @@
             <ul class="sub-menu">
                   <li>
                         <% if (viewStat){
-                   out.println("<a href='client_table_stat.jsp'>"+
+                   out.println("<a href='forward?lien=user_statistique.jsp'>"+
                            "View  Statistique"+ 
                            "<span class='arrow'></span>"+
                            "</a>");

@@ -216,6 +216,22 @@
                   </li>
 				  </ul>
             </li>
+            <li class="">
+               <a href="javascript:;">
+               <i class="icon-file-text"></i> 
+               <span class="title">invoice management</span>
+               <span class="arrow "></span>
+               </a>
+             <ul class="sub-menu">
+                  <li class="active">
+                     <a href="factureServlet">
+                     View list of invoices
+                     <span class="arrow"></span>
+                     </a>                  
+                  </li>
+                  
+              </ul>
+              </li>
              <li class="">
                <a href="javascript:;">
                <i class="icon-file-text"></i> 
@@ -237,14 +253,14 @@
                <span class="title">Statistique</span>
                <span class="arrow "></span>
                </a>
-			   <ul class="sub-menu">
+            <ul class="sub-menu">
                   <li>
-                     <a href="client_table_stat.jsp">
+                     <a href="forward?lien=client_statistique.jsp">
                      View  Statistique 
                      <span class="arrow"></span>
                      </a>
                   </li>
-				  </ul>
+              </ul>
             </li>
 			
          </ul>

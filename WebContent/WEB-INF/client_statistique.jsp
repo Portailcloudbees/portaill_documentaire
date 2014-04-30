@@ -113,7 +113,10 @@
 
                 // WRITE
                 chart.write("chartdiv");
+                
+               
             });
+            
         </script>
    <link rel="shortcut icon" href="favicon.ico" />
 </head>
@@ -303,6 +306,22 @@
                   </li>
 				  </ul>
             </li>
+            <li class="">
+               <a href="javascript:;">
+               <i class="icon-file-text"></i> 
+               <span class="title">invoice management</span>
+               <span class="arrow "></span>
+               </a>
+             <ul class="sub-menu">
+                  <li class="active">
+                     <a href="factureServlet">
+                     View list of invoices
+                     <span class="arrow"></span>
+                     </a>                  
+                  </li>
+                  
+              </ul>
+              </li>
              <li class="">
                <a href="javascript:;">
                <i class="icon-file-text"></i> 
@@ -318,20 +337,20 @@
                   </li>
               </ul>
             </li>
-			<li class="start active ">
+			<li class="start active">
                <a href="javascript:;">
                <i class="icon-bar-chart"></i> 
                <span class="title">Statistique</span>
-               <span class="arrow "></span>
+               <span class="selected"></span>
                </a>
-			   <ul class="sub-menu">
+         <ul class="sub-menu">
                   <li>
                      <a href="forward?lien=client_statistique.jsp">
                      View  Statistique 
-                       <span class="selected"></span>
+                     <span class="arrow"></span>
                      </a>
                   </li>
-				  </ul>
+          </ul>
             </li>
 			
          </ul>

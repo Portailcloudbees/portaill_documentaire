@@ -9,6 +9,8 @@ public class client {
 	private Date date_ajout_resp;
 	private String mot_de_pass_resp;
 	private String matricule_soc;
+	private String Numtel;
+	
 	
 	public client() {
 	}
@@ -25,6 +27,16 @@ public class client {
 		
 	}
 	
+	
+	
+	public String getNumtel() {
+		return Numtel;
+	}
+
+	public void setNumtel(String numtel) {
+		Numtel = numtel;
+	}
+
 	public String getEmail_resp() {
 		return email_resp;
 	}

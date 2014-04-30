@@ -56,7 +56,7 @@ var TableEditableCompany = function () {
                
                 $.ajax({
                 	type:"POST",
-                	url: "./ajout_modif_soc",
+                	url: "./insert_affiche_soc",
                 	contentType: "application/x-www-form-urlencoded",
                 	dataType: "JSON",
                 	data: {soc:JSON.stringify(table)},
@@ -136,7 +136,7 @@ var TableEditableCompany = function () {
                
                 $.ajax({
                 	type:"POST",
-                	url: "./delet_soc_client",
+                	url: ".//modif_delete_soc",
                 	contentType: "application/x-www-form-urlencoded",
                 	dataType: "JSON",
                 	data: {mat:d[0]},

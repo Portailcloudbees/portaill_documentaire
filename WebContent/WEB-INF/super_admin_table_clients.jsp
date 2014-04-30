@@ -206,7 +206,22 @@
                   
               </ul>
 				  </li>
-				  
+				   <li class="">
+               <a href="javascript:;">
+               <i class="icon-file-text"></i> 
+               <span class="title">invoice management</span>
+               <span class="arrow "></span>
+               </a>
+             <ul class="sub-menu">
+                  <li class="active">
+                     <a href="factureServlet">
+                     View list of invoices
+                     <span class="arrow"></span>
+                     </a>                  
+                  </li>
+                  
+              </ul>
+              </li>
 				  
 				  <li class="">
                <a href="javascript:;">
@@ -471,7 +486,8 @@
                         <thead>
                            <tr>
                               <th>Full Name</th>
-                              <th>Service company / phone number</th>
+                              <th>Service company</th>
+                              <th>phone number</th>
                               <th>Login</th>
                               <th>mot de passe</th>
 							  <th>Date Added</th>
@@ -488,7 +504,13 @@
                         %>
                            <tr >
                               <td><%= liste_client.get(i).getPrenom_resp()+" "+liste_client.get(i).getNom_resp() %></td>
-                              <td><%= liste_client.get(i).getMatricule_soc() %></td>
+                              <td><%if (liste_client.get(i).getMatricule_soc()==null){
+                            	  out.println("Pas de Société");
+                            	  }else{
+                            		  out.println(liste_client.get(i).getMatricule_soc());
+                            	  }%></td>
+                              
+                              <td><%=liste_client.get(i).getNumtel() %>
                               <td><%= liste_client.get(i).getEmail_resp() %></td>
                               <td ><%= liste_client.get(i).getMot_de_pass_resp() %></td>
 							  <td><%= liste_client.get(i).getDate_ajout_resp() %></td>

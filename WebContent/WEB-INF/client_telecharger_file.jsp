@@ -220,6 +220,22 @@
                   </li>
 				  </ul>
             </li>
+            <li class="">
+               <a href="javascript:;">
+               <i class="icon-file-text"></i> 
+               <span class="title">invoice management</span>
+               <span class="arrow "></span>
+               </a>
+             <ul class="sub-menu">
+                  <li class="active">
+                     <a href="factureServlet">
+                     View list of invoices
+                     <span class="arrow"></span>
+                     </a>                  
+                  </li>
+                  
+              </ul>
+              </li>
              <li class="">
                <a href="javascript:;">
                <i class="icon-file-text"></i> 
@@ -241,14 +257,14 @@
                <span class="title">Statistique</span>
                <span class="arrow "></span>
                </a>
-			   <ul class="sub-menu">
+            <ul class="sub-menu">
                   <li>
-                     <a href="client_table_stat.jsp">
+                     <a href="forward?lien=client_statistique.jsp">
                      View  Statistique 
                      <span class="arrow"></span>
                      </a>
                   </li>
-				  </ul>
+              </ul>
             </li>
 			
          </ul>
@@ -362,7 +378,7 @@
                            <tr>
                               <th>Type</th>
                               <th>Name</th>
-                              
+                              <th hidden>Path</th>
                               <th class="hidden-xs">Size</th>
                               <th class="hidden-xs">Date</th>
                               <th class="hidden-xs">Etat</th>
@@ -382,7 +398,7 @@
                            <tr>
                               <td><%= liste_xml.get(j).getType_doc() %></td>
                               <td><%= liste_xml.get(j).getNom_doc() %></td>
-                             
+                             <td hidden><%= liste_xml.get(j).getPath_doc() %></td>
                               <td ><%= liste_xml.get(j).getTaille_doc() %></td>
 							  <td><%= liste_xml.get(j).getDate_ajout() %></td>
 							 <% 

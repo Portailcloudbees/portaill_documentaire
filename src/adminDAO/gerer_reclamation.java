@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import connexion.ConnectionBD;
+import connexion.authentification;
 import entities.administrateur;
 import entities.reclamation;
 import entities.reclamation_rep;
@@ -73,7 +74,12 @@ public class gerer_reclamation {
          ps.setString(2,rec.getSujet_rec());
          ps.setBoolean(3,rec.isTraiter());
          ps.setString(4,rec.getEmail_sender());
-         ps.setString(5, rec.getCompany());
+         if (rec.getCompany().length()==0){
+        	 ps.setString(5, null);
+         }else{
+        	 ps.setString(5, rec.getCompany());
+         }
+         
          ps.executeUpdate();
          System.out.println("Ajout reclamation effectuée avec succès");
          return true;
@@ -153,15 +159,7 @@ public List<reclamation> ListReclamation(){
             	rec.setDate(resultat.getDate(4));
             	rec.setTraiter(resultat.getBoolean(5));
             	rec.setEmail_sender(resultat.getString(6));
-            	//String req1="Select * from utilisateur where email_ut='"+resultat.getString(6)+"'";
-        		//String req2="Select * from client_soc where email_resp='"+resultat.getString(6)+"'";
-            	//if (getCompany(req1)==null){
-            		//comp=getCompany(req1);
-            		//System.out.println(comp);
-            	//}else{
-            		//comp=getCompany(req2);
-            		//System.out.println(comp);
-            	//}
+            
             	rec.setCompany(resultat.getString(7));     
             	listeRec.add(rec);
             }
@@ -178,7 +176,17 @@ public List<reclamation> ListReclamationClient(String mat){
 	
 	List<reclamation> listeRec = new ArrayList<reclamation>();
 	String comp="";
-	String req="Select * from reclamation where mat_soc='"+mat+"'";
+	String req="";
+	if (mat==null && authentification.c.equals("utilisateur")){
+		req="select * from reclamation where email_sender=(select email_resp from utilisateur where email_ut='"+authentification.email+"')";
+	}else
+	if (mat==null){
+		req= "select * from reclamation where email_sender='"+authentification.email+"'";
+	}else{
+		
+		req="Select * from reclamation where mat_soc='"+mat+"'";
+	}
+
     try {
        Statement statement = ConnectionBD.getInstance()
                .createStatement();
@@ -246,9 +254,19 @@ public List<reclamation> ListReclamationClient(String mat){
         	
         	   int c = 0;
         		String req="";
+        		if ((matsoc==null) && (authentification.c.equals("utilisateur"))){
+        			req="select count(*) from reclamation where traiter=0 and email_sender=(select email_resp from utilisateur where email_ut='"+authentification.email+"')";
+        		}else
         		if (matsoc==null){
-        			req="SELECT count(*) FROM `reclamation` WHERE `traiter`=0 ";
+        			if (authentification.c.equals("responsable")){
+        				req="select count(*) from reclamation where traiter=0 and email_sender='"+authentification.email+"'";
+        			}else{
+        				req="SELECT count(*) FROM `reclamation` WHERE `traiter`=0 ";
+        			}
+        		
+        			
         		}else{
+        		
         			req="SELECT count(*) FROM `reclamation` WHERE `traiter`=0 and mat_soc='"+matsoc+"'";
         		}
         	    try {

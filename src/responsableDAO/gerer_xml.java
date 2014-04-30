@@ -63,6 +63,7 @@ public class gerer_xml {
 	
 	public void deletefile(String path_doc){
 		String req="delete from xml_doc where path_doc='"+path_doc+"'";
+		System.out.println("path doc delete"+path_doc);
 		try {
             PreparedStatement ps = ConnectionBD.getInstance().prepareStatement(req);
             ps.executeUpdate();

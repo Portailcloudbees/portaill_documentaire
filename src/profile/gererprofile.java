@@ -132,5 +132,44 @@ public class gererprofile {
         }
 	}
 	
+	public int getCountUsers(String email){
+		int count=0;
+		String req="select count(*) from utilisateur where email_resp='"+email+"'";
+		try {
+            Statement statement = ConnectionBD.getInstance()
+                    .createStatement();
+             ResultSet resultat = statement.executeQuery(req);
+             while(resultat.next()){
+             	count=resultat.getInt(1);
+             } 
+        
+             return  count;
+         } catch (SQLException ex) {
+            
+             System.out.println("erreur recperation nbr users "+ex.getMessage());
+             return 0;
+         }
+	}
+	
+	public int getCountDocs(String email){
+		int count=0;
+		String req="select count(*) from xml_doc where etat_doc='ready' and email_client='"+email+"'";
+		try {
+            Statement statement = ConnectionBD.getInstance()
+                    .createStatement();
+             ResultSet resultat = statement.executeQuery(req);
+             while(resultat.next()){
+             	count=resultat.getInt(1);
+             } 
+        
+             return  count;
+         } catch (SQLException ex) {
+            
+             System.out.println("erreur recperation nbr doc ready "+ex.getMessage());
+             return 0;
+         }
+	}
+	
+	
 
 }

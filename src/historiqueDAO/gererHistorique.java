@@ -182,6 +182,7 @@ public List<historique> Listhistorique(String type,String email){
             	h.setIpAdresse(resultat.getString(4));
             	h.setEmail(resultat.getString(7));
             	h.setType(resultat.getString(8));
+            	
             	h.setDate(resultat.getDate(5));
             	Listhistorique.add(h);
             }
@@ -199,7 +200,7 @@ public int getLast(String type){
    int c = 0;
 	String req="";
 	if (type==null){
-		req="Select count(*) from historique WHERE DATE(`date`) = CURDATE( ) ";
+		req="Select count(*) from historique WHERE DATE(`date`) = CURDATE( ) and  type=utilisateur or type=responsable ";
 	}else if (type.equals("administrateur")){
 		req="Select count(*) from historique WHERE DATE(`date`) = CURDATE( ) and type !='administrateur'";
 	}else{

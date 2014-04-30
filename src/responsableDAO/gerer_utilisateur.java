@@ -18,7 +18,7 @@ public class gerer_utilisateur {
 	public boolean ajouterUtilisateur (utilisateur_entities ut){
 		gerer_privilege_ut gp = new gerer_privilege_ut();
 		
-		String req ="insert into utilisateur values (?,?,?,?,?,?)";
+		String req ="insert into utilisateur values (?,?,?,?,?,?,null)";
         try { 
          PreparedStatement ps = ConnectionBD.getInstance().prepareStatement(req);
          ps.setString(1,ut.getEmail_ut());

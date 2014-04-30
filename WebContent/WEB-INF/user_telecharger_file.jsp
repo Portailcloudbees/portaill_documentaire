@@ -138,7 +138,7 @@
                </form>
                <!-- END RESPONSIVE QUICK SEARCH FORM -->
             </li>
-            <li class="start active ">
+            <li class="">
                <a href="forward?lien=index_user.jsp">
                <i class="icon-home"></i> 
                <span class="title">Dashboard</span>
@@ -181,11 +181,11 @@
                 }
             %>
       
-         <li>
+         <li  class="start active ">
                <a class="active" href="javascript:;">
                <i class="icon-folder-open"></i> 
                <span class="title">Files</span>
-               <span class="arrow "></span>
+               <span class="selected"></span>
                </a>
                <ul class="sub-menu">
                   <li>
@@ -265,7 +265,7 @@
             <ul class="sub-menu">
                   <li>
                         <% if (viewStat){
-                   out.println("<a href='client_table_stat.jsp'>"+
+                   out.println("<a href='forward?lien=user_statistique.jsp'>"+
                            "View  Statistique"+ 
                            "<span class='arrow'></span>"+
                            "</a>");

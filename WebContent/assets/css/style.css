@@ -1,47 +1,4 @@
-/*   
-Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.0
-Version: 1.5.2
-Author: KeenThemes
-Website: http://www.keenthemes.com/
-Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keentheme
-*/
 
-/*********************
- GENERAL UI COLORS 
-*********************/
-
-/***
-Colors
-blue:  #4b8df8
-light blue: #bfd5fa
-red: #e02222
-yellow: #ffb848
-green: #35aa47
-purple: #852b99
-dark: #555555;
-light grey: #fafafa;
-***/
-
-/*********************
- GENERAL RESET & SETUP 
-*********************/
-
-/***
-Import fonts
-***/
-
-/*Load Open Sans Font from google fonts*/
-/*
-@import url(//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700);
-*/
-
-/* load Open Sans Font from local */
-@import url(../fonts/font.css);
-
-/***
-Reset and overrides  
-***/
-/* general body settings */
 body { 
   color: #000; 
   font-family: 'Open Sans', sans-serif;
